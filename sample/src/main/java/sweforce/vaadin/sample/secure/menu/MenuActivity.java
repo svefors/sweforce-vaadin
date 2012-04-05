@@ -52,7 +52,7 @@ public class MenuActivity extends AbstractActivity {
 
         menuView.getNoroleBtn().addListener(new GotoPlaceClickListener(new NorolePlace()));
         menuView.getRole1Btn().addListener(new GotoPlaceClickListener(new Role1Place()));
-        menuView.getRole2Btn().addListener(new GotoPlaceClickListener(new Role2Place()));
+        menuView.getRole2Btn().addListener(new GotoPlaceClickListener(new Role2Place("asdf asdf")));
     }
 
     public static interface MenuView extends IsVaadinWidget {

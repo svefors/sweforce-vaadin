@@ -28,9 +28,17 @@ import sweforce.gui.view.AcceptsOneWidget;
  */
 public class Role2Activity extends AbstractActivity {
 
+    private String someValue;
+
+    public void setSomeValue(String someValue) {
+        this.someValue = someValue;
+    }
 
     @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        panel.setWidget(new Role2View());
+        Role2View role2View = new Role2View();
+        if(someValue!= null)
+            role2View.getLabel_1().setValue("Parameter was: " + someValue);
+        panel.setWidget(role2View);
     }
 }

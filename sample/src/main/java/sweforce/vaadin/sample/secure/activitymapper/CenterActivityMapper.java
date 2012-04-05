@@ -74,7 +74,13 @@ public class CenterActivityMapper extends AbstractLayoutPlaceActivityMapper.Cent
             return loginActivity;
         if (place.getClass() == LogoutPlace.class)
             return logoutActivity;
-        return super.getActivity(place);
+        if (place instanceof Role2Place){
+            role2Activity.setSomeValue(((Role2Place) place).getSomeValue());
+            return role2Activity;
+        }else{
+            return super.getActivity(place);
+        }
+
     }
 
     @Override

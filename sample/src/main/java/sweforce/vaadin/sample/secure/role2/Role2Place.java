@@ -33,15 +33,25 @@ import sweforce.vaadin.security.place.PlaceRequiresRoles;
 @PlaceRequiresRoles("user_role_2")
 public class Role2Place extends Place implements CenterPlace, NorthPlace {
 
+    private String someValue;
+
+    public Role2Place(String someValue) {
+        this.someValue = someValue;
+    }
+
+    public String getSomeValue() {
+        return someValue;
+    }
+
     public static class Tokenizer implements PlaceTokenizer<Role2Place>{
         @Override
         public Role2Place getPlace(String token) {
-            return new Role2Place();
+            return new Role2Place(token);
         }
 
         @Override
         public String getToken(Role2Place place) {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
+            return place.someValue;
         }
     }
 
