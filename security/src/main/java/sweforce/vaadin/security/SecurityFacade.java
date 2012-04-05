@@ -27,9 +27,90 @@ import sweforce.gui.ap.place.Place;
  */
 public interface SecurityFacade {
 
-    public Subject getSubject();
+    public Subject getSubject() ;
 
     public boolean isAuthenticationRequired(Place place);
 
 
+    public class UnknownAccountException extends RuntimeException {
+        public UnknownAccountException() {
+        }
+
+        public UnknownAccountException(String s) {
+            super(s);
+        }
+
+        public UnknownAccountException(String s, Throwable throwable) {
+            super(s, throwable);
+        }
+
+        public UnknownAccountException(Throwable throwable) {
+            super(throwable);
+        }
+    }
+
+    public class IncorrectCredentialsException extends RuntimeException {
+        public IncorrectCredentialsException(String s) {
+            super(s);
+        }
+
+        public IncorrectCredentialsException(String s, Throwable throwable) {
+            super(s, throwable);
+        }
+
+        public IncorrectCredentialsException(Throwable throwable) {
+            super(throwable);
+        }
+    }
+
+    public class LockedAccountException extends RuntimeException {
+        public LockedAccountException() {
+        }
+
+        public LockedAccountException(String s) {
+            super(s);
+        }
+
+        public LockedAccountException(String s, Throwable throwable) {
+            super(s, throwable);
+        }
+
+        public LockedAccountException(Throwable throwable) {
+            super(throwable);
+        }
+    }
+
+    public class ExcessiveAttemptsException extends RuntimeException {
+        public ExcessiveAttemptsException() {
+        }
+
+        public ExcessiveAttemptsException(String s) {
+            super(s);
+        }
+
+        public ExcessiveAttemptsException(String s, Throwable throwable) {
+            super(s, throwable);
+        }
+
+        public ExcessiveAttemptsException(Throwable throwable) {
+            super(throwable);
+        }
+    }
+
+    public class AuthenticationException extends RuntimeException {
+        public AuthenticationException() {
+        }
+
+        public AuthenticationException(String s) {
+            super(s);
+        }
+
+        public AuthenticationException(String s, Throwable throwable) {
+            super(s, throwable);
+        }
+
+        public AuthenticationException(Throwable throwable) {
+            super(throwable);
+        }
+    }
 }

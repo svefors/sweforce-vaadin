@@ -16,7 +16,7 @@
 package sweforce.vaadin.security.login;
 
 
-import org.apache.shiro.authc.*;
+
 import sweforce.gui.ap.activity.AbstractActivity;
 import sweforce.gui.ap.place.Place;
 import sweforce.gui.event.EventBus;
@@ -66,15 +66,15 @@ public class LoginActivity extends AbstractActivity implements LoginView.Present
         try {
             securityFacade.getSubject().login(username, password);
             eventBus.fireEvent(new UserLoginSuccessEvent(wantedPlace));
-        } catch (UnknownAccountException uae) {
+        } catch (SecurityFacade.UnknownAccountException uae) {
             eventBus.fireEvent(new UserLoginFailedEvent());
-        } catch (IncorrectCredentialsException ice) {
+        } catch (SecurityFacade.IncorrectCredentialsException ice) {
             eventBus.fireEvent(new UserLoginFailedEvent());
-        } catch (LockedAccountException lae) {
+        } catch (SecurityFacade.LockedAccountException lae) {
             eventBus.fireEvent(new UserLoginFailedEvent());
-        } catch (ExcessiveAttemptsException eae) {
+        } catch (SecurityFacade.ExcessiveAttemptsException eae) {
             eventBus.fireEvent(new UserLoginFailedEvent());
-        } catch (AuthenticationException ae) {
+        } catch (SecurityFacade.AuthenticationException ae) {
             eventBus.fireEvent(new UserLoginFailedEvent());
         } catch (Exception ex) {
             ex.printStackTrace();

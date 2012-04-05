@@ -35,7 +35,7 @@ public class ShiroSecurityFacade implements SecurityFacade {
 
     @Override
     public Subject getSubject() {
-        final org.apache.shiro.subject.Subject subject =  SecurityUtils.getSubject();
+        final org.apache.shiro.subject.Subject subject = SecurityUtils.getSubject();
         return new Subject() {
             @Override
             public boolean hasRole(String rolename) {
@@ -64,7 +64,19 @@ public class ShiroSecurityFacade implements SecurityFacade {
             @Override
             public void login(String username, String password) {
                 UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-                subject.login(token);
+                try {
+                    subject.login(token);
+                } catch (UnknownAccountException uae) {
+                    throw new SecurityFacade.UnknownAccountException(uae);
+                } catch (IncorrectCredentialsException ice) {
+                    throw new SecurityFacade.IncorrectCredentialsException(ice);
+                } catch (LockedAccountException lae) {
+                    throw new SecurityFacade.LockedAccountException(lae);
+                } catch (ExcessiveAttemptsException eae) {
+                    throw new SecurityFacade.ExcessiveAttemptsException(eae);
+                } catch (AuthenticationException ae) {
+                    throw new SecurityFacade.AuthenticationException(ae);
+                }
             }
 
             @Override
@@ -77,6 +89,7 @@ public class ShiroSecurityFacade implements SecurityFacade {
 
     /**
      * return true if requires authentication or roles
+     *
      * @param place
      * @return
      */
@@ -84,12 +97,12 @@ public class ShiroSecurityFacade implements SecurityFacade {
     public boolean isAuthenticationRequired(Place place) {
         boolean rolesRequired = false;
         boolean loginRequired = false;
-        if (place.getClass().isAnnotationPresent(PlaceRequiresAuthentication.class)){
+        if (place.getClass().isAnnotationPresent(PlaceRequiresAuthentication.class)) {
             PlaceRequiresAuthentication placeRequiresAuthentication =
-                place.getClass().getAnnotation(PlaceRequiresAuthentication.class);
+                    place.getClass().getAnnotation(PlaceRequiresAuthentication.class);
             loginRequired = placeRequiresAuthentication != null ? placeRequiresAuthentication.value() : false;
         }
-        if (place.getClass().isAnnotationPresent(PlaceRequiresRoles.class)){
+        if (place.getClass().isAnnotationPresent(PlaceRequiresRoles.class)) {
             PlaceRequiresRoles placeRequiresRoles = place.getClass().getAnnotation(PlaceRequiresRoles.class);
             if (placeRequiresRoles.value() != null && placeRequiresRoles.value().length > 0)
                 rolesRequired = true;
