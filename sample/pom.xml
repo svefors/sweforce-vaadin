@@ -35,7 +35,6 @@
                 <groupId>com.google.inject</groupId>
                 <artifactId>guice</artifactId>
                 <version>${version.guice}</version>
-                <optional>true</optional>
             </dependency>
         </dependencies>
     </dependencyManagement>
