@@ -13,28 +13,38 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package sweforce.vaadin.security;
+package sweforce.vaadin.sample.secure.role1;
 
-
-import org.apache.shiro.SecurityUtils;
 import sweforce.gui.ap.place.Place;
+import sweforce.gui.ap.place.token.PlaceTokenizer;
+import sweforce.gui.ap.place.token.Prefix;
+import sweforce.vaadin.layout.places.CenterPlace;
+import sweforce.vaadin.layout.places.NorthPlace;
+import sweforce.vaadin.security.place.PlaceRequiresRoles;
 
 /**
  * Created by IntelliJ IDEA.
  * User: sveffa
- * Date: 2/23/12
- * Time: 2:54 PM
+ * Date: 4/5/12
+ * Time: 12:06 AM
  * To change this template use File | Settings | File Templates.
  */
-public class ShiroSecurityChecks implements SecurityChecks {
+@Prefix("role1")
+@PlaceRequiresRoles("user_role_1")
+public class Role1Place extends Place implements CenterPlace, NorthPlace {
 
-    @Override
-    public boolean isLoggedIn() {
-        return SecurityUtils.getSubject().isAuthenticated();
+
+
+    public static class Tokenizer implements PlaceTokenizer<Role1Place>{
+        @Override
+        public Role1Place getPlace(String token) {
+            return new Role1Place();
+        }
+
+        @Override
+        public String getToken(Role1Place place) {
+            return "";
+        }
     }
 
-    @Override
-    public boolean hasAccessTo(Place place) {
-        return isLoggedIn() && SecurityUtils.getSubject().hasRole("admin");
-    }
 }

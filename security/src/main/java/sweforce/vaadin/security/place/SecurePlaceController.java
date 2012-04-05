@@ -18,7 +18,7 @@ package sweforce.vaadin.security.place;
 
 import sweforce.gui.ap.place.ConfirmationHandler;
 import sweforce.gui.ap.place.Place;
-import sweforce.gui.ap.place.PlaceController;
+import sweforce.gui.ap.place.DefaultPlaceController;
 import sweforce.gui.event.EventBus;
 import sweforce.vaadin.security.SecurityFacade;
 import sweforce.vaadin.security.login.LoginPlace;
@@ -31,7 +31,7 @@ import sweforce.vaadin.security.login.LoginPlace;
  * To change this template use File | Settings | File Templates.
  */
 @javax.inject.Singleton
-public class SecurePlaceController extends PlaceController {
+public class SecurePlaceController extends DefaultPlaceController {
 
     private final SecurityFacade securityFacade;
 

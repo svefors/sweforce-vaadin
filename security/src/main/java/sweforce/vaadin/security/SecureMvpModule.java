@@ -16,6 +16,14 @@
 package sweforce.vaadin.security;
 
 import com.google.inject.AbstractModule;
+import com.vaadin.Application;
+import sweforce.gui.ap.place.ConfirmationHandler;
+import sweforce.gui.ap.place.DefaultPlaceController;
+import sweforce.gui.ap.place.PlaceController;
+import sweforce.gui.ap.web.BrowserWindow;
+import sweforce.gui.ap.web.vaadin.VaadinBrowserWindow;
+import sweforce.gui.event.EventBus;
+import sweforce.gui.event.SimpleEventBus;
 import sweforce.vaadin.security.login.LoginActivity;
 import sweforce.vaadin.security.login.LoginView;
 import sweforce.vaadin.security.login.LoginViewImpl;
@@ -29,15 +37,25 @@ import sweforce.vaadin.security.place.SecurePlaceController;
  * Time: 2:05 PM
  * To change this template use File | Settings | File Templates.
  */
-public class SecurityModule extends AbstractModule{
+
+public class SecureMvpModule extends AbstractModule{
+
+    private final Application application;
+
+    public SecureMvpModule(Application application) {
+        this.application = application;
+    }
 
     @Override
     protected void configure() {
-
+        bind(BrowserWindow.class).to(VaadinBrowserWindow.class);
+        bind(EventBus.class).to(SimpleEventBus.class);
+        bind(Application.class).toInstance(this.application);
+        bind(ConfirmationHandler.class).to(VaadinBrowserWindow.class);
         bind(LoginView.class).to(LoginViewImpl.class);
         bind(LoginActivity.class);
         bind(LogoutActivity.class);
-        bind(SecurePlaceController.class);
+        bind(PlaceController.class).to(SecurePlaceController.class);
 
     }
 

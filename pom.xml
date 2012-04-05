@@ -11,6 +11,7 @@
 
     <properties>
         <version.vaadin>6.7.6</version.vaadin>
+        <version.guice>3.0</version.guice>
     </properties>
     <licenses>
         <license>
@@ -34,6 +35,12 @@
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin</artifactId>
                 <version>${version.vaadin}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.inject</groupId>
+                <artifactId>guice</artifactId>
+                <version>${version.guice}</version>
+                <optional>true</optional>
             </dependency>
         </dependencies>
     </dependencyManagement>

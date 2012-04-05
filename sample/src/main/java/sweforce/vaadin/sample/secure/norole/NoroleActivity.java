@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 Google Inc.
+ * Copyright 2012 Mats Svefors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -13,21 +13,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package sweforce.gui.view;
+package sweforce.vaadin.sample.secure.norole;
 
+import sweforce.gui.ap.activity.AbstractActivity;
+import sweforce.gui.event.EventBus;
+import sweforce.gui.view.AcceptsOneWidget;
 
 /**
- * Implemented by displays that can be given accept an {@link IsWidget}
- * to show.
+ * Created by IntelliJ IDEA.
+ * User: sveffa
+ * Date: 4/5/12
+ * Time: 12:19 PM
+ * To change this template use File | Settings | File Templates.
  */
-public interface AcceptsOneWidget {
+public class NoroleActivity extends AbstractActivity {
 
-  /**
-   * Set the only widget of the receiver, replacing the previous
-   * widget if there was one.
-   *
-   * @param w the widget, or <code>null</code> to remove the widget
-   *
-   */
-  void setWidget(IsWidget<?> w);
+    @Override
+    public void start(AcceptsOneWidget panel, EventBus eventBus) {
+        panel.setWidget(new NoroleView());
+    }
 }

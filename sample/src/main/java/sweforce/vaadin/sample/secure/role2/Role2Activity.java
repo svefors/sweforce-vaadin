@@ -13,18 +13,24 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package sweforce.vaadin.security.shiro.place;
+package sweforce.vaadin.sample.secure.role2;
+
+import sweforce.gui.ap.activity.AbstractActivity;
+import sweforce.gui.event.EventBus;
+import sweforce.gui.view.AcceptsOneWidget;
 
 /**
  * Created by IntelliJ IDEA.
  * User: sveffa
- * Date: 4/1/12
- * Time: 8:37 PM
+ * Date: 4/5/12
+ * Time: 12:21 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface ShiroPlace {
-
-    public boolean isRequireAuthentication();
+public class Role2Activity extends AbstractActivity {
 
 
+    @Override
+    public void start(AcceptsOneWidget panel, EventBus eventBus) {
+        panel.setWidget(new Role2View());
+    }
 }

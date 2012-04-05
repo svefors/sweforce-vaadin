@@ -22,7 +22,7 @@ package sweforce.gui.ap.place;
  */
 public interface ConfirmationHandler {
 
-    boolean confirm(String message);
+    void askForConfirmation(String message, Listener listener);
 
 //    /**
 //     * Adds a {@link ClosingHandler} to the Delegate.
@@ -39,4 +39,11 @@ public interface ConfirmationHandler {
 //     * @return true to allow the window closing
 //     */
 //    boolean confirm(String message);
+
+    public static interface Listener {
+
+        public void onConfirm();
+
+        public void onCancel();
+    }
 }

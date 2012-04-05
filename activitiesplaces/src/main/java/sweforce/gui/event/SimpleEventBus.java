@@ -11,11 +11,13 @@ package sweforce.gui.event;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
+import javax.inject.Singleton;
 import java.util.*;
 
 /**
  * Basic implementation of {@link EventBus}.
  */
+@Singleton
 public class SimpleEventBus implements EventBus {
 
 

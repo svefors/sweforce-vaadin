@@ -15,39 +15,61 @@
  */
 package sweforce.gui.ap.web.vaadin;
 
-import com.vaadin.Application;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UriFragmentUtility;
 import com.vaadin.ui.Window;
+import org.vaadin.dialogs.ConfirmDialog;
+import sweforce.gui.ap.place.ConfirmationHandler;
 import sweforce.gui.ap.web.BrowserWindow;
 
+import javax.inject.Inject;
+
 /**
- * Created by IntelliJ IDEA.
- * User: sveffa
- * Date: 4/4/12
- * Time: 4:56 PM
- * To change this template use File | Settings | File Templates.
+ * for now. only support one browser window per injector.
+ * comparable with org.eclipse.swt.widgets.Display  ?
  */
-public class VaadinBrowserWindow implements BrowserWindow {
+public class VaadinBrowserWindow extends Window implements BrowserWindow, ConfirmationHandler {
 
-    private final Application application;
+    private final UriFragmentUtility uriFragmentUtility = new UriFragmentUtility();
 
-    private final UriFragmentUtility uriFragmentUtility = new com.vaadin.ui.UriFragmentUtility();
+    private final String id;
 
-    public VaadinBrowserWindow(Application application) {
-        this.application = application;
-        application.addWindow(new Window());
-
+    @Inject
+    public VaadinBrowserWindow() {
+        super();
+        //TODO, think about if this can be some form of counter
+        id = "app1";
+        uriFragmentUtility.setFragment(id);
     }
 
     @Override
     public void setContent(ComponentContainer componentContainer) {
-        application.getMainWindow().addComponent(componentContainer);
-        componentContainer.addComponent(uriFragmentUtility);
+        if (componentContainer != null) {
+            super.setContent(componentContainer);
+            componentContainer.addComponent(uriFragmentUtility);
+        }
     }
 
     @Override
     public UriFragmentUtility getUriFragmentUtility() {
         return uriFragmentUtility;
     }
+
+
+    @Override
+    public void askForConfirmation(String message, final ConfirmationHandler.Listener listener) {
+        ConfirmDialog.show(this, message, new ConfirmDialog.Listener() {
+
+            @Override
+            public void onClose(ConfirmDialog dialog) {
+                if (dialog.isConfirmed()) {
+                    listener.onConfirm();
+                } else {
+                    listener.onCancel();
+                }
+            }
+        });
+    }
+
+
 }

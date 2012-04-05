@@ -75,9 +75,25 @@ public class ShiroSecurityFacade implements SecurityFacade {
 
     }
 
+    /**
+     * return true if requires authentication or roles
+     * @param place
+     * @return
+     */
     @Override
     public boolean isAuthenticationRequired(Place place) {
-        PlaceRequiresAuthentication placeRequiresAuthentication = place.getClass().getAnnotation(PlaceRequiresAuthentication.class);
-        return placeRequiresAuthentication != null ? placeRequiresAuthentication.value() : false;
+        boolean rolesRequired = false;
+        boolean loginRequired = false;
+        if (place.getClass().isAnnotationPresent(PlaceRequiresAuthentication.class)){
+            PlaceRequiresAuthentication placeRequiresAuthentication =
+                place.getClass().getAnnotation(PlaceRequiresAuthentication.class);
+            loginRequired = placeRequiresAuthentication != null ? placeRequiresAuthentication.value() : false;
+        }
+        if (place.getClass().isAnnotationPresent(PlaceRequiresRoles.class)){
+            PlaceRequiresRoles placeRequiresRoles = place.getClass().getAnnotation(PlaceRequiresRoles.class);
+            if (placeRequiresRoles.value() != null && placeRequiresRoles.value().length > 0)
+                rolesRequired = true;
+        }
+        return rolesRequired || loginRequired;
     }
 }

@@ -46,6 +46,11 @@
         </dependency>
         <dependency>
             <groupId>sweforce</groupId>
+            <artifactId>sweforce.vaadin.layout</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>sweforce</groupId>
             <artifactId>sweforce.vaadin.security</artifactId>
             <version>${project.version}</version>
         </dependency>

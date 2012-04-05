@@ -77,6 +77,7 @@ public class LoginActivity extends AbstractActivity implements LoginView.Present
         } catch (AuthenticationException ae) {
             eventBus.fireEvent(new UserLoginFailedEvent());
         } catch (Exception ex) {
+            ex.printStackTrace();
             eventBus.fireEvent(new SystemThrowableEvent(ex));
         }
     }

@@ -30,7 +30,7 @@ import sweforce.gui.event.HandlerRegistration;
  */
 public class PlaceFragmentHandler implements UriFragmentUtility.FragmentChangedListener {
 
-    private PlaceController placeController;
+    private DefaultPlaceController placeController;
 
     private Place defaultPlace = Place.NOWHERE;
 
@@ -51,7 +51,7 @@ public class PlaceFragmentHandler implements UriFragmentUtility.FragmentChangedL
     }
 
 
-    public HandlerRegistration register(PlaceController placeController, EventBus eventBus,
+    public HandlerRegistration register(DefaultPlaceController placeController, EventBus eventBus,
                                         Place defaultPlace) {
         this.placeController = placeController;
         this.defaultPlace = defaultPlace;
@@ -105,7 +105,7 @@ public class PlaceFragmentHandler implements UriFragmentUtility.FragmentChangedL
         placeController.goTo(newPlace);
     }
 
-    public void handleCurrentHistory() {
+    public void handleCurrentFragment() {
         handleHistoryToken(browserWindow.getUriFragmentUtility().getFragment());
     }
 }
