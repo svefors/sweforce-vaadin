@@ -1,0 +1,22 @@
+apply plugin: 'sonar'
+group = "sweforce"
+
+sonar {
+    server {
+        url = "http://buildserver.sweforce.com:9000"
+    }
+    database {
+        url = "jdbc:mysql://buildserver.sweforce.com:3306/sonar"
+        driverClassName = "com.mysql.jdbc.Driver"
+        username = "sveffa"
+        password = "1qazxsw2"
+    }
+
+}
+
+allprojects {
+    apply plugin: 'idea'
+    sonar{}
+}
+
+
