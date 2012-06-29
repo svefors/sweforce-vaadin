@@ -67,7 +67,7 @@ public class Role1View extends CustomComponent implements IsVaadinWidget{
 		label_1.setImmediate(false);
 		label_1.setWidth("-1px");
 		label_1.setHeight("-1px");
-		label_1.setValue("This is the page for users with role 1");
+		label_1.setValue("This is the page for users with role 1 " + getLocale());
 		mainLayout.addComponent(label_1);
 		
 		return mainLayout;

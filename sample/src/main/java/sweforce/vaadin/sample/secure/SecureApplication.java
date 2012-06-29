@@ -22,6 +22,7 @@ import sweforce.gui.VaadinGuiModule;
 import sweforce.gui.ap.activity.ActivityManager;
 import sweforce.gui.ap.place.Place;
 import sweforce.gui.ap.place.DefaultPlaceController;
+import sweforce.gui.ap.place.PlaceController;
 import sweforce.gui.ap.place.PlaceFragmentHandler;
 import sweforce.gui.ap.place.mapper.PlaceFragmentMapper;
 import sweforce.gui.ap.place.mapper.PlaceFragmentMapperFactory;
@@ -60,7 +61,7 @@ public class SecureApplication extends Application implements UserLoginSuccessEv
         final PlaceFragmentHandler placeFragmentHandler = new PlaceFragmentHandler(placeFragmentMapper, vaadinBrowserWindow);
         final Place defaultPlace = new NorolePlace();
         placeController = injector.getInstance(SecurePlaceController.class);
-        eventBus = injector.getInstance(EventBus.class);
+        EventBus eventBus = injector.getInstance(EventBus.class);
         placeFragmentHandler.register(placeController,
                 eventBus, defaultPlace);
 
@@ -87,9 +88,7 @@ public class SecureApplication extends Application implements UserLoginSuccessEv
 
     }
 
-    private EventBus eventBus;
-
-    private DefaultPlaceController placeController;
+    private PlaceController placeController;
 
     @Override
     public void onAfterLogin(Place wantedPlace) {

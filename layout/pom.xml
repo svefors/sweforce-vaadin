@@ -12,7 +12,7 @@
         <groupId>sweforce</groupId>
         <artifactId>sweforce.vaadin</artifactId>
         <relativePath>../</relativePath>
-        <version>1.0</version>
+        <version>1.0.1</version>
     </parent>
 
     <properties>

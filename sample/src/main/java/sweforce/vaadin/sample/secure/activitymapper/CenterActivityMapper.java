@@ -75,6 +75,7 @@ public class CenterActivityMapper extends AbstractLayoutPlaceActivityMapper.Cent
         if (place.getClass() == LogoutPlace.class)
             return logoutActivity;
         if (place instanceof Role2Place){
+            //this is not necessary. Activity could use placeController.getWhere()
             role2Activity.setSomeValue(((Role2Place) place).getSomeValue());
             return role2Activity;
         }else{

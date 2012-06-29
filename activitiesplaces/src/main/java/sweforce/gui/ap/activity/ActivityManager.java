@@ -23,6 +23,7 @@ import sweforce.gui.ap.place.PlaceChangeEvent;
 import sweforce.gui.ap.place.PlaceChangeRequestEvent;
 import sweforce.gui.view.AcceptsOneWidget;
 import sweforce.gui.view.IsWidget;
+import sweforce.gui.view.NullWidget;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -137,7 +138,7 @@ public class ActivityManager implements PlaceChangeEvent.Handler, PlaceChangeReq
             currentActivity = NULL_ACTIVITY;
             startingNext = false;
         } else if (!currentActivity.equals(NULL_ACTIVITY)) {
-            showWidget(null);
+            showWidget(NullWidget.getInstance());
 
             /*
             * Kill off the activity's handlers, so it doesn't have to worry about
