@@ -1,5 +1,9 @@
 apply plugin: 'sonar'
-group = "sweforce"
+//project.name = "sweforce-vaadin"
+
+
+project.ext.vaadinVersion = "6.8"
+project.ext.guiceVersion = "3.0"
 
 sonar {
     server {
@@ -16,7 +20,97 @@ sonar {
 
 allprojects {
     apply plugin: 'idea'
-    sonar{}
+    sonar {}
+    group = "sweforce.vaadin"
+    project.version = "1.0.2"
 }
 
+subprojects {
+    apply plugin: 'java'
+    dependencies {
+        testCompile "junit:junit:4.10"
+        compile 'com.google.inject:guice:3.0'
+    }
+    targetCompatibility = 1.6
+    sourceCompatibility = 1.6
+    repositories {
+        mavenRepo url: 'http://maven.vaadin.com/vaadin-addons'
+        mavenCentral()
+    }
+}
+
+
+
+project(':activitiesplaces') {
+    dependencies {
+        compile([
+                'com.google.guava:guava:12.0',
+                'org.vaadin.addon:confirmdialog:1.2.1',
+                'com.vaadin:vaadin:6.8.0'
+        ])
+    }
+
+}
+
+project(':security') {
+    dependencies {
+        compile project(':activitiesplaces')
+
+    }
+}
+
+project(':security-shiro') {
+    dependencies {
+        compile([
+                project(':security'),
+                project(':activitiesplaces'),
+                'org.apache.shiro:shiro-core:1.2.0',
+                'org.apache.shiro:shiro-web:1.2.0',
+        ])
+    }
+}
+
+project(':layout') {
+    dependencies {
+        compile project(':activitiesplaces')
+    }
+}
+
+project(':sample') {
+    apply plugin: 'war'
+    apply plugin: 'jetty'
+    dependencies {
+        compile([
+                project(':security'),
+                project(':security-shiro'),
+                project(':activitiesplaces'),
+                project(':layout'),
+        ])
+        testCompile(
+                'org.mortbay.jetty:jetty:6.1.26',
+
+        )
+        /*
+        <dependency>
+                    <groupId>org.mortbay.jetty</groupId>
+                    <artifactId>jetty</artifactId>
+                    <scope>test</scope>
+                    <version>${version.jetty}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.mortbay.jetty</groupId>
+                    <artifactId>jetty-util</artifactId>
+                    <scope>test</scope>
+                    <version>${version.jetty}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.mortbay.jetty</groupId>
+                    <artifactId>jetty-management</artifactId>
+                    <scope>test</scope>
+                    <version>${version.jetty}</version>
+                </dependency>
+         */
+
+    }
+}
 
