@@ -13,16 +13,15 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package sweforce.gui.ap.place.mapper;
+package sweforce.gui.ap.place.history;
 
 import sweforce.gui.ap.place.Place;
 
 /**
  *
  *
- * (Renamed from GWT PlaceHistoryMapper)
  */
-public interface PlaceFragmentMapper {
+public interface PlaceHistoryMapper {
 
     /**
      * Returns the {@link sweforce.gui.ap.place.Place} associated with the given token.

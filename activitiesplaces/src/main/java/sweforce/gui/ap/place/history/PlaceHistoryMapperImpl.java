@@ -13,31 +13,42 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package sweforce.gui.ap.place.mapper;
+package sweforce.gui.ap.place.history;
 
 import sweforce.gui.ap.place.Place;
 import sweforce.gui.ap.place.token.PlaceTokenizer;
 import sweforce.gui.ap.place.token.Prefix;
 
-import java.util.HashMap;
+import javax.inject.Inject;
 import java.util.Map;
 
 /**
- * An implementation of {@link PlaceFragmentMapper} that uses the place tokenizers to map between fragment and place.
- *
+ * An implementation of {@link PlaceHistoryMapper} that uses the place tokenizers to map between fragment and place.
  */
-public class PlaceTokenizerPlaceFragmentMapper implements PlaceFragmentMapper {
+class PlaceHistoryMapperImpl implements PlaceHistoryMapper {
 
 
-    private Map<String, PlaceTokenizer<Place>> tokenizerMap = new HashMap<String, PlaceTokenizer<Place>>();
+//    private Map<String, PlaceTokenizer<Place>> tokenizerMap = new HashMap<String, PlaceTokenizer<Place>>();
 
-    public PlaceTokenizerPlaceFragmentMapper(Map<String, PlaceTokenizer<Place>> tokenizerMap) {
-        this.tokenizerMap = tokenizerMap;
+//    public PlaceHistoryMapperImpl(final Map<String, PlaceTokenizer<Place>> tokenizerMap) {
+//        this(new PlaceTokenizerGetter() {
+//            @Override
+//            public PlaceTokenizer getTokenizer(String prefix) {
+//                return tokenizerMap.get(prefix);
+//            }
+//        });
+//    }
+
+    @Inject
+    public PlaceHistoryMapperImpl(PlaceTokenizerStore tokenizerStore) {
+        this.tokenizerStore = tokenizerStore;
     }
+
+    private final PlaceTokenizerStore tokenizerStore;
 
     /**
      * Return value for
-     * {@link PlaceTokenizerPlaceFragmentMapper#getPrefixAndToken(sweforce.gui.ap.place.Place)}.
+     * {@link PlaceHistoryMapperImpl#getPrefixAndToken(sweforce.gui.ap.place.Place)}.
      */
     public static class PrefixAndToken {
         public final String prefix;
@@ -68,7 +79,7 @@ public class PlaceTokenizerPlaceFragmentMapper implements PlaceFragmentMapper {
             initial = "";
             rest = token;
         }
-        PlaceTokenizer<?> tokenizer = getTokenizer(initial);
+        PlaceTokenizer<?> tokenizer = tokenizerStore.getTokenizer(initial);
         if (tokenizer != null) {
             return tokenizer.getPlace(rest);
         }
@@ -83,7 +94,8 @@ public class PlaceTokenizerPlaceFragmentMapper implements PlaceFragmentMapper {
         return null;
     }
 
-//    public void setFactory(F factory) {
+
+    //    public void setFactory(F factory) {
 //        this.factory = factory;
 //    }
 
@@ -91,19 +103,19 @@ public class PlaceTokenizerPlaceFragmentMapper implements PlaceFragmentMapper {
      * @param newPlace what needs tokenizing
      * @return the token, or null
      */
-    protected PrefixAndToken getPrefixAndToken(Place newPlace){
+    protected PrefixAndToken getPrefixAndToken(Place newPlace) {
         Prefix prefix = newPlace.getClass().getAnnotation(Prefix.class);
-        if(prefix != null){
-            return new PrefixAndToken(prefix.value(), getTokenizer(prefix.value()).getToken(newPlace));
+        if (prefix != null) {
+            return new PrefixAndToken(prefix.value(), tokenizerStore.getTokenizer(prefix.value()).getToken(newPlace));
         }
         return null;
     }
 
-    /**
-     * @param prefix the prefix found on the history token
-     * @return the PlaceTokenizer registered with that token, or null
-     */
-    protected PlaceTokenizer getTokenizer(String prefix){
-        return tokenizerMap.get(prefix);
-    }
+//    /**
+//     * @param prefix the prefix found on the history token
+//     * @return the PlaceTokenizer registered with that token, or null
+//     */
+//    protected PlaceTokenizer getTokenizer(String prefix) {
+//        return tokenizerMap.get(prefix);
+//    }
 }

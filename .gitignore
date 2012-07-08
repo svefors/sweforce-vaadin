@@ -7,6 +7,7 @@
 /*/build
 /target/**/*
 /target/*
+/out
 # Package Files #
 *.jar
 *.war

@@ -29,4 +29,6 @@ public interface ActivityMapper {
    * @param place a Place object
    */
   Activity getActivity(Place place);
+
+
 }

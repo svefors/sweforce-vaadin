@@ -3,13 +3,12 @@ package sweforce.vaadin.layout.style1.impl.splitpanels;
 import com.vaadin.ui.AbstractSplitPanel;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Layout;
-import sweforce.gui.ap.web.vaadin.IsVaadinWidget;
+import sweforce.gui.ap.vaadin.IsVaadinWidget;
 import sweforce.gui.view.AcceptsOneWidget;
 import sweforce.gui.view.IsWidget;
 import sweforce.vaadin.layout.LayoutSection;
 import sweforce.vaadin.layout.view.AcceptsManyWidgets;
 import java.util.Arrays;
-import java.util.Iterator;
 
 /**
  * Created by IntelliJ IDEA.

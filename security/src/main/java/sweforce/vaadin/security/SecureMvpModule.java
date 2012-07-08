@@ -16,12 +16,9 @@
 package sweforce.vaadin.security;
 
 import com.google.inject.AbstractModule;
-import com.vaadin.Application;
-import sweforce.gui.ap.place.ConfirmationHandler;
-import sweforce.gui.ap.place.DefaultPlaceController;
-import sweforce.gui.ap.place.PlaceController;
-import sweforce.gui.ap.web.BrowserWindow;
-import sweforce.gui.ap.web.vaadin.VaadinBrowserWindow;
+import com.google.inject.name.Names;
+import sweforce.gui.ap.place.controller.DefaultPlaceController;
+import sweforce.gui.ap.place.controller.PlaceController;
 import sweforce.gui.event.EventBus;
 import sweforce.gui.event.SimpleEventBus;
 import sweforce.vaadin.security.login.LoginActivity;
@@ -40,23 +37,24 @@ import sweforce.vaadin.security.place.SecurePlaceController;
 
 public class SecureMvpModule extends AbstractModule{
 
-    private final Application application;
-
-    public SecureMvpModule(Application application) {
-        this.application = application;
-    }
+//    private final Application application;
+//
+//    public SecureMvpModule(Application application) {
+//        this.application = application;
+//    }
 
     @Override
     protected void configure() {
-        bind(BrowserWindow.class).to(VaadinBrowserWindow.class);
+//        bind(Page.class).to(VaadinBrowserWindow.class);
         bind(EventBus.class).to(SimpleEventBus.class);
-        bind(Application.class).toInstance(this.application);
-        bind(ConfirmationHandler.class).to(VaadinBrowserWindow.class);
+//        bind(Application.class).toInstance(this.application);
+//        bind(ConfirmationHandler.class).to(CurrentRootConfirmationHandler.class);
         bind(LoginView.class).to(LoginViewImpl.class);
         bind(LoginActivity.class);
         bind(LogoutActivity.class);
         bind(PlaceController.class).to(SecurePlaceController.class);
-
+        bind(PlaceController.class).annotatedWith(Names.named(SecurePlaceController.DELEGATE_NAME))
+                .to(DefaultPlaceController.class);
     }
 
 }

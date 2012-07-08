@@ -19,9 +19,10 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
-import sweforce.gui.ap.web.vaadin.IsVaadinWidget;
+import sweforce.gui.ap.vaadin.IsVaadinWidget;
 import sweforce.gui.view.AcceptsOneWidget;
 import sweforce.gui.view.IsWidget;
+import sweforce.gui.view.NullWidget;
 
 
 /**
@@ -39,42 +40,42 @@ public class LayoutContainer extends VerticalLayout {
     private final AcceptsOneWidget northAcceptsOneWidget = new AcceptsOneWidget() {
         @Override
         public void setWidget(IsWidget w) {
-            setNorth(w == null ? null : ((IsVaadinWidget) w).asWidget());
+            setNorth(w == null || NullWidget.getInstance().equals(w) ? null : ((IsVaadinWidget) w).asWidget());
         }
     };
 
     private final AcceptsOneWidget westAcceptsOneWidget = new AcceptsOneWidget() {
         @Override
         public void setWidget(IsWidget w) {
-            setWest(w == null ? null : ((IsVaadinWidget) w).asWidget());
+            setWest(w == null || NullWidget.getInstance().equals(w)  ? null : ((IsVaadinWidget) w).asWidget());
         }
     };
 
     private final AcceptsOneWidget centerAcceptsOneWidget = new AcceptsOneWidget() {
         @Override
         public void setWidget(IsWidget w) {
-            setCenter(w == null ? null : ((IsVaadinWidget) w).asWidget());
+            setCenter(w == null || NullWidget.getInstance().equals(w) ? null : ((IsVaadinWidget) w).asWidget());
         }
     };
 
     private final AcceptsOneWidget eastAcceptsOneWidget = new AcceptsOneWidget() {
         @Override
         public void setWidget(IsWidget w) {
-            setEast(w == null ? null : ((IsVaadinWidget) w).asWidget());
+            setEast(w == null || NullWidget.getInstance().equals(w) ? null : ((IsVaadinWidget) w).asWidget());
         }
     };
 
     private final AcceptsOneWidget detailsAcceptsOneWidget = new AcceptsOneWidget() {
         @Override
         public void setWidget(IsWidget w) {
-            setDetails(w == null ? null : ((IsVaadinWidget) w).asWidget());
+            setDetails(w == null || NullWidget.getInstance().equals(w) ? null : ((IsVaadinWidget) w).asWidget());
         }
     };
 
     private final AcceptsOneWidget southAcceptsOneWidget = new AcceptsOneWidget() {
         @Override
         public void setWidget(IsWidget w) {
-            setSouth(w == null ? null : ((IsVaadinWidget) w).asWidget());
+            setSouth(w == null || NullWidget.getInstance().equals(w) ? null : ((IsVaadinWidget) w).asWidget());
         }
     };
 

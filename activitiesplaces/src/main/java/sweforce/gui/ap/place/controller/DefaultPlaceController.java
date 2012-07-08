@@ -13,19 +13,24 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package sweforce.gui.ap.place;
+package sweforce.gui.ap.place.controller;
 
+import sweforce.gui.ap.place.ConfirmationHandler;
+import sweforce.gui.ap.place.Place;
+import sweforce.gui.ap.place.PlaceChangeEvent;
+import sweforce.gui.ap.place.PlaceChangeRequestEvent;
+import sweforce.gui.ap.place.controller.PlaceController;
 import sweforce.gui.event.EventBus;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * In charge of the user's location in the app.
+ * In charge of the user's place/location in the app.
  * Copied and modified from GWt PLace Controller
  */
 @Singleton
-public class DefaultPlaceController implements PlaceController{
+public class DefaultPlaceController implements PlaceController {
 
     private final EventBus eventBus;
 

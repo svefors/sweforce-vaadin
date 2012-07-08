@@ -1,4 +1,4 @@
-package sweforce.gui.ap.place;
+package sweforce.gui.ap.history;
 
 import sweforce.gui.event.Event;
 import sweforce.gui.event.EventHandler;
@@ -18,14 +18,18 @@ public class HistoryChangedEvent implements Event<HistoryChangedEvent.Handler> {
         this.placeToken = placeToken;
     }
 
+    public String getPlaceToken() {
+        return placeToken;
+    }
+
     @Override
     public void dispatch(Handler handler) {
-        handler.onHistoryChange(this.placeToken);
+        handler.onHistoryChange(this);
     }
 
     public static interface Handler extends EventHandler{
 
-        public void onHistoryChange(String placeToken);
+        public void onHistoryChange(HistoryChangedEvent event);
 
     }
 }

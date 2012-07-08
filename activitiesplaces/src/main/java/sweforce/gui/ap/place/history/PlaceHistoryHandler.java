@@ -13,13 +13,18 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package sweforce.gui.ap.place;
+package sweforce.gui.ap.place.history;
 
-import com.vaadin.ui.UriFragmentUtility;
-import sweforce.gui.ap.place.mapper.PlaceFragmentMapper;
-import sweforce.gui.ap.web.BrowserWindow;
+import sweforce.gui.ap.history.Historian;
+import sweforce.gui.ap.history.HistoryChangedEvent;
+import sweforce.gui.ap.place.Place;
+import sweforce.gui.ap.place.PlaceChangeEvent;
+import sweforce.gui.ap.place.controller.PlaceController;
+import sweforce.gui.ap.place.history.PlaceHistoryMapper;
 import sweforce.gui.event.EventBus;
 import sweforce.gui.event.HandlerRegistration;
+
+import javax.inject.Inject;
 
 /**
  * Created by IntelliJ IDEA.
@@ -28,27 +33,23 @@ import sweforce.gui.event.HandlerRegistration;
  * Time: 3:52 PM
  * To change this template use File | Settings | File Templates.
  */
-public class PlaceFragmentHandler implements UriFragmentUtility.FragmentChangedListener {
+public class PlaceHistoryHandler {
 
     private PlaceController placeController;
 
     private Place defaultPlace = Place.NOWHERE;
 
+    private final PlaceHistoryMapper mapper;
 
-    private final PlaceFragmentMapper mapper;
+    private final Historian historian;
 
-    private final BrowserWindow browserWindow;
-
-    public PlaceFragmentHandler(PlaceFragmentMapper mapper, BrowserWindow browserWindow) {
+    @Inject
+    public PlaceHistoryHandler(PlaceHistoryMapper mapper, Historian historian) {
         this.mapper = mapper;
-        this.browserWindow = browserWindow;
+        this.historian = historian;
     }
 
-    @Override
-    public void fragmentChanged(UriFragmentUtility.FragmentChangedEvent fragmentChangedEvent) {
-        String fragment = fragmentChangedEvent.getUriFragmentUtility().getFragment();
-        handleHistoryToken(fragment);
-    }
+
 
 
     public HandlerRegistration register(PlaceController placeController, EventBus eventBus,
@@ -59,20 +60,27 @@ public class PlaceFragmentHandler implements UriFragmentUtility.FragmentChangedL
                 eventBus.addHandler(PlaceChangeEvent.class, new PlaceChangeEvent.Handler() {
                     public void onPlaceChange(PlaceChangeEvent event) {
                         Place newPlace = event.getNewPlace();
-                        browserWindow.getUriFragmentUtility().setFragment(tokenForPlace(newPlace));
+                        historian.newItem(tokenForPlace(newPlace));
                     }
                 });
+        final HandlerRegistration historyReg = historian.addValueChangeHandler(new HistoryChangedEvent.Handler(){
+            @Override
+            public void onHistoryChange(HistoryChangedEvent event) {
+                PlaceHistoryHandler.this.handleHistoryToken(event.getPlaceToken());
+            }
+        });
 
         return new HandlerRegistration() {
             public void removeHandler() {
-                PlaceFragmentHandler.this.defaultPlace = Place.NOWHERE;
-                PlaceFragmentHandler.this.placeController = null;
+                PlaceHistoryHandler.this.defaultPlace = Place.NOWHERE;
+                PlaceHistoryHandler.this.placeController = null;
                 placeReg.removeHandler();
-
+                historyReg.removeHandler();
             }
         };
-
     }
+
+
 
     private String tokenForPlace(Place newPlace) {
         if (defaultPlace.equals(newPlace)) {
@@ -106,6 +114,6 @@ public class PlaceFragmentHandler implements UriFragmentUtility.FragmentChangedL
     }
 
     public void handleCurrentFragment() {
-        handleHistoryToken(browserWindow.getUriFragmentUtility().getFragment());
+        handleHistoryToken(historian.getToken());
     }
 }

@@ -18,10 +18,14 @@ package sweforce.vaadin.security.place;
 
 import sweforce.gui.ap.place.ConfirmationHandler;
 import sweforce.gui.ap.place.Place;
-import sweforce.gui.ap.place.DefaultPlaceController;
+import sweforce.gui.ap.place.controller.DefaultPlaceController;
+import sweforce.gui.ap.place.controller.PlaceController;
 import sweforce.gui.event.EventBus;
 import sweforce.vaadin.security.SecurityFacade;
 import sweforce.vaadin.security.login.LoginPlace;
+import sweforce.vaadin.security.login.UserLoginSuccessEvent;
+
+import javax.inject.Named;
 
 /**
  * Created by IntelliJ IDEA.
@@ -31,27 +35,37 @@ import sweforce.vaadin.security.login.LoginPlace;
  * To change this template use File | Settings | File Templates.
  */
 @javax.inject.Singleton
-public class SecurePlaceController extends DefaultPlaceController {
+public class SecurePlaceController implements PlaceController {
 
     private final SecurityFacade securityFacade;
 
+//    private Place defaultPlace;
+
+    private final PlaceController delegate;
+
+    public static final String DELEGATE_NAME = "SecurePlaceController.DELEGATE";
+
+
+
     @javax.inject.Inject
-    public SecurePlaceController(EventBus eventBus, ConfirmationHandler delegate, SecurityFacade securityFacade) {
-        super(eventBus, delegate);
+    public SecurePlaceController(SecurityFacade securityFacade, @Named(SecurePlaceController.DELEGATE_NAME) PlaceController delegate) {
         this.securityFacade = securityFacade;
+        this.delegate = delegate;
     }
 
+
+
     @Override
-    public void goTo(Place newPlace) {
+    public void goTo(Place wantedPlace) {
         //check if the place is secure
-        if (!securityFacade.isAuthenticationRequired(newPlace)){
-            super.goTo(newPlace);
+        if (!securityFacade.isAuthenticationRequired(wantedPlace)){
+            delegate.goTo(wantedPlace);
         }else{
             if (!securityFacade.getSubject().isAuthenticated()){
-                super.goTo(new LoginPlace(newPlace));
+                delegate.goTo(new LoginPlace(wantedPlace));
             }else{
-                if (securityFacade.getSubject().isAuthorized(newPlace)){
-                    super.goTo(newPlace);
+                if (securityFacade.getSubject().isAuthorized(wantedPlace)){
+                    delegate.goTo(wantedPlace);
                 }else{
                     //display not authorized information
                 }
@@ -59,4 +73,9 @@ public class SecurePlaceController extends DefaultPlaceController {
         }
     }
 
+
+    @Override
+    public Place getWhere() {
+        return delegate.getWhere();
+    }
 }

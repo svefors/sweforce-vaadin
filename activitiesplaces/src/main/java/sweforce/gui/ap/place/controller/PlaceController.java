@@ -1,4 +1,6 @@
-package sweforce.gui.ap.place;
+package sweforce.gui.ap.place.controller;
+
+import sweforce.gui.ap.place.Place;
 
 /**
  * Created by IntelliJ IDEA.

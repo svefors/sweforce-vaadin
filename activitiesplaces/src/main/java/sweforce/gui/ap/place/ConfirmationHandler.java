@@ -31,7 +31,7 @@ public interface ConfirmationHandler {
 //     * @return a {@link HandlerRegistration} instance
 //     */
 //    HandlerRegistration addWindowClosingHandler(ClosingHandler handler);
-//
+//TODO: check if Vaadin has support for closing window event.
 //    /**
 //     * Called to confirm a window closing event.
 //     *

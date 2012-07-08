@@ -13,18 +13,19 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package sweforce.gui.ap.web.vaadin;
+package sweforce.gui.ap.vaadin;
 
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Component;
+import sweforce.gui.view.IsWidget;
 
 /**
  * Created by IntelliJ IDEA.
  * User: sveffa
  * Date: 4/4/12
- * Time: 10:37 PM
+ * Time: 10:33 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface IsVaadinComponentContainer {
+public interface IsVaadinWidget extends IsWidget<Component> {
 
-    public ComponentContainer asComponentContainer();
+
 }

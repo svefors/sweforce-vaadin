@@ -20,7 +20,7 @@ import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
-import sweforce.gui.ap.web.vaadin.IsVaadinWidget;
+import sweforce.gui.ap.vaadin.IsVaadinWidget;
 
 public class NoroleView extends CustomComponent implements IsVaadinWidget{
 

@@ -2,8 +2,6 @@ apply plugin: 'sonar'
 //project.name = "sweforce-vaadin"
 
 
-project.ext.vaadinVersion = "6.8"
-project.ext.guiceVersion = "3.0"
 
 sonar {
     server {
@@ -22,7 +20,7 @@ allprojects {
     apply plugin: 'idea'
     sonar {}
     group = "sweforce.vaadin"
-    project.version = "1.0.2"
+    project.version = "1.1"
 }
 
 subprojects {
@@ -35,6 +33,8 @@ subprojects {
     sourceCompatibility = 1.6
     repositories {
         mavenRepo url: 'http://maven.vaadin.com/vaadin-addons'
+        mavenRepo url: 'http://oss.sonatype.org/content/repositories/vaadin-snapshots/'
+        mavenRepo url: 'https://oss.sonatype.org/content/repositories/vaadin-releases'
         mavenCentral()
     }
 }
@@ -45,8 +45,8 @@ project(':activitiesplaces') {
     dependencies {
         compile([
                 'com.google.guava:guava:12.0',
-                'org.vaadin.addon:confirmdialog:1.2.1',
-                'com.vaadin:vaadin:6.8.0'
+                'org.vaadin.addon:confirmdialog:2.0.0',
+                'com.vaadin:vaadin:7.0.0.alpha3'
         ])
     }
 
