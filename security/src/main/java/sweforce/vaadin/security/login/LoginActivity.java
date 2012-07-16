@@ -19,6 +19,7 @@ package sweforce.vaadin.security.login;
 
 import sweforce.gui.ap.activity.AbstractActivity;
 import sweforce.gui.ap.place.Place;
+import sweforce.gui.display.Display;
 import sweforce.gui.event.EventBus;
 import sweforce.gui.event.SystemThrowableEvent;
 import sweforce.gui.view.AcceptsOneWidget;
@@ -51,9 +52,9 @@ public class LoginActivity extends AbstractActivity implements LoginView.Present
     }
 
     @Override
-    public void start(AcceptsOneWidget panel, EventBus eventBus) {
+    public void start(Display panel, EventBus eventBus) {
         this.eventBus = eventBus;
-        panel.setWidget(loginView);
+        panel.setView(loginView);
         loginView.setPresenter(this);
     }
 

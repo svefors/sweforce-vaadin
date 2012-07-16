@@ -17,6 +17,7 @@ package sweforce.vaadin.security.logout;
 
 
 import sweforce.gui.ap.activity.AbstractActivity;
+import sweforce.gui.display.Display;
 import sweforce.gui.event.EventBus;
 import sweforce.gui.view.AcceptsOneWidget;
 import sweforce.vaadin.security.SecurityFacade;
@@ -42,7 +43,7 @@ public class LogoutActivity extends AbstractActivity {
 
 
     @Override
-    public void start(AcceptsOneWidget acceptsOneWidget, EventBus eventBus) {
+    public void start(Display acceptsOneWidget, EventBus eventBus) {
         securityFacade.getSubject().logout();
         eventBus.fireEvent(new UserLogoutEvent());
     }

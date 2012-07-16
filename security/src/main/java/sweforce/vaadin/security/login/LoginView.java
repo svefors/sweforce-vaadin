@@ -17,6 +17,7 @@ package sweforce.vaadin.security.login;
 
 
 import sweforce.gui.ap.vaadin.IsVaadinWidget;
+import sweforce.gui.display.VaadinView;
 
 
 /**
@@ -26,7 +27,7 @@ import sweforce.gui.ap.vaadin.IsVaadinWidget;
  * Time: 2:07 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface LoginView extends IsVaadinWidget{
+public interface LoginView extends VaadinView{
 
     public void setPresenter(Presenter presenter);
 

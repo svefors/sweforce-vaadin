@@ -17,6 +17,7 @@ package sweforce.vaadin.security.login;
 
 import com.vaadin.ui.*;
 import sweforce.gui.ap.vaadin.IsVaadinWidget;
+import sweforce.gui.display.VaadinView;
 
 
 /**
@@ -26,7 +27,7 @@ import sweforce.gui.ap.vaadin.IsVaadinWidget;
  * Time: 2:30 PM
  * To change this template use File | Settings | File Templates.
  */
-public class LoginViewImpl implements LoginView, IsVaadinWidget, LoginForm.LoginListener {
+public class LoginViewImpl implements LoginView, VaadinView, LoginForm.LoginListener {
 
     private Presenter presenter;
 
@@ -62,8 +63,7 @@ public class LoginViewImpl implements LoginView, IsVaadinWidget, LoginForm.Login
     }
 
     @Override
-    public Component asWidget() {
+    public Component asComponent() {
         return mainLayout;
     }
-
 }

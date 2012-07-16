@@ -16,6 +16,7 @@
 package sweforce.vaadin.sample.secure.role2;
 
 import sweforce.gui.ap.activity.AbstractActivity;
+import sweforce.gui.display.Display;
 import sweforce.gui.event.EventBus;
 import sweforce.gui.view.AcceptsOneWidget;
 import sweforce.vaadin.sample.secure.SecureApplication;
@@ -36,10 +37,10 @@ public class Role2Activity extends AbstractActivity {
     }
 
     @Override
-    public void start(AcceptsOneWidget panel, EventBus eventBus) {
+    public void start(Display panel, EventBus eventBus) {
         Role2View role2View = new Role2View();
         if(someValue!= null)
             role2View.getLabel_1().setValue("Parameter was: " + someValue);
-        panel.setWidget(role2View);
+        panel.setView(role2View);
     }
 }

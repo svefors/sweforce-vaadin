@@ -16,6 +16,7 @@
 package sweforce.gui.ap.activity;
 
 
+import sweforce.gui.display.Display;
 import sweforce.gui.event.EventBus;
 import sweforce.gui.view.AcceptsOneWidget;
 
@@ -60,5 +61,5 @@ public interface Activity {
    * @param panel the panel to display this activity's widget when it is ready
    * @param eventBus the event bus
    */
-  void start(AcceptsOneWidget panel, EventBus eventBus);
+  void start(Display panel, EventBus eventBus);
 }

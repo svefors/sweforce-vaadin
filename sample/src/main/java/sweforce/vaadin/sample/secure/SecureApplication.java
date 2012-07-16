@@ -22,6 +22,8 @@ import com.google.inject.Provides;
 import com.google.inject.name.Names;
 import com.vaadin.terminal.WrappedRequest;
 import com.vaadin.ui.Root;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sweforce.gui.ap.activity.ActivityManager;
 import sweforce.gui.ap.place.Place;
 import sweforce.gui.ap.place.PlacesRunner;
@@ -31,6 +33,7 @@ import sweforce.gui.ap.vaadin.VaadinModule;
 import sweforce.gui.ap.vaadin.VaadinPageHistorian;
 import sweforce.gui.event.EventBus;
 import sweforce.vaadin.layout.LayoutContainer;
+import sweforce.vaadin.layout.style2.Style1Layout;
 import sweforce.vaadin.sample.secure.activitymapper.CenterActivityMapper;
 import sweforce.vaadin.sample.secure.activitymapper.NorthActivityMapper;
 import sweforce.vaadin.sample.secure.menu.MenuActivity;
@@ -62,6 +65,9 @@ import java.util.List;
  */
 public class SecureApplication extends Root implements UserLoginSuccessEvent.Handler {
 
+    private static Logger logger = LoggerFactory.getLogger(SecureApplication.class);
+
+
     private Injector injector;
 
     private class MyModule extends AbstractModule {
@@ -75,8 +81,9 @@ public class SecureApplication extends Root implements UserLoginSuccessEvent.Han
             bind(MenuActivity.class);
         }
 
-        @Provides @Named(PlaceHistoryModule.NAMED_PLACE_CLASSES)
-        Collection<Class<? extends Place>> providePlaceClasses(){
+        @Provides
+        @Named(PlaceHistoryModule.NAMED_PLACE_CLASSES)
+        Collection<Class<? extends Place>> providePlaceClasses() {
             //TODO write a classpath scanning mechanism
             List<Class<? extends Place>> places = new ArrayList<Class<? extends Place>>();
             places.add(LoginPlace.class);
@@ -88,8 +95,8 @@ public class SecureApplication extends Root implements UserLoginSuccessEvent.Han
         }
 
 
-
     }
+
     @Override
     protected void init(WrappedRequest request) {
 //        this.getApplication().setRootPreserved(true);
@@ -117,25 +124,32 @@ public class SecureApplication extends Root implements UserLoginSuccessEvent.Han
 
         eventBus.addHandler(UserLoginSuccessEvent.class, this);
 
-        LayoutContainer layoutContainer = new LayoutContainer();
-        layoutContainer.init();
-        this.setContent(layoutContainer);
+//        LayoutContainer layoutContainer = new LayoutContainer();
+//        layoutContainer.init();
+//        this.setContent(layoutContainer);
 
+        Style1Layout style1Layout = new Style1Layout();
+        this.setContent(style1Layout);
         final ActivityManager centerActivityManager = new ActivityManager(
                 injector.getInstance(CenterActivityMapper.class),
                 injector.getInstance(EventBus.class)
-                );
+        );
 
-        centerActivityManager.setDisplay(layoutContainer.getCenterAcceptsOneWidget());
+        centerActivityManager.setDisplay(style1Layout.getCenterDisplay());
 
         final ActivityManager northActivityManager = new ActivityManager(
                 injector.getInstance(NorthActivityMapper.class),
                 injector.getInstance(EventBus.class)
-                );
+        );
 
-        northActivityManager.setDisplay(layoutContainer.getNorthAcceptsOneWidget());
-        PlacesRunner placesRunner= injector.getInstance(PlacesRunner.class);
-        placesRunner.start();
+        northActivityManager.setDisplay(style1Layout.getTopDisplay());
+
+        PlacesRunner placesRunner = injector.getInstance(PlacesRunner.class);
+        try {
+            placesRunner.start();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
     }
 
     @Override

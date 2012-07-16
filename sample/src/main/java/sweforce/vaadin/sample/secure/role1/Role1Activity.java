@@ -16,6 +16,7 @@
 package sweforce.vaadin.sample.secure.role1;
 
 import sweforce.gui.ap.activity.AbstractActivity;
+import sweforce.gui.display.Display;
 import sweforce.gui.event.EventBus;
 import sweforce.gui.view.AcceptsOneWidget;
 
@@ -29,7 +30,7 @@ import sweforce.gui.view.AcceptsOneWidget;
 public class Role1Activity extends AbstractActivity {
 
     @Override
-    public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        panel.setWidget(new Role1View());
+    public void start(Display panel, EventBus eventBus) {
+        panel.setView(new Role1View());
     }
 }

@@ -20,6 +20,8 @@ import sweforce.gui.ap.activity.AbstractActivity;
 import sweforce.gui.ap.place.Place;
 import sweforce.gui.ap.place.controller.PlaceController;
 import sweforce.gui.ap.vaadin.IsVaadinWidget;
+import sweforce.gui.display.Display;
+import sweforce.gui.display.VaadinView;
 import sweforce.gui.event.EventBus;
 import sweforce.gui.view.AcceptsOneWidget;
 import sweforce.vaadin.sample.secure.norole.NorolePlace;
@@ -47,15 +49,15 @@ public class MenuActivity extends AbstractActivity {
     }
 
     @Override
-    public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        panel.setWidget(menuView);
+    public void start(Display panel, EventBus eventBus) {
+        panel.setView(menuView);
 
         menuView.getNoroleBtn().addListener(new GotoPlaceClickListener(new NorolePlace()));
         menuView.getRole1Btn().addListener(new GotoPlaceClickListener(new Role1Place()));
         menuView.getRole2Btn().addListener(new GotoPlaceClickListener(new Role2Place("asdf asdf")));
     }
 
-    public static interface MenuView extends IsVaadinWidget {
+    public static interface MenuView extends VaadinView {
 
         public Button getNoroleBtn();
 

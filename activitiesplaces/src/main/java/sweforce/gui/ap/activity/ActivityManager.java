@@ -16,6 +16,11 @@
 package sweforce.gui.ap.activity;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sweforce.gui.display.Display;
+import sweforce.gui.display.NullView;
+import sweforce.gui.display.View;
 import sweforce.gui.event.EventBus;
 import sweforce.gui.event.HandlerRegistration;
 import sweforce.gui.event.ResettableEventBus;
@@ -35,18 +40,19 @@ import java.util.Set;
  */
 public class ActivityManager implements PlaceChangeEvent.Handler, PlaceChangeRequestEvent.Handler {
 
+    private static Logger logger = LoggerFactory.getLogger(ActivityManager.class);
     /**
      * Wraps our real display to prevent an Activity from taking it over if it is
      * not the currentActivity.
      */
-    private class ProtectedDisplay implements AcceptsOneWidget {
+    private class ProtectedDisplay implements Display {
         private final Activity activity;
 
         ProtectedDisplay(Activity activity) {
             this.activity = activity;
         }
 
-        public void setWidget(IsWidget view) {
+        public void setView(View view) {
             if (this.activity == ActivityManager.this.currentActivity) {
                 startingNext = false;
                 showWidget(view);
@@ -55,7 +61,7 @@ public class ActivityManager implements PlaceChangeEvent.Handler, PlaceChangeReq
     }
 
     private static final Activity NULL_ACTIVITY = new AbstractActivity() {
-        public void start(AcceptsOneWidget panel, EventBus eventBus) {
+        public void start(Display panel, EventBus eventBus) {
         }
     };
 
@@ -71,7 +77,7 @@ public class ActivityManager implements PlaceChangeEvent.Handler, PlaceChangeReq
 
     private Activity currentActivity = NULL_ACTIVITY;
 
-    private AcceptsOneWidget display;
+    private Display display;
 
     private boolean startingNext = false;
 
@@ -134,18 +140,18 @@ public class ActivityManager implements PlaceChangeEvent.Handler, PlaceChangeReq
         if (startingNext) {
             // The place changed again before the new current activity showed its
             // widget
-            caughtOnCancel = tryStopOrCancel(false);
+            caughtOnCancel = tryCancel();
             currentActivity = NULL_ACTIVITY;
             startingNext = false;
         } else if (!currentActivity.equals(NULL_ACTIVITY)) {
-            showWidget(NullWidget.getInstance());
+            showWidget(NullView.getInstance());
 
             /*
             * Kill off the activity's handlers, so it doesn't have to worry about
             * them accidentally firing as a side effect of its tear down
             */
             stopperedEventBus.removeHandlers();
-            caughtOnStop = tryStopOrCancel(true);
+            caughtOnStop = tryStop();
         }
 
         currentActivity = nextActivity;
@@ -160,12 +166,15 @@ public class ActivityManager implements PlaceChangeEvent.Handler, PlaceChangeReq
         if (caughtOnStart != null || caughtOnCancel != null || caughtOnStop != null) {
             Set<Throwable> causes = new LinkedHashSet<Throwable>();
             if (caughtOnStop != null) {
+                logger.error("On cancel error", caughtOnStop);
                 causes.add(caughtOnStop);
             }
             if (caughtOnCancel != null) {
+                logger.error("On cancel error", caughtOnCancel);
                 causes.add(caughtOnCancel);
             }
             if (caughtOnStart != null) {
+                logger.error("On cancel error", caughtOnStart);
                 causes.add(caughtOnStart);
             }
 
@@ -193,7 +202,7 @@ public class ActivityManager implements PlaceChangeEvent.Handler, PlaceChangeReq
      *
      * @param display an instance of AcceptsOneWidget
      */
-    public void setDisplay(AcceptsOneWidget display) {
+    public void setDisplay(Display display) {
         boolean wasActive = (null != this.display);
         boolean willBeActive = (null != display);
         this.display = display;
@@ -214,9 +223,9 @@ public class ActivityManager implements PlaceChangeEvent.Handler, PlaceChangeReq
         return mapper.getActivity(event.getNewPlace());
     }
 
-    private void showWidget(IsWidget view) {
+    private void showWidget(View view) {
         if (display != null) {
-            display.setWidget(view);
+            display.setView(view);
         }
     }
 
@@ -233,6 +242,36 @@ public class ActivityManager implements PlaceChangeEvent.Handler, PlaceChangeReq
             caughtOnStart = t;
         }
         return caughtOnStart;
+    }
+
+    private Throwable tryStop() {
+        try {
+            currentActivity.onStop();
+            return null;
+        } catch (Throwable t) {
+            return t;
+        } finally {
+            /*
+            * Kill off the handlers again in case it was naughty and added new ones
+            * during onstop or oncancel
+            */
+            stopperedEventBus.removeHandlers();
+        }
+    }
+
+    private Throwable tryCancel() {
+        try {
+            currentActivity.onCancel();
+            return null;
+        } catch (Throwable t) {
+            return t;
+        } finally {
+            /*
+            * Kill off the handlers again in case it was naughty and added new ones
+            * during onstop or oncancel
+            */
+            stopperedEventBus.removeHandlers();
+        }
     }
 
     private Throwable tryStopOrCancel(boolean stop) {

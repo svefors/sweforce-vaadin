@@ -20,6 +20,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 import sweforce.gui.ap.vaadin.IsVaadinWidget;
+import sweforce.gui.display.Display;
 import sweforce.gui.view.AcceptsOneWidget;
 import sweforce.gui.view.IsWidget;
 import sweforce.gui.view.NullWidget;
@@ -323,27 +324,27 @@ public class LayoutContainer extends VerticalLayout {
         this.setMargin(true);
     }
 
-    public AcceptsOneWidget getNorthAcceptsOneWidget() {
-        return northAcceptsOneWidget;
+    public Display getNorthAcceptsOneWidget() {
+        return null;//northAcceptsOneWidget;
     }
 
-    public AcceptsOneWidget getWestAcceptsOneWidget() {
-        return westAcceptsOneWidget;
+    public Display getWestAcceptsOneWidget() {
+        return null;//westAcceptsOneWidget;
     }
 
-    public AcceptsOneWidget getCenterAcceptsOneWidget() {
-        return centerAcceptsOneWidget;
+    public Display getCenterAcceptsOneWidget() {
+        return null;//centerAcceptsOneWidget;
     }
 
-    public AcceptsOneWidget getEastAcceptsOneWidget() {
-        return eastAcceptsOneWidget;
+    public Display getEastAcceptsOneWidget() {
+        return null;//eastAcceptsOneWidget;
     }
 
-    public AcceptsOneWidget getDetailsAcceptsOneWidget() {
-        return detailsAcceptsOneWidget;
+    public Display getDetailsAcceptsOneWidget() {
+        return null;//detailsAcceptsOneWidget;
     }
 
-    public AcceptsOneWidget getSouthAcceptsOneWidget() {
-        return southAcceptsOneWidget;
+    public Display getSouthAcceptsOneWidget() {
+        return null;//southAcceptsOneWidget;
     }
 }
