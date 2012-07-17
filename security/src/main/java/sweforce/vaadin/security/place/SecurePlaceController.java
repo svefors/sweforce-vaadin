@@ -16,14 +16,10 @@
 package sweforce.vaadin.security.place;
 
 
-import sweforce.gui.ap.place.ConfirmationHandler;
 import sweforce.gui.ap.place.Place;
-import sweforce.gui.ap.place.controller.DefaultPlaceController;
 import sweforce.gui.ap.place.controller.PlaceController;
-import sweforce.gui.event.EventBus;
 import sweforce.vaadin.security.SecurityFacade;
 import sweforce.vaadin.security.login.LoginPlace;
-import sweforce.vaadin.security.login.UserLoginSuccessEvent;
 
 import javax.inject.Named;
 

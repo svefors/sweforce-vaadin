@@ -6,7 +6,6 @@ import sweforce.gui.ap.place.token.Prefix;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -35,7 +34,7 @@ public interface PlaceTokenizerStore {
             return new MapStore(createTokenizerMap(clazzes));
         }
 
-
+        @SuppressWarnings("unchecked")
         static Map<String, PlaceTokenizer<Place>> createTokenizerMap(Collection<Class<? extends Place>> clazzes) {
             Map<String, PlaceTokenizer<Place>> tokenizerMap = new HashMap<String, PlaceTokenizer<Place>>();
             for (Class<? extends Place> clazz : clazzes) {

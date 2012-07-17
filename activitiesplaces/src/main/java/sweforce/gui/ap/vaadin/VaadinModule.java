@@ -6,7 +6,6 @@ import com.vaadin.terminal.Page;
 import com.vaadin.ui.Root;
 import sweforce.gui.ap.history.Historian;
 import sweforce.gui.ap.place.ConfirmationHandler;
-import sweforce.gui.ap.vaadin.RootConfirmationHandler;
 
 /**
  * Created with IntelliJ IDEA.

@@ -18,7 +18,6 @@ package sweforce.gui.ap.activity;
 
 import sweforce.gui.display.Display;
 import sweforce.gui.event.EventBus;
-import sweforce.gui.view.AcceptsOneWidget;
 
 /**
  * Implemented by objects that control a piece of user interface, with a life
@@ -51,7 +50,7 @@ public interface Activity {
    * Called when the Activity should ready its widget for the user. When the
    * widget is ready (typically after an RPC response has been received),
    * receiver should present it by calling
-   * {@link AcceptsOneWidget#setWidget} on the given panel.
+   * {@link Display#setView(sweforce.gui.display.View)} on the given panel.
    * <p>
    * Any handlers attached to the provided event bus will be de-registered when
    * the activity is stopped, so activities will rarely need to hold on to the

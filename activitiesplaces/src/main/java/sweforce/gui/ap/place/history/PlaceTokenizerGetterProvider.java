@@ -2,16 +2,11 @@ package sweforce.gui.ap.place.history;
 
 import com.google.inject.ProvisionException;
 import sweforce.gui.ap.place.Place;
-import sweforce.gui.ap.place.token.PlaceTokenizer;
-import sweforce.gui.ap.place.token.Prefix;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,7 +17,7 @@ import java.util.Map;
  */
 public class PlaceTokenizerGetterProvider implements Provider<PlaceTokenizerStore> {
 
-    Collection<Class<? extends Place>> clazzes;
+    private Collection<Class<? extends Place>> clazzes;
 
     @Inject
     public PlaceTokenizerGetterProvider(@Named("Place Classes") Collection<Class<? extends Place>> clazzes) {

@@ -19,7 +19,6 @@ package sweforce.vaadin.security.logout;
 import sweforce.gui.ap.activity.AbstractActivity;
 import sweforce.gui.display.Display;
 import sweforce.gui.event.EventBus;
-import sweforce.gui.view.AcceptsOneWidget;
 import sweforce.vaadin.security.SecurityFacade;
 
 import javax.inject.Inject;

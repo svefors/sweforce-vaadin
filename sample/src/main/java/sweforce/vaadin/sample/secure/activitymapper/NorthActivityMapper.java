@@ -17,16 +17,12 @@ package sweforce.vaadin.sample.secure.activitymapper;
 
 import sweforce.gui.ap.activity.AbstractActivity;
 import sweforce.gui.ap.activity.Activity;
-import sweforce.gui.ap.place.Place;
 import sweforce.vaadin.layout.AbstractLayoutPlaceActivityMapper;
-import sweforce.vaadin.layout.places.CenterPlace;
 import sweforce.vaadin.layout.places.NorthPlace;
 import sweforce.vaadin.sample.secure.menu.MenuActivity;
 import sweforce.vaadin.sample.secure.norole.NorolePlace;
 import sweforce.vaadin.sample.secure.role1.Role1Place;
 import sweforce.vaadin.sample.secure.role2.Role2Place;
-import sweforce.vaadin.security.login.LoginPlace;
-import sweforce.vaadin.security.logout.LogoutPlace;
 
 import javax.inject.Inject;
 import java.util.HashMap;

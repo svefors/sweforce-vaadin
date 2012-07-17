@@ -20,7 +20,6 @@ import sweforce.gui.ap.place.token.PlaceTokenizer;
 import sweforce.gui.ap.place.token.Prefix;
 
 import javax.inject.Inject;
-import java.util.Map;
 
 /**
  * An implementation of {@link PlaceHistoryMapper} that uses the place tokenizers to map between fragment and place.
@@ -103,6 +102,7 @@ class PlaceHistoryMapperImpl implements PlaceHistoryMapper {
      * @param newPlace what needs tokenizing
      * @return the token, or null
      */
+    @SuppressWarnings("unchecked")
     protected PrefixAndToken getPrefixAndToken(Place newPlace) {
         Prefix prefix = newPlace.getClass().getAnnotation(Prefix.class);
         if (prefix != null) {

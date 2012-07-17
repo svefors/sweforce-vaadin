@@ -19,7 +19,6 @@ import sweforce.gui.ap.place.ConfirmationHandler;
 import sweforce.gui.ap.place.Place;
 import sweforce.gui.ap.place.PlaceChangeEvent;
 import sweforce.gui.ap.place.PlaceChangeRequestEvent;
-import sweforce.gui.ap.place.controller.PlaceController;
 import sweforce.gui.event.EventBus;
 
 import javax.inject.Inject;

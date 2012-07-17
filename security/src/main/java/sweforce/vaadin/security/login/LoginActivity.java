@@ -16,13 +16,11 @@
 package sweforce.vaadin.security.login;
 
 
-
 import sweforce.gui.ap.activity.AbstractActivity;
 import sweforce.gui.ap.place.Place;
 import sweforce.gui.display.Display;
 import sweforce.gui.event.EventBus;
 import sweforce.gui.event.SystemThrowableEvent;
-import sweforce.gui.view.AcceptsOneWidget;
 import sweforce.vaadin.security.SecurityFacade;
 
 import javax.inject.Inject;

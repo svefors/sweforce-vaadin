@@ -38,6 +38,7 @@ public abstract class AbstractLayoutPlaceActivityMapper<P extends LayoutPlace> i
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Activity getActivity(Place place) {
         if (place != null && clazz.isAssignableFrom(place.getClass())) {
             return getInternalActivity((P) place);

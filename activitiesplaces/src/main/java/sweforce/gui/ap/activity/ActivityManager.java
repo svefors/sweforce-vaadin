@@ -18,17 +18,14 @@ package sweforce.gui.ap.activity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sweforce.gui.ap.place.PlaceChangeEvent;
+import sweforce.gui.ap.place.PlaceChangeRequestEvent;
 import sweforce.gui.display.Display;
 import sweforce.gui.display.NullView;
 import sweforce.gui.display.View;
 import sweforce.gui.event.EventBus;
 import sweforce.gui.event.HandlerRegistration;
 import sweforce.gui.event.ResettableEventBus;
-import sweforce.gui.ap.place.PlaceChangeEvent;
-import sweforce.gui.ap.place.PlaceChangeRequestEvent;
-import sweforce.gui.view.AcceptsOneWidget;
-import sweforce.gui.view.IsWidget;
-import sweforce.gui.view.NullWidget;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

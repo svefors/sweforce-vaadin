@@ -69,7 +69,7 @@ public class Style2Layout extends CustomComponent {
 
     private Display rightDisplay;
 
-    protected void buildDisplays(){
+    private void buildDisplays(){
         headerDisplay = new SingleComponentDisplay(header);
         centerDisplay = new SingleComponentDisplay(center);
         SplitPanelDisplay splitPanelDisplay = new SplitPanelDisplay(leftRightSplitPanel);

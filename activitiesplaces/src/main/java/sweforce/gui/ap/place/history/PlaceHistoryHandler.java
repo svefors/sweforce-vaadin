@@ -20,7 +20,6 @@ import sweforce.gui.ap.history.HistoryChangedEvent;
 import sweforce.gui.ap.place.Place;
 import sweforce.gui.ap.place.PlaceChangeEvent;
 import sweforce.gui.ap.place.controller.PlaceController;
-import sweforce.gui.ap.place.history.PlaceHistoryMapper;
 import sweforce.gui.event.EventBus;
 import sweforce.gui.event.HandlerRegistration;
 

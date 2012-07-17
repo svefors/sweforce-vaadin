@@ -16,7 +16,6 @@
 package sweforce.vaadin.security.login;
 
 
-import sweforce.gui.ap.vaadin.IsVaadinWidget;
 import sweforce.gui.display.VaadinView;
 
 

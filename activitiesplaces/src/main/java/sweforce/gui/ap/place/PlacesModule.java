@@ -1,8 +1,6 @@
 package sweforce.gui.ap.place;
 
 import com.google.inject.AbstractModule;
-import sweforce.gui.ap.place.controller.DefaultPlaceController;
-import sweforce.gui.ap.place.controller.PlaceController;
 
 /**
  * Created with IntelliJ IDEA.

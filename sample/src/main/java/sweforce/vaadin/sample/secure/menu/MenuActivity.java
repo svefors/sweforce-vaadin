@@ -19,11 +19,9 @@ import com.vaadin.ui.Button;
 import sweforce.gui.ap.activity.AbstractActivity;
 import sweforce.gui.ap.place.Place;
 import sweforce.gui.ap.place.controller.PlaceController;
-import sweforce.gui.ap.vaadin.IsVaadinWidget;
 import sweforce.gui.display.Display;
 import sweforce.gui.display.VaadinView;
 import sweforce.gui.event.EventBus;
-import sweforce.gui.view.AcceptsOneWidget;
 import sweforce.vaadin.sample.secure.norole.NorolePlace;
 import sweforce.vaadin.sample.secure.role1.Role1Place;
 import sweforce.vaadin.sample.secure.role2.Role2Place;
@@ -39,7 +37,7 @@ import javax.inject.Inject;
  */
 public class MenuActivity extends AbstractActivity {
 
-    MenuView menuView = new MenuViewImpl();
+    private MenuView menuView = new MenuViewImpl();
 
     private PlaceController placeController;
 

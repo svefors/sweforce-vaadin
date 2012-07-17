@@ -11,10 +11,10 @@ import com.vaadin.terminal.Sizeable;
 */
 public class Size {
 
-    final float width;
-    final Sizeable.Unit widthUnit;
-    final float height;
-    final Sizeable.Unit heightUnit;
+    private final float width;
+    private final Sizeable.Unit widthUnit;
+    private final float height;
+    private final Sizeable.Unit heightUnit;
 
     public Size(float width, Sizeable.Unit widthUnit, float height, Sizeable.Unit heightUnit) {
         this.width = width;

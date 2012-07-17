@@ -18,7 +18,6 @@ package sweforce.vaadin.sample.secure.norole;
 import sweforce.gui.ap.activity.AbstractActivity;
 import sweforce.gui.display.Display;
 import sweforce.gui.event.EventBus;
-import sweforce.gui.view.AcceptsOneWidget;
 
 /**
  * Created by IntelliJ IDEA.
