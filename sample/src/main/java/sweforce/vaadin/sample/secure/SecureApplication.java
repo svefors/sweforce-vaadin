@@ -34,6 +34,7 @@ import sweforce.gui.ap.vaadin.VaadinPageHistorian;
 import sweforce.gui.event.EventBus;
 import sweforce.vaadin.layout.LayoutContainer;
 import sweforce.vaadin.layout.style2.Style1Layout;
+import sweforce.vaadin.layout.style2.Style2Layout;
 import sweforce.vaadin.sample.secure.activitymapper.CenterActivityMapper;
 import sweforce.vaadin.sample.secure.activitymapper.NorthActivityMapper;
 import sweforce.vaadin.sample.secure.menu.MenuActivity;
@@ -128,21 +129,23 @@ public class SecureApplication extends Root implements UserLoginSuccessEvent.Han
 //        layoutContainer.init();
 //        this.setContent(layoutContainer);
 
-        Style1Layout style1Layout = new Style1Layout();
-        this.setContent(style1Layout);
+        Style2Layout style2Layout = new Style2Layout();
+
+
+        this.setContent(style2Layout );
         final ActivityManager centerActivityManager = new ActivityManager(
                 injector.getInstance(CenterActivityMapper.class),
                 injector.getInstance(EventBus.class)
         );
 
-        centerActivityManager.setDisplay(style1Layout.getCenterDisplay());
+        centerActivityManager.setDisplay(style2Layout.getCenterDisplay());
 
         final ActivityManager northActivityManager = new ActivityManager(
                 injector.getInstance(NorthActivityMapper.class),
                 injector.getInstance(EventBus.class)
         );
 
-        northActivityManager.setDisplay(style1Layout.getTopDisplay());
+        northActivityManager.setDisplay(style2Layout.getHeaderDisplay());
 
         PlacesRunner placesRunner = injector.getInstance(PlacesRunner.class);
         try {

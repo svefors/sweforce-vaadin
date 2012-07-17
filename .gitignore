@@ -1,3 +1,9 @@
+.project
+**/.project
+**/.classpath
+**/.settings
+*.ipr
+**/bin
 *.class
 .DS_STORE
 .idea

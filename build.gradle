@@ -18,6 +18,7 @@ sonar {
 
 allprojects {
     apply plugin: 'idea'
+    apply plugin: 'eclipse'
     sonar {}
     group = "sweforce.vaadin"
     project.version = "1.1"
