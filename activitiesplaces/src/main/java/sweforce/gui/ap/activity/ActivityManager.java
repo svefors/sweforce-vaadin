@@ -18,6 +18,7 @@ package sweforce.gui.ap.activity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sweforce.gui.ap.UmbrellaException;
 import sweforce.gui.ap.place.PlaceChangeEvent;
 import sweforce.gui.ap.place.PlaceChangeRequestEvent;
 import sweforce.gui.display.Display;
@@ -38,6 +39,7 @@ import java.util.Set;
 public class ActivityManager implements PlaceChangeEvent.Handler, PlaceChangeRequestEvent.Handler {
 
     private static Logger logger = LoggerFactory.getLogger(ActivityManager.class);
+
     /**
      * Wraps our real display to prevent an Activity from taking it over if it is
      * not the currentActivity.
@@ -92,8 +94,8 @@ public class ActivityManager implements PlaceChangeEvent.Handler, PlaceChangeReq
         this.mapper = mapper;
         this.eventBus = eventBus;
         this.stopperedEventBus = new ResettableEventBus(eventBus);
-        eventBus.addHandler(PlaceChangeEvent.class, this);
-        eventBus.addHandler(PlaceChangeRequestEvent.class, this);
+//        eventBus.addHandler(PlaceChangeEvent.class, this);
+//        eventBus.addHandler(PlaceChangeRequestEvent.class, this);
     }
 
     /**
@@ -137,7 +139,7 @@ public class ActivityManager implements PlaceChangeEvent.Handler, PlaceChangeReq
         if (startingNext) {
             // The place changed again before the new current activity showed its
             // widget
-            caughtOnCancel = tryCancel();
+            caughtOnCancel = tryStopOrCancel(false);
             currentActivity = NULL_ACTIVITY;
             startingNext = false;
         } else if (!currentActivity.equals(NULL_ACTIVITY)) {
@@ -148,7 +150,7 @@ public class ActivityManager implements PlaceChangeEvent.Handler, PlaceChangeReq
             * them accidentally firing as a side effect of its tear down
             */
             stopperedEventBus.removeHandlers();
-            caughtOnStop = tryStop();
+            caughtOnStop = tryStopOrCancel(true);
         }
 
         currentActivity = nextActivity;
@@ -175,7 +177,7 @@ public class ActivityManager implements PlaceChangeEvent.Handler, PlaceChangeReq
                 causes.add(caughtOnStart);
             }
 
-//      throw new UmbrellaException(causes);
+            throw new UmbrellaException(causes);
 
         }
     }
