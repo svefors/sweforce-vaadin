@@ -18,7 +18,7 @@ package sweforce.gui.ap.activity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sweforce.gui.ap.UmbrellaException;
+import sweforce.gui.event.UmbrellaException;
 import sweforce.gui.ap.place.PlaceChangeEvent;
 import sweforce.gui.ap.place.PlaceChangeRequestEvent;
 import sweforce.gui.display.Display;

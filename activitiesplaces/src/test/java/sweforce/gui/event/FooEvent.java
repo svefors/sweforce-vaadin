@@ -1,9 +1,4 @@
-package sweforce.gui.ap.event;
-
-import sweforce.gui.event.Event;
-import sweforce.gui.event.EventBus;
-import sweforce.gui.event.EventHandler;
-import sweforce.gui.event.HandlerRegistration;
+package sweforce.gui.event;
 
 /**
  * Created by IntelliJ IDEA.

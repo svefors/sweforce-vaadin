@@ -19,8 +19,8 @@ package sweforce.gui.ap.activity;
 import com.vaadin.ui.Component;
 import junit.framework.TestCase;
 import org.junit.Test;
-import sweforce.gui.ap.UmbrellaException;
-import sweforce.gui.ap.event.CountingEventBus;
+import sweforce.gui.event.UmbrellaException;
+import sweforce.gui.event.CountingEventBus;
 import sweforce.gui.ap.place.Place;
 import sweforce.gui.ap.place.PlaceChangeEvent;
 import sweforce.gui.ap.place.PlaceChangeRequestEvent;
@@ -28,7 +28,6 @@ import sweforce.gui.display.Display;
 import sweforce.gui.display.NullView;
 import sweforce.gui.display.VaadinView;
 import sweforce.gui.display.View;
-import sweforce.gui.event.Event;
 import sweforce.gui.event.EventBus;
 import sweforce.gui.event.EventHandler;
 

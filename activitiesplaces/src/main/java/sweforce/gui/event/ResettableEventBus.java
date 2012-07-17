@@ -72,7 +72,7 @@ public class ResettableEventBus implements EventBus {
     /**
      * Visible for testing.
      */
-    int getRegistrationSize() {
+    public int getRegistrationSize() {
         return handlerRegistrations.size();
     }
 }

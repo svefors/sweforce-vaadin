@@ -1,4 +1,4 @@
-package sweforce.gui.ap.event;
+package sweforce.gui.event;
 
 import java.util.HashSet;
 import static org.junit.Assert.*;

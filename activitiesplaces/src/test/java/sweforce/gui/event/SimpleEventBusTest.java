@@ -1,10 +1,6 @@
-package sweforce.gui.ap.event;
+package sweforce.gui.event;
 
-import junit.framework.AssertionFailedError;
 import org.junit.Test;
-import sweforce.gui.ap.UmbrellaException;
-import sweforce.gui.event.HandlerRegistration;
-import sweforce.gui.event.SimpleEventBus;
 
 import java.util.Set;
 

@@ -1,7 +1,5 @@
-package sweforce.gui.ap.event;
+package sweforce.gui.event;
 
-
-import sweforce.gui.event.*;
 
 import java.util.HashMap;
 import java.util.Map;

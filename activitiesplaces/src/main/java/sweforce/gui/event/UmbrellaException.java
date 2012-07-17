@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package sweforce.gui.ap;
+package sweforce.gui.event;
 
 import java.util.Collections;
 import java.util.Iterator;
