@@ -28,12 +28,9 @@ import sweforce.gui.ap.activity.ActivityManager;
 import sweforce.gui.ap.place.Place;
 import sweforce.gui.ap.place.PlacesRunner;
 import sweforce.gui.ap.place.controller.PlaceController;
-import sweforce.gui.ap.place.history.*;
+import sweforce.gui.ap.place.history.PlaceHistoryModule;
 import sweforce.gui.ap.vaadin.VaadinModule;
-import sweforce.gui.ap.vaadin.VaadinPageHistorian;
 import sweforce.gui.event.EventBus;
-import sweforce.vaadin.layout.LayoutContainer;
-import sweforce.vaadin.layout.style2.Style1Layout;
 import sweforce.vaadin.layout.style2.Style2Layout;
 import sweforce.vaadin.sample.secure.activitymapper.CenterActivityMapper;
 import sweforce.vaadin.sample.secure.activitymapper.NorthActivityMapper;
@@ -48,12 +45,10 @@ import sweforce.vaadin.security.SecureMvpModule;
 import sweforce.vaadin.security.login.LoginPlace;
 import sweforce.vaadin.security.login.UserLoginSuccessEvent;
 import sweforce.vaadin.security.logout.LogoutPlace;
-import sweforce.vaadin.security.place.SecurePlaceController;
 import sweforce.vaadin.security.shiro.ShiroSecurityModule;
 
 import javax.inject.Named;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
