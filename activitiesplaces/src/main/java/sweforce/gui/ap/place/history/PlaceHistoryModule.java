@@ -27,9 +27,9 @@ public class PlaceHistoryModule extends AbstractModule {
 
 
 
-    @Provides
-    PlaceTokenizerStore providePlaceTokenizerStore(@Named(NAMED_PLACE_CLASSES) Collection<Class<? extends Place>> clazzes){
-        return PlaceTokenizerStore.MapStore.create(clazzes);
-    }
+//    @Provides
+//    PlaceTokenizerStore providePlaceTokenizerStore(@Named(NAMED_PLACE_CLASSES) Collection<Class<? extends Place>> clazzes){
+//        return new PlaceTokenizerStore.Builder().addPlaces(clazzes).build();
+//    }
 
 }

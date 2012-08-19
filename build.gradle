@@ -51,7 +51,8 @@ project(':activitiesplaces') {
         compile([
                 'com.google.guava:guava:12.0',
                 'org.vaadin.addon:confirmdialog:2.0.0',
-                'com.vaadin:vaadin:7.0.0.alpha3'
+                'com.vaadin:vaadin:7.0.0.alpha3'//,
+//                'org.reflections:reflections:0.9.8'
         ])
     }
 

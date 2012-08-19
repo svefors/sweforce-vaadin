@@ -27,7 +27,7 @@ public class PlaceTokenizerGetterProvider implements Provider<PlaceTokenizerStor
     @Override
     public PlaceTokenizerStore get() {
         try {
-            return PlaceTokenizerStore.MapStore.create(this.clazzes);
+            return new PlaceTokenizerStore.Builder().addPlaces(this.clazzes).build();
         } catch (RuntimeException re) {
             throw new ProvisionException("Could not create PlaceTokenizerGetter", re);
         }

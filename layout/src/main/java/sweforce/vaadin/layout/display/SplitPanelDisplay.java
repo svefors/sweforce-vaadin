@@ -80,10 +80,12 @@ public class SplitPanelDisplay {
         splitPanel.setWidth("0px");
         splitPanel.setHeight("0px");
         minimized = true;
+        splitPanel.setVisible(false);
     }
 
     private void upsize() {
         size.setSizeOn(splitPanel);
         minimized = false;
+        splitPanel.setVisible(true);
     }
 }

@@ -45,11 +45,14 @@ public class SingleComponentDisplay implements Display {
         container.setWidth("0px");
         container.setHeight("0px");
         minimized = true;
+        container.setVisible(false);
+
     }
 
     private void upsize() {
         size.setSizeOn(container);
         minimized = false;
+        container.setVisible(true);
     }
 
     private void resizeIfNecessary() {
