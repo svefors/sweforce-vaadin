@@ -68,7 +68,7 @@ public class SplitPanelDisplay {
             } else if (component != null) {
                 splitPanel.replaceComponent(component, newComponent);
             } else {
-                splitPanel.setFirstComponent(newComponent);
+                splitPanel.setSecondComponent(newComponent);
             }
             this.component = newComponent;
             resizeIfNecessary();

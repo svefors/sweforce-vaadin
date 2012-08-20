@@ -43,10 +43,16 @@ public class LoginActivity extends AbstractActivity implements LoginView.Present
 
     private Place wantedPlace;
 
+    private Place defaultPlace;
+
     @Inject
     public LoginActivity(LoginView loginView, SecurityFacade securityFacade) {
         this.loginView = loginView;
         this.securityFacade = securityFacade;
+    }
+
+    public void setDefaultPlace(Place defaultPlace) {
+        this.defaultPlace = defaultPlace;
     }
 
     @Override

@@ -69,7 +69,7 @@ public class Style2Layout extends CustomComponent {
 
     private Display rightDisplay;
 
-    private void buildDisplays(){
+    private void buildDisplays() {
         headerDisplay = new SingleComponentDisplay(header);
         centerDisplay = new SingleComponentDisplay(center);
         SplitPanelDisplay splitPanelDisplay = new SplitPanelDisplay(leftRightSplitPanel);
@@ -108,6 +108,7 @@ public class Style2Layout extends CustomComponent {
 
         // header
         header = new AbsoluteLayout();
+        header.setStyleName("header");
         header.setImmediate(false);
         header.setWidth("100.0%");
         header.setHeight("50px");
@@ -116,20 +117,30 @@ public class Style2Layout extends CustomComponent {
 
         // center
         center = new AbsoluteLayout();
+        center.setStyleName("center");
         center.setImmediate(false);
         center.setWidth("100.0%");
         center.setHeight("100.0%");
         center.setMargin(false);
         mainLayout.addComponent(center);
+        mainLayout.setExpandRatio(center, 1.0f);
 
         // leftRightSplitPanel
         leftRightSplitPanel = new HorizontalSplitPanel();
+        leftRightSplitPanel.setStyleName("leftRight");
         leftRightSplitPanel.setImmediate(false);
         leftRightSplitPanel.setWidth("100.0%");
         leftRightSplitPanel.setHeight("100.0%");
         mainLayout.addComponent(leftRightSplitPanel);
-
+        mainLayout.setExpandRatio(leftRightSplitPanel, 1.0f);
         return mainLayout;
     }
+
+
+
+    public void setLeftDisplaySize(float value, Unit unit) {
+        leftRightSplitPanel.setSplitPosition(value, unit);
+    }
+
 
 }

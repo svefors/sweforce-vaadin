@@ -30,6 +30,10 @@ import sweforce.gui.ap.place.token.Prefix;
 @Prefix("logout")
 public class LogoutPlace extends Place {
 
+    private static LogoutPlace INSTANCE = new LogoutPlace();
+
+    public static LogoutPlace get() { return INSTANCE;}
+
     public static class Tokenizer implements PlaceTokenizer<LogoutPlace> {
         @Override
         public LogoutPlace getPlace(String s) {
@@ -41,4 +45,6 @@ public class LogoutPlace extends Place {
             return "";
         }
     }
+
+
 }

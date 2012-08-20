@@ -49,8 +49,6 @@ public class SecurePlaceController implements PlaceController {
         this.delegate = delegate;
     }
 
-
-
     @Override
     public void goTo(Place wantedPlace) {
         //check if the place is secure
