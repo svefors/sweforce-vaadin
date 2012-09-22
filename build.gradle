@@ -3,7 +3,6 @@ apply plugin: 'sonar'
 //project.name = "sweforce-vaadin"
 
 
-
 sonar {
     server {
         url = "http://buildserver.sweforce.com:9000"
@@ -23,14 +22,14 @@ allprojects {
     apply plugin: 'eclipse'
     sonar {}
     group = "sweforce.vaadin"
-    project.version = "1.1"
+    project.version = "1.2.1"
 }
 
 subprojects {
     apply plugin: 'java'
     dependencies {
         testCompile "junit:junit:4.10"
-        compile (['com.google.inject:guice:3.0', 'org.slf4j:slf4j-api:1.6.6', 'ch.qos.logback:logback-classic:1.0.6'
+        compile(['com.google.inject:guice:3.0', 'org.slf4j:slf4j-api:1.6.6', 'ch.qos.logback:logback-classic:1.0.6'
         ])
 
     }
@@ -50,10 +49,12 @@ project(':activitiesplaces') {
     dependencies {
         compile([
                 'com.google.guava:guava:12.0',
-                'org.vaadin.addon:confirmdialog:2.0.0',
-                'com.vaadin:vaadin:7.0.0.alpha3'//,
-//                'org.reflections:reflections:0.9.8'
+                'com.vaadin:vaadin-server:7.0.0.beta1'//,
+                //                'org.reflections:reflections:0.9.8'
         ])
+        compile('org.vaadin.addon:confirmdialog:2.0.1') {
+            exclude group: 'com.vaadin', module: 'vaadin'
+        }
     }
 
 }

@@ -1,7 +1,8 @@
 package sweforce.gui.ap.vaadin;
 
-import com.vaadin.ui.Root;
-import org.vaadin.dialogs.ConfirmDialog;
+
+import com.vaadin.ui.UI;
+
 import sweforce.gui.ap.place.ConfirmationHandler;
 
 /**
@@ -15,15 +16,16 @@ public class CurrentRootConfirmationHandler implements ConfirmationHandler {
 
     @Override
     public void askForConfirmation(String message, final Listener listener) {
-        ConfirmDialog.show(Root.getCurrent(), message, new ConfirmDialog.Listener() {
-            @Override
-            public void onClose(ConfirmDialog dialog) {
-                if (dialog.isConfirmed()) {
-                    listener.onConfirm();
-                } else {
-                    listener.onCancel();
-                }
-            }
-        });
+        //TODO wait for next version of confirm dialog. OR use your own javascript
+//        ConfirmDialog.show(UI.getCurrent(), message, new ConfirmDialog.Listener() {
+//            @Override
+//            public void onClose(ConfirmDialog dialog) {
+//                if (dialog.isConfirmed()) {
+//                    listener.onConfirm();
+//                } else {
+//                    listener.onCancel();
+//                }
+//            }
+//        });
     }
 }

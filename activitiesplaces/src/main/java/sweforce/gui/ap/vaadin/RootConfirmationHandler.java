@@ -1,6 +1,7 @@
 package sweforce.gui.ap.vaadin;
 
-import com.vaadin.ui.Root;
+
+import com.vaadin.ui.UI;
 import org.vaadin.dialogs.ConfirmDialog;
 import sweforce.gui.ap.place.ConfirmationHandler;
 
@@ -15,24 +16,26 @@ import javax.inject.Inject;
  */
 public class RootConfirmationHandler implements ConfirmationHandler{
 
-    private final Root root;
+    private final UI root;
 
     @Inject
-    public RootConfirmationHandler(Root root) {
+    public RootConfirmationHandler(UI root) {
         this.root = root;
     }
 
     @Override
         public void askForConfirmation(String message, final Listener listener) {
-            ConfirmDialog.show(root, message, new ConfirmDialog.Listener() {
-                @Override
-                public void onClose(ConfirmDialog dialog) {
-                    if (dialog.isConfirmed()) {
-                        listener.onConfirm();
-                    } else {
-                        listener.onCancel();
-                    }
-                }
-            });
+        //TODO figure out which confirmation handler is used.
+
+//            ConfirmDialog.show(root, message, new ConfirmDialog.Listener() {
+//                @Override
+//                public void onClose(ConfirmDialog dialog) {
+//                    if (dialog.isConfirmed()) {
+//                        listener.onConfirm();
+//                    } else {
+//                        listener.onCancel();
+//                    }
+//                }
+//            });
         }
 }

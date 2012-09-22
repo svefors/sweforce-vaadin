@@ -20,8 +20,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Names;
-import com.vaadin.terminal.WrappedRequest;
-import com.vaadin.ui.Root;
+import com.vaadin.server.WrappedRequest;
+import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sweforce.gui.ap.activity.ActivityManager;
@@ -59,7 +59,7 @@ import java.util.List;
  * Time: 9:54 PM
  * To change this template use File | Settings | File Templates.
  */
-public class SecureApplication extends Root implements UserLoginSuccessEvent.Handler {
+public class SecureApplication extends UI implements UserLoginSuccessEvent.Handler {
 
     private static Logger logger = LoggerFactory.getLogger(SecureApplication.class);
 

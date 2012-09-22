@@ -1,6 +1,6 @@
 package sweforce.vaadin.layout.display;
 
-import com.vaadin.terminal.Sizeable;
+import com.vaadin.server.Sizeable;
 
 /**
 * Created by IntelliJ IDEA.

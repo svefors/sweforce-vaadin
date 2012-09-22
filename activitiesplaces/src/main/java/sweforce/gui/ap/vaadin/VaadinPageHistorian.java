@@ -1,6 +1,7 @@
 package sweforce.gui.ap.vaadin;
 
-import com.vaadin.terminal.Page;
+
+import com.vaadin.server.Page;
 import sweforce.gui.ap.history.Historian;
 import sweforce.gui.ap.history.HistoryChangedEvent;
 import sweforce.gui.event.HandlerRegistration;
