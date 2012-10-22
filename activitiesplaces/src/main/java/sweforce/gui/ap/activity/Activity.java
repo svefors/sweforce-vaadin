@@ -17,7 +17,7 @@ package sweforce.gui.ap.activity;
 
 
 import sweforce.gui.display.Display;
-import sweforce.gui.event.EventBus;
+import sweforce.event.EventBus;
 
 /**
  * Implemented by objects that control a piece of user interface, with a life
@@ -54,7 +54,7 @@ public interface Activity {
    * <p>
    * Any handlers attached to the provided event bus will be de-registered when
    * the activity is stopped, so activities will rarely need to hold on to the
-   * {@link sweforce.gui.event.HandlerRegistration HandlerRegistration}
+   * {@link sweforce.event.HandlerRegistration HandlerRegistration}
    * instances returned by {@link EventBus#addHandler}.
    *
    * @param panel the panel to display this activity's widget when it is ready

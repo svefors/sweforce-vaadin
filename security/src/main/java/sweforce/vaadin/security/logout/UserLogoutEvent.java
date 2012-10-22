@@ -15,8 +15,8 @@
  */
 package sweforce.vaadin.security.logout;
 
-import sweforce.gui.event.Event;
-import sweforce.gui.event.EventHandler;
+import sweforce.event.Event;
+import sweforce.event.EventHandler;
 
 /**
  * Created by IntelliJ IDEA.

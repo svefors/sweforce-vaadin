@@ -1,10 +1,10 @@
 package sweforce.gui.ap.place;
 
 import org.junit.Test;
+import sweforce.event.EventBus;
 import sweforce.gui.ap.place.controller.DefaultPlaceController;
 import sweforce.gui.ap.place.controller.PlaceController;
-import sweforce.gui.event.EventBus;
-import sweforce.gui.event.SimpleEventBus;
+import sweforce.event.SimpleEventBus;
 
 import static org.junit.Assert.*;
 

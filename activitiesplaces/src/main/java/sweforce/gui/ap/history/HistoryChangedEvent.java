@@ -1,7 +1,7 @@
 package sweforce.gui.ap.history;
 
-import sweforce.gui.event.Event;
-import sweforce.gui.event.EventHandler;
+import sweforce.event.EventHandler;
+import sweforce.event.Event;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,7 +27,7 @@ public class HistoryChangedEvent implements Event<HistoryChangedEvent.Handler> {
         handler.onHistoryChange(this);
     }
 
-    public static interface Handler extends EventHandler{
+    public static interface Handler extends EventHandler {
 
         public void onHistoryChange(HistoryChangedEvent event);
 

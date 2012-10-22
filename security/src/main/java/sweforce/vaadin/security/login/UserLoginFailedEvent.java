@@ -15,8 +15,8 @@
  */
 package sweforce.vaadin.security.login;
 
-import sweforce.gui.event.Event;
-import sweforce.gui.event.EventHandler;
+import sweforce.event.Event;
+import sweforce.event.EventHandler;
 
 /**
  * Created by IntelliJ IDEA.
@@ -25,14 +25,14 @@ import sweforce.gui.event.EventHandler;
  * Time: 11:54 AM
  * To change this template use File | Settings | File Templates.
  */
-public class UserLoginFailedEvent implements Event<UserLoginFailedEvent.Handler>{
+public class UserLoginFailedEvent implements Event<UserLoginFailedEvent.Handler> {
 
     @Override
     public void dispatch(Handler handler) {
         handler.onFailedLogin();
     }
 
-    public static interface Handler extends EventHandler{
+    public static interface Handler extends EventHandler {
         public void onFailedLogin();
     }
 }

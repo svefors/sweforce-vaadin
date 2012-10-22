@@ -1,9 +1,9 @@
 package sweforce.gui.ap.place;
 
+import sweforce.event.EventBus;
+import sweforce.event.HandlerRegistration;
 import sweforce.gui.ap.place.controller.PlaceController;
 import sweforce.gui.ap.place.history.PlaceHistoryHandler;
-import sweforce.gui.event.EventBus;
-import sweforce.gui.event.HandlerRegistration;
 
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -2,6 +2,8 @@ package sweforce.gui.ap.place;
 
 import org.junit.Before;
 import org.junit.Test;
+import sweforce.event.EventBus;
+import sweforce.event.HandlerRegistration;
 import sweforce.gui.ap.history.Historian;
 import sweforce.gui.ap.history.HistoryChangedEvent;
 import sweforce.gui.ap.place.controller.DefaultPlaceController;
@@ -10,9 +12,7 @@ import sweforce.gui.ap.place.history.PlaceHistoryHandler;
 import sweforce.gui.ap.place.history.PlaceHistoryMapper;
 import sweforce.gui.ap.place.testplaces.Place1;
 import sweforce.gui.ap.place.testplaces.Place2;
-import sweforce.gui.event.EventBus;
-import sweforce.gui.event.HandlerRegistration;
-import sweforce.gui.event.SimpleEventBus;
+import sweforce.event.SimpleEventBus;
 
 import static org.junit.Assert.*;
 

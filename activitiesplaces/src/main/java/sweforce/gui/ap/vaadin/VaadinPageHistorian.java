@@ -2,9 +2,9 @@ package sweforce.gui.ap.vaadin;
 
 
 import com.vaadin.server.Page;
+import sweforce.event.HandlerRegistration;
 import sweforce.gui.ap.history.Historian;
 import sweforce.gui.ap.history.HistoryChangedEvent;
-import sweforce.gui.event.HandlerRegistration;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class VaadinPageHistorian implements Historian, Page.FragmentChangedListe
     @Inject
     public VaadinPageHistorian(Page page) {
         this.page = page;
-        page.addListener(this);
+        page.addFragmentChangedListener(this);
     }
 
     @Override

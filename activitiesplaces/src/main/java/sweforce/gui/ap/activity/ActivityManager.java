@@ -18,15 +18,15 @@ package sweforce.gui.ap.activity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sweforce.gui.event.UmbrellaException;
+import sweforce.event.*;
 import sweforce.gui.ap.place.PlaceChangeEvent;
 import sweforce.gui.ap.place.PlaceChangeRequestEvent;
 import sweforce.gui.display.Display;
 import sweforce.gui.display.NullView;
 import sweforce.gui.display.View;
-import sweforce.gui.event.EventBus;
-import sweforce.gui.event.HandlerRegistration;
-import sweforce.gui.event.ResettableEventBus;
+import sweforce.event.EventBus;
+import sweforce.event.HandlerRegistration;
+import sweforce.event.ResettableEventBus;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

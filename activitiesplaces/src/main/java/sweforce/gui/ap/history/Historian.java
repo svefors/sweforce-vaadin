@@ -1,6 +1,6 @@
 package sweforce.gui.ap.history;
 
-import sweforce.gui.event.HandlerRegistration;
+import sweforce.event.HandlerRegistration;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,8 +1,9 @@
 package sweforce.gui.ap.activity;
 
 import org.junit.Test;
+import sweforce.event.EventBus;
 import sweforce.gui.display.Display;
-import sweforce.gui.event.EventBus;
+
 import static org.junit.Assert.*;
 /**
  * Created by IntelliJ IDEA.

@@ -1,1 +1,1 @@
-include 'activitiesplaces', 'security', 'security-shiro', 'layout', 'sample'
+include 'events', 'command', 'activitiesplaces', 'components', 'security', 'security-shiro', 'layout', 'sample'

@@ -15,13 +15,13 @@
  */
 package sweforce.gui.ap.place.history;
 
+import sweforce.event.HandlerRegistration;
 import sweforce.gui.ap.history.Historian;
 import sweforce.gui.ap.history.HistoryChangedEvent;
 import sweforce.gui.ap.place.Place;
 import sweforce.gui.ap.place.PlaceChangeEvent;
 import sweforce.gui.ap.place.controller.PlaceController;
-import sweforce.gui.event.EventBus;
-import sweforce.gui.event.HandlerRegistration;
+import sweforce.event.EventBus;
 
 import javax.inject.Inject;
 

@@ -21,7 +21,7 @@ import sweforce.gui.ap.place.Place;
 import sweforce.gui.ap.place.controller.PlaceController;
 import sweforce.gui.display.Display;
 import sweforce.gui.display.VaadinView;
-import sweforce.gui.event.EventBus;
+import sweforce.event.EventBus;
 import sweforce.vaadin.sample.secure.norole.NorolePlace;
 import sweforce.vaadin.sample.secure.role1.Role1Place;
 import sweforce.vaadin.sample.secure.role2.Role2Place;
@@ -50,9 +50,9 @@ public class MenuActivity extends AbstractActivity {
     public void start(Display panel, EventBus eventBus) {
         panel.setView(menuView);
 
-        menuView.getNoroleBtn().addListener(new GotoPlaceClickListener(new NorolePlace()));
-        menuView.getRole1Btn().addListener(new GotoPlaceClickListener(new Role1Place()));
-        menuView.getRole2Btn().addListener(new GotoPlaceClickListener(new Role2Place("asdf asdf")));
+        menuView.getNoroleBtn().addClickListener(new GotoPlaceClickListener(new NorolePlace()));
+        menuView.getRole1Btn().addClickListener(new GotoPlaceClickListener(new Role1Place()));
+        menuView.getRole2Btn().addClickListener(new GotoPlaceClickListener(new Role2Place("asdf asdf")));
     }
 
     public static interface MenuView extends VaadinView {

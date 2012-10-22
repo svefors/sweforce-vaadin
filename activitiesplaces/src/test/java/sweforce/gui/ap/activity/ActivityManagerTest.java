@@ -19,8 +19,9 @@ package sweforce.gui.ap.activity;
 import com.vaadin.ui.Component;
 import junit.framework.TestCase;
 import org.junit.Test;
-import sweforce.gui.event.UmbrellaException;
-import sweforce.gui.event.CountingEventBus;
+import sweforce.event.EventBus;
+import sweforce.event.UmbrellaException;
+import sweforce.event.CountingEventBus;
 import sweforce.gui.ap.place.Place;
 import sweforce.gui.ap.place.PlaceChangeEvent;
 import sweforce.gui.ap.place.PlaceChangeRequestEvent;
@@ -28,8 +29,7 @@ import sweforce.gui.display.Display;
 import sweforce.gui.display.NullView;
 import sweforce.gui.display.VaadinView;
 import sweforce.gui.display.View;
-import sweforce.gui.event.EventBus;
-import sweforce.gui.event.EventHandler;
+import sweforce.event.EventHandler;
 
 /**
  * Eponymous unit test.
@@ -51,11 +51,11 @@ public class ActivityManagerTest extends TestCase {
         }
     }
 
-    private static class Event implements sweforce.gui.event.Event<Handler> {
-//    private static sweforce.gui.event.Event.Type<EventHandler> TYPE = new sweforce.gui.event.Event.Type<EventHandler>();
+    private static class Event implements sweforce.event.Event<Handler> {
+//    private static sweforce.event.Event.Type<EventHandler> TYPE = new sweforce.event.Event.Type<EventHandler>();
 //
 //    @Override
-//    public sweforce.gui.event.Event.Type<Handler> getAssociatedType() {
+//    public sweforce.event.Event.Type<Handler> getAssociatedType() {
 //      throw new UnsupportedOperationException("Auto-generated method stub");
 //    }
 

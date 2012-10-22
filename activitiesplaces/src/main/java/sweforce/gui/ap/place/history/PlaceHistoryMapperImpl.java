@@ -68,6 +68,8 @@ class PlaceHistoryMapperImpl implements PlaceHistoryMapper {
 //    protected F factory;
 
     public Place getPlace(String token) {
+        if(token == null)
+            return null;
         int colonAt = token.indexOf(':');
         String initial;
         String rest;

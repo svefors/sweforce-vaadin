@@ -15,9 +15,9 @@
  */
 package sweforce.vaadin.sample.secure.role2;
 
+import sweforce.event.EventBus;
 import sweforce.gui.ap.activity.AbstractActivity;
 import sweforce.gui.display.Display;
-import sweforce.gui.event.EventBus;
 
 /**
  * Created by IntelliJ IDEA.

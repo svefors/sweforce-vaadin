@@ -20,17 +20,17 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Names;
-import com.vaadin.server.WrappedRequest;
+import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sweforce.event.EventBus;
 import sweforce.gui.ap.activity.ActivityManager;
 import sweforce.gui.ap.place.Place;
 import sweforce.gui.ap.place.PlacesRunner;
 import sweforce.gui.ap.place.controller.PlaceController;
 import sweforce.gui.ap.place.history.PlaceHistoryModule;
 import sweforce.gui.ap.vaadin.VaadinModule;
-import sweforce.gui.event.EventBus;
 import sweforce.vaadin.layout.style2.Style2Layout;
 import sweforce.vaadin.sample.secure.activitymapper.CenterActivityMapper;
 import sweforce.vaadin.sample.secure.activitymapper.NorthActivityMapper;
@@ -94,7 +94,7 @@ public class SecureApplication extends UI implements UserLoginSuccessEvent.Handl
     }
 
     @Override
-    protected void init(WrappedRequest request) {
+    protected void init(VaadinRequest request) {
 //        this.getApplication().setRootPreserved(true);
         injector = Guice.createInjector(new VaadinModule(this),
                 new ShiroSecurityModule(),

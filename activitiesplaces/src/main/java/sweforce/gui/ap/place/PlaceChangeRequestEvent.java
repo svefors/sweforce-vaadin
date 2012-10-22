@@ -16,8 +16,8 @@
 package sweforce.gui.ap.place;
 
 
-import sweforce.gui.event.Event;
-import sweforce.gui.event.EventHandler;
+import sweforce.event.Event;
+import sweforce.event.EventHandler;
 
 /**
  * Event thrown when the user may go to a new place in the app, or tries to
