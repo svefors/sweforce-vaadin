@@ -1,6 +1,6 @@
 package sweforce.command;
 
-import sweforce.event.AbstractEventNotifier;
+import sweforce.event.SimpleEventNotifier;
 import sweforce.event.EventNotifier;
 
 /**
@@ -35,7 +35,7 @@ public abstract class AbstractCommand implements Command {
     }
 
     private final class IsExecutableChangeEventNotifier extends
-            AbstractEventNotifier<IsExecutableChangeEvent.Handler, IsExecutableChangeEvent> {
+            SimpleEventNotifier<IsExecutableChangeEvent.Handler, IsExecutableChangeEvent> {
 
         protected void fireEvent() {
             fireEvent(new IsExecutableChangeEvent(AbstractCommand.this));

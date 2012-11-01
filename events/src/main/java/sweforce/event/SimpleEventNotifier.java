@@ -10,7 +10,7 @@ import java.util.Set;
  * Time: 6:11 PM
  * To change this template use File | Settings | File Templates.
  */
-public class AbstractEventNotifier<H extends EventHandler, E extends Event<H>>
+public class SimpleEventNotifier<H extends EventHandler, E extends Event<H>>
         implements EventNotifier<H> {
 
     private Set<H> handlers = new HashSet<H>();

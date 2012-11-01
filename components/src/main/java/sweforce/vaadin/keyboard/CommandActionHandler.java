@@ -14,11 +14,11 @@ import java.util.Map;
  * Time: 11:21 AM
  * To change this template use File | Settings | File Templates.
  */
-public class CommandActionHandler implements Action.Handler{
+public class CommandActionHandler implements Action.Handler {
 
 //    private final Iterable<KeyBinding> keyBindings;
 
-    private final Map<Action,Command> actionCommandMap;// = new HashMap<Action, Command>();
+    private final Map<Action, Command> actionCommandMap;// = new HashMap<Action, Command>();
 
     public CommandActionHandler(Map<Action, Command> actionCommandMap) {
         this.actionCommandMap = actionCommandMap;
@@ -36,9 +36,9 @@ public class CommandActionHandler implements Action.Handler{
             command.execute();
     }
 
-    public static CommandActionHandler create (Iterable<KeyBinding> keyBindings) {
-        Map<Action,Command> actionCommandMap = new HashMap<Action, Command>();
-        for(KeyBinding binding : keyBindings){
+    public static CommandActionHandler create(Iterable<KeyBinding> keyBindings) {
+        Map<Action, Command> actionCommandMap = new HashMap<Action, Command>();
+        for (KeyBinding binding : keyBindings) {
             ShortcutAction shortcutAction = new ShortcutAction(
                     binding.getKeyGesture().getCaption(),
                     binding.getKeyGesture().getShortcutKey(),
@@ -48,5 +48,20 @@ public class CommandActionHandler implements Action.Handler{
         }
         return new CommandActionHandler(actionCommandMap);
     }
+
+    public static CommandActionHandler create(KeyBinding... keyBindings) {
+        Map<Action, Command> actionCommandMap = new HashMap<Action, Command>();
+        for (KeyBinding binding : keyBindings) {
+            ShortcutAction shortcutAction = new ShortcutAction(
+                    binding.getKeyGesture().getCaption(),
+                    binding.getKeyGesture().getShortcutKey(),
+                    binding.getKeyGesture().getModifierKeys()
+            );
+            actionCommandMap.put(shortcutAction, binding.getCommand());
+        }
+        return new CommandActionHandler(actionCommandMap);
+    }
+
+
 
 }

@@ -51,6 +51,15 @@ project(':command') {
     }
 }
 
+project(':mvvm') {
+    dependencies {
+        compile([
+                project(':events'),
+                project(':command')
+        ])
+    }
+}
+
 project(':components') {
     dependencies {
         compile([
