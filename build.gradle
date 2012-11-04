@@ -66,6 +66,7 @@ project(':components') {
                 'com.vaadin:vaadin-server:7.0.0.beta4',
                 'org.apache.wicket:wicket-util:6.1.0',
                 project(':command'),
+                project(':mvvm'),
                 project(':events')
         ])
     }
