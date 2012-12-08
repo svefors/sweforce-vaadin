@@ -4,7 +4,9 @@ import com.vaadin.event.Action;
 import com.vaadin.event.ShortcutAction;
 import sweforce.command.Command;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,7 +38,7 @@ public class CommandActionHandler implements Action.Handler {
             command.execute();
     }
 
-    public static CommandActionHandler create(Iterable<KeyBinding> keyBindings) {
+    public static Map<Action, Command> actionCommandMap(Iterable<KeyBinding> keyBindings) {
         Map<Action, Command> actionCommandMap = new HashMap<Action, Command>();
         for (KeyBinding binding : keyBindings) {
             ShortcutAction shortcutAction = new ShortcutAction(
@@ -46,22 +48,24 @@ public class CommandActionHandler implements Action.Handler {
             );
             actionCommandMap.put(shortcutAction, binding.getCommand());
         }
-        return new CommandActionHandler(actionCommandMap);
+        return actionCommandMap;
+    }
+
+    public static Map<Action, Command> actionCommandMap(KeyBinding... keyBindings) {
+        List<KeyBinding> bindings = new ArrayList<KeyBinding>();
+        for (KeyBinding binding : keyBindings) {
+            bindings.add(binding);
+        }
+        return actionCommandMap(bindings);
+    }
+
+    public static CommandActionHandler create(Iterable<KeyBinding> keyBindings) {
+        return new CommandActionHandler(actionCommandMap(keyBindings));
     }
 
     public static CommandActionHandler create(KeyBinding... keyBindings) {
-        Map<Action, Command> actionCommandMap = new HashMap<Action, Command>();
-        for (KeyBinding binding : keyBindings) {
-            ShortcutAction shortcutAction = new ShortcutAction(
-                    binding.getKeyGesture().getCaption(),
-                    binding.getKeyGesture().getShortcutKey(),
-                    binding.getKeyGesture().getModifierKeys()
-            );
-            actionCommandMap.put(shortcutAction, binding.getCommand());
-        }
-        return new CommandActionHandler(actionCommandMap);
+        return new CommandActionHandler(actionCommandMap(keyBindings));
     }
-
 
 
 }

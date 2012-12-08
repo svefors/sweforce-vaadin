@@ -17,11 +17,6 @@ public class EditedCellsProperty extends SetProperty<CellGridId> {
         this.addValueChangeListener(new TableRefreshListener(table));
     }
 
-
-
-
-
-
     public static class TableRefreshListener implements ValueChangeListener {
 
         private final Table table;
@@ -35,4 +30,6 @@ public class EditedCellsProperty extends SetProperty<CellGridId> {
             table.markAsDirty();
         }
     }
+
+
 }

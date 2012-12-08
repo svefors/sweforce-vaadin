@@ -1,10 +1,9 @@
-package sweforce.vaadin.table.editor;
+package sweforce.vaadin.table.editor.fieldfactory;
 
 import com.vaadin.data.Container;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TableFieldFactory;
-import sweforce.vaadin.data.SetProperty;
 
 /**
  *
@@ -27,10 +26,5 @@ public class DiscriminateTableFieldFactoryWrapper implements TableFieldFactory {
         return null;
     }
 
-    public static interface FieldCreationDiscriminator {
-        public boolean passesDiscrimination(Container container, Object itemId, Object propertyId, Component uiContext);
-    }
-    /*
 
-     */
 }

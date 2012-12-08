@@ -1,5 +1,7 @@
 package sweforce.command;
 
+import com.vaadin.data.Property;
+import com.vaadin.data.util.ObjectProperty;
 import sweforce.event.SimpleEventNotifier;
 import sweforce.event.EventNotifier;
 
@@ -11,42 +13,73 @@ import sweforce.event.EventNotifier;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class AbstractCommand implements Command {
+//    private boolean executable = true;
+//
+//    protected void setExecutable(boolean executable) {
+//        if (this.isExecutable() != executable) {
+//            this.executable = executable;
+//            isExecutableChangeNotifier.fireEvent();
+//        }
+//    }
 
-    private boolean executable = true;
+    private Property.ValueChangeNotifier executableNotifier;
 
-    protected void setExecutable(boolean executable) {
-        if (this.isExecutable() != executable) {
-            this.executable = executable;
-            isExecutableChangeNotifier.fireEvent();
-        }
+    private Property<Boolean> executable;
+
+    protected AbstractCommand() {
+        this(new ObjectProperty<Boolean>(Boolean.TRUE));
+    }
+
+    protected AbstractCommand(Property<Boolean> executable) {
+        if (executable instanceof Property.ValueChangeNotifier)
+            this.executableNotifier = (Property.ValueChangeNotifier) executable;
     }
 
     @Override
     public void execute() {
-        if (isExecutable())
+        if (executable.getValue())
             internalExecute();
+    }
+
+    @Override
+    public Property.ValueChangeNotifier isExecutableNotifier() {
+        return executableNotifier;
+    }
+
+    protected void setExecutable(boolean executable){
+        this.executable.setValue(executable);
     }
 
     protected abstract void internalExecute();
 
-    @Override
-    public boolean isExecutable() {
-        return executable;
-    }
+//    @Override
+//    public Property.ValueChangeNotifier isExecutableNotifier() {
+//        return null;  //To change body of implemented methods use File | Settings | File Templates.
+//    }
+//
+//    @Override
+//    public void valueChange(Property.ValueChangeEvent event) {
+//        //To change body of implemented methods use File | Settings | File Templates.
+//    }
 
-    private final class IsExecutableChangeEventNotifier extends
-            SimpleEventNotifier<IsExecutableChangeEvent.Handler, IsExecutableChangeEvent> {
-
-        protected void fireEvent() {
-            fireEvent(new IsExecutableChangeEvent(AbstractCommand.this));
-        }
-
-    }
-
-    protected final IsExecutableChangeEventNotifier isExecutableChangeNotifier = new IsExecutableChangeEventNotifier();
-
-    @Override
-    public EventNotifier<IsExecutableChangeEvent.Handler> getEventNotifier() {
-        return isExecutableChangeNotifier;
-    }
+    //    @Override
+//    public boolean isExecutable() {
+//        return executable;
+//    }
+//
+//    private final class IsExecutableChangeEventNotifier extends
+//            SimpleEventNotifier<IsExecutableChangeEvent.Handler, IsExecutableChangeEvent> {
+//
+//        protected void fireEvent() {
+//            fireEvent(new IsExecutableChangeEvent(AbstractCommand.this));
+//        }
+//
+//    }
+//
+//    protected final IsExecutableChangeEventNotifier isExecutableChangeNotifier = new IsExecutableChangeEventNotifier();
+//
+//    @Override
+//    public EventNotifier<IsExecutableChangeEvent.Handler> getEventNotifier() {
+//        return isExecutableChangeNotifier;
+//    }
 }

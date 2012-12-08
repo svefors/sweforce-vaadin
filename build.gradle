@@ -16,6 +16,50 @@ sonar {
 
 }
 
+def prevaylerVersion = "2.5"
+def axonVersion = "2.0-m2"
+def scalaVersion = "2.9.2"
+def sweforceVaadinVersion = "1.2.3"
+def vaadinVersion = "7.0.0.beta4"
+
+ext.libs = [
+        junit: "junit:junit:4.10",
+        prevayler: [
+                "org.prevayler:prevayler-core:${prevaylerVersion}",
+                "org.prevayler:prevayler-factory:${prevaylerVersion}",
+                "org.prevayler.extras:prevayler-xstream:${prevaylerVersion}",
+        ],
+        scala: dependencies.create("org.scala-lang:scala-library:${scalaVersion}") {
+
+        },
+        axon: [
+                "org.axonframework:axon-core:${axonVersion}"
+        ],
+        slf4j: [
+                "org.clapper:grizzled-slf4j_${scalaVersion}:0.6.10",
+                'org.slf4j:slf4j-api:1.6.6',
+                'ch.qos.logback:logback-classic:1.0.6'
+        ],
+        sweforce_vaadin: [
+                "sweforce.vaadin:activitiesplaces:${sweforceVaadinVersion}",
+                "sweforce.vaadin:security-shiro:${sweforceVaadinVersion}",
+                "sweforce.vaadin:layout:${sweforceVaadinVersion}",
+                "sweforce.vaadin:events:${sweforceVaadinVersion}",
+                "sweforce.vaadin:command:${sweforceVaadinVersion}",
+                "sweforce.vaadin:components:${sweforceVaadinVersion}"
+        ],
+        vaadin: [
+                "com.vaadin:vaadin-server:${vaadinVersion}",
+                "com.vaadin:vaadin-client-compiled:${vaadinVersion}",
+                "com.vaadin:vaadin-themes:${vaadinVersion}"
+        ],
+        jsr303: [
+                "javax.validation:validation-api:1.0.0.GA",
+                "org.apache.bval:bval-jsr303:0.4"
+        ],
+        servlet_api: "javax.servlet:servlet-api:2.5"
+]
+
 allprojects {
     apply plugin: 'maven'
     apply plugin: 'idea'
@@ -46,6 +90,7 @@ subprojects {
 project(':command') {
     dependencies {
         compile([
+                libs.vaadin,
                 project(':events')
         ])
     }
@@ -63,7 +108,7 @@ project(':mvvm') {
 project(':components') {
     dependencies {
         compile([
-                'com.vaadin:vaadin-server:7.0.0.beta4',
+                libs.vaadin,
                 'org.apache.wicket:wicket-util:6.1.0',
                 project(':command'),
                 project(':mvvm'),
@@ -76,7 +121,7 @@ project(':events') {
     dependencies {
         compile([
                 'com.google.guava:guava:12.0'
-                ])
+        ])
     }
 }
 
@@ -84,7 +129,7 @@ project(':activitiesplaces') {
     dependencies {
         compile([
                 project(':events'),
-                'com.vaadin:vaadin-server:7.0.0.beta4'//,
+                libs.vaadin//,
                 //                'org.reflections:reflections:0.9.8'
         ])
         compile('org.vaadin.addon:confirmdialog:2.0.1') {
