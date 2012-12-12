@@ -1,6 +1,12 @@
 package sweforce.vaadin.table.editor;
 
+import com.vaadin.data.Property;
 import com.vaadin.data.util.ObjectProperty;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -67,7 +73,7 @@ public class CellGridId {
             return this;
         }
 
-        public void setCell(CellGridId cellGridId){
+        public void setCell(CellGridId cellGridId) {
             this.setValue(cellGridId);
         }
 
@@ -78,6 +84,52 @@ public class CellGridId {
 
         public Property setPropertyId(Object propertyId) {
             this.setValue(new CellGridId(this.getValue() != null ? this.getValue().itemId : null, propertyId));
+            return this;
+        }
+    }
+
+
+    public static class SetProperty extends ObjectProperty<Set<CellGridId>> {
+
+        public SetProperty() {
+            super(Collections.newSetFromMap(new ConcurrentHashMap()));
+        }
+
+        @Override
+        public void setValue(Object newValue) throws ReadOnlyException {
+            Set<CellGridId> incoming = (Set<CellGridId>) newValue;
+            HashSet<CellGridId> copy = new HashSet<CellGridId>();
+            copy.addAll(incoming);
+            internalSet(copy);
+        }
+
+        private final void internalSet(Set<CellGridId> value) {
+            super.setValue(value);
+        }
+
+        /**
+         *
+         *
+         * @return
+         */
+        @Override
+        public Set<CellGridId> getValue() {
+            return Collections.unmodifiableSet(super.getValue());
+        }
+
+        public SetProperty addCell(CellGridId cellGridId) {
+            if (!this.getValue().contains(cellGridId)) {
+                super.getValue().add(cellGridId);
+                fireValueChange();
+            }
+            return this;
+        }
+
+        public SetProperty removeCell(CellGridId cellGridId) {
+            if (!this.getValue().contains(cellGridId)) {
+                super.getValue().add(cellGridId);
+                fireValueChange();
+            }
             return this;
         }
     }

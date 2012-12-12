@@ -1,6 +1,6 @@
-package sweforce.vaadin.table.editor.navigator;
+package sweforce.vaadin.table.editor.traversal;
 
-import com.vaadin.data.Container;
+import com.vaadin.ui.Table;
 import sweforce.vaadin.table.editor.CellGridId;
 
 /**
@@ -12,11 +12,10 @@ import sweforce.vaadin.table.editor.CellGridId;
  */
 public interface GridTraversalOrder {
 
-    public boolean hasNext(Container.Ordered orderedContainer, CellGridId cellGridId);
+    public boolean hasNext(Table table, CellGridId cellGridId);
 
-    public CellGridId next(Container.Ordered orderedContainer, CellGridId cellGridId);
+    public CellGridId next(Table table, CellGridId cellGridId);
 
     public GridTraversalOrder reverse();
-
 
 }
