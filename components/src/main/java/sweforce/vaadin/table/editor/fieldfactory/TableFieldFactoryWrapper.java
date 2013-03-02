@@ -7,23 +7,16 @@ import com.vaadin.ui.TableFieldFactory;
 import sweforce.vaadin.table.editor.CellGridId;
 
 /**
- * Created with IntelliJ IDEA.
- * User: SERVICE-NOW\mats.svefors
- * Date: 09/12/2012
- * Time: 17:32
- * To change this template use File | Settings | File Templates.
+ *
  */
 public class TableFieldFactoryWrapper implements TableFieldFactory {
 
     private final TableFieldFactory inner;
 
-    private CellGridId.SetProperty cellsInEditMode;
+    public final CellGridId.SetProperty cellsInEditMode;
 
-    public TableFieldFactoryWrapper(TableFieldFactory inner) {
+    public TableFieldFactoryWrapper(CellGridId.SetProperty cellsInEditMode, TableFieldFactory inner) {
         this.inner = inner;
-    }
-
-    public void bind(CellGridId.SetProperty cellsInEditMode){
         this.cellsInEditMode = cellsInEditMode;
     }
 

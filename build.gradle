@@ -20,7 +20,8 @@ def prevaylerVersion = "2.5"
 def axonVersion = "2.0-m2"
 def scalaVersion = "2.9.2"
 def sweforceVaadinVersion = "1.2.3"
-def vaadinVersion = "7.0.0.beta4"
+def vaadinVersion = "7.0.0"
+
 
 ext.libs = [
         junit: "junit:junit:4.10",
@@ -73,7 +74,12 @@ subprojects {
     apply plugin: 'java'
     dependencies {
         testCompile "junit:junit:4.10"
-        compile(['com.google.inject:guice:3.0', 'org.slf4j:slf4j-api:1.6.6', 'ch.qos.logback:logback-classic:1.0.6'
+        compile(['com.google.inject:guice:3.0',
+                'org.slf4j:slf4j-api:1.6.6',
+                'ch.qos.logback:logback-classic:1.0.6',
+                'com.google.inject.extensions:guice-assistedinject:3.0',
+                'com.google.inject.extensions:guice-multibindings:3.0'
+
         ])
 
     }
@@ -141,8 +147,10 @@ project(':activitiesplaces') {
 
 project(':security') {
     dependencies {
-        compile project(':activitiesplaces')
-
+        compile([
+                project(':activitiesplaces'),
+                project(':components')
+        ])
     }
 }
 
@@ -151,8 +159,8 @@ project(':security-shiro') {
         compile([
                 project(':security'),
                 project(':activitiesplaces'),
-                'org.apache.shiro:shiro-core:1.2.0',
-                'org.apache.shiro:shiro-web:1.2.0',
+                'org.apache.shiro:shiro-core:1.2.1',
+                'org.apache.shiro:shiro-web:1.2.1',
         ])
     }
 }
@@ -172,6 +180,7 @@ project(':sample') {
                 project(':security-shiro'),
                 project(':activitiesplaces'),
                 project(':layout'),
+                project(':components')
         ])
         testCompile(
                 'org.mortbay.jetty:jetty:6.1.26',

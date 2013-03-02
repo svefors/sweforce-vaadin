@@ -15,25 +15,16 @@
  */
 package sweforce.vaadin.sample.secure;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Provides;
+import com.google.inject.Module;
 import com.google.inject.name.Names;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.UI;
+import com.vaadin.ui.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sweforce.event.EventBus;
-import sweforce.gui.ap.activity.ActivityManager;
-import sweforce.gui.ap.place.Place;
-import sweforce.gui.ap.place.PlacesRunner;
-import sweforce.gui.ap.place.controller.PlaceController;
+import sweforce.gui.GuicedUI;
 import sweforce.gui.ap.place.history.PlaceHistoryModule;
 import sweforce.gui.ap.vaadin.VaadinModule;
-import sweforce.vaadin.layout.style2.Style2Layout;
-import sweforce.vaadin.sample.secure.activitymapper.CenterActivityMapper;
-import sweforce.vaadin.sample.secure.activitymapper.NorthActivityMapper;
+import sweforce.vaadin.layout.display.RegionPlacesModule;
+import sweforce.vaadin.layout.style1.Style1Layout;
 import sweforce.vaadin.sample.secure.menu.MenuActivity;
 import sweforce.vaadin.sample.secure.norole.NoroleActivity;
 import sweforce.vaadin.sample.secure.norole.NorolePlace;
@@ -42,119 +33,159 @@ import sweforce.vaadin.sample.secure.role1.Role1Place;
 import sweforce.vaadin.sample.secure.role2.Role2Activity;
 import sweforce.vaadin.sample.secure.role2.Role2Place;
 import sweforce.vaadin.security.SecureMvpModule;
+import sweforce.vaadin.security.login.LoginActivity;
 import sweforce.vaadin.security.login.LoginPlace;
-import sweforce.vaadin.security.login.UserLoginSuccessEvent;
 import sweforce.vaadin.security.logout.LogoutPlace;
 import sweforce.vaadin.security.shiro.ShiroSecurityModule;
 
-import javax.inject.Named;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 /**
- * Created by IntelliJ IDEA.
- * User: sveffa
- * Date: 4/1/12
- * Time: 9:54 PM
- * To change this template use File | Settings | File Templates.
+ * Sample Application
  */
-public class SecureApplication extends UI implements UserLoginSuccessEvent.Handler {
+public class SecureApplication extends GuicedUI {
 
     private static Logger logger = LoggerFactory.getLogger(SecureApplication.class);
 
-
-    private Injector injector;
-
-    private class MyModule extends AbstractModule {
-        @Override
-        protected void configure() {
-            //@Named("Default Place")
-            bind(Place.class).annotatedWith(Names.named("Default Place")).toInstance(new NorolePlace());
-            bind(NoroleActivity.class);
-            bind(Role1Activity.class);
-            bind(Role2Activity.class);
-            bind(MenuActivity.class);
-        }
-
-        @Provides
-        @Named(PlaceHistoryModule.NAMED_PLACE_CLASSES)
-        Collection<Class<? extends Place>> providePlaceClasses() {
-            //TODO write a classpath scanning mechanism
-            List<Class<? extends Place>> places = new ArrayList<Class<? extends Place>>();
-            places.add(LoginPlace.class);
-            places.add(LogoutPlace.class);
-            places.add(Role1Place.class);
-            places.add(NorolePlace.class);
-            places.add(Role2Place.class);
-            return places;
-        }
-
-
-    }
-
     @Override
-    protected void init(VaadinRequest request) {
-//        this.getApplication().setRootPreserved(true);
-        injector = Guice.createInjector(new VaadinModule(this),
+    public Module[] getModules() {
+        return new Module[]{
+        new VaadinModule(this),
                 new ShiroSecurityModule(),
                 new SecureMvpModule(),
                 new PlaceHistoryModule(),
-                new MyModule());
-
-//        VaadinBrowserWindow vaadinBrowserWindow = injector.getInstance(VaadinBrowserWindow.class);
-
-//        this.addWindow(vaadinBrowserWindow);
-
-//        final PlaceHistoryMapper placeHistoryMapper = new PlaceHistoryMapperImpl(
-//                LoginPlace.class, LogoutPlace.class, Role1Place.class, NorolePlace.class, Role2Place.class);
-//        VaadinPageHistorian vaadinPageHistorian = new VaadinPageHistorian(this.getPage());
-//        final PlaceHistoryHandler placeHistoryHandler = new PlaceHistoryHandler(placeHistoryMapper, vaadinPageHistorian);
-
-//        final Place defaultPlace = new NorolePlace();
-
-//        placeController = injector.getInstance(SecurePlaceController.class);
-        EventBus eventBus = injector.getInstance(EventBus.class);
-//        placeHistoryHandler.register(placeController,
-//                eventBus, defaultPlace);
-
-        eventBus.addHandler(UserLoginSuccessEvent.class, this);
-
-//        LayoutContainer layoutContainer = new LayoutContainer();
-//        layoutContainer.init();
-//        this.setContent(layoutContainer);
-
-        Style2Layout style2Layout = new Style2Layout();
+                myModule
+        };
+    }
+    /*
 
 
-        this.setContent(style2Layout );
-        final ActivityManager centerActivityManager = new ActivityManager(
-                injector.getInstance(CenterActivityMapper.class),
-                injector.getInstance(EventBus.class)
-        );
+    (NorolePlace.class, Style1Layout.Region.MAIN), NoroleActivity.class
 
-        centerActivityManager.setDisplay(style2Layout.getCenterDisplay());
+    NorolePlace.class, Style1Layout.Region.MAIN, NoroleActivity.class
+    NorolePlace.class, Style1Layout.Region.TOOLBAR, MenuActivity.class
 
-        final ActivityManager northActivityManager = new ActivityManager(
-                injector.getInstance(NorthActivityMapper.class),
-                injector.getInstance(EventBus.class)
-        );
+    Alt1:
+    Region -> (Place -> Provider)
+    only one multibinding
 
-        northActivityManager.setDisplay(style2Layout.getHeaderDisplay());
+    Alt2:
+    named
+    Region -> (ActivityMapper)
 
-        PlacesRunner placesRunner = injector.getInstance(PlacesRunner.class);
-        try {
-            placesRunner.start();
-        } catch (Throwable t) {
-            t.printStackTrace();
+    Region -> Set(ActivityMappings)
+     */
+
+
+    private RegionPlacesModule myModule = new  RegionPlacesModule(){
+
+        @Override
+        protected void configure(Config config) {
+            config
+                    .forPlace(NorolePlace.class)
+                    .inRegion(Style1Layout.Region.MAIN)
+                    .useActivity(NoroleActivity.class)
+                    .inRegion(Style1Layout.Region.TOOLBAR)
+                    .useActivity(MenuActivity.class)
+
+                    .forPlace(Role1Place.class)
+                    .inRegion(Style1Layout.Region.MAIN)
+                    .useActivity(Role1Activity.class)
+                    .inRegion(Style1Layout.Region.TOOLBAR)
+                    .useActivity(MenuActivity.class)
+
+                    .forPlace(Role2Place.class)
+                    .inRegion(Style1Layout.Region.MAIN)
+                    .useActivity(Role2Activity.class)
+                    .inRegion(Style1Layout.Region.TOOLBAR)
+                    .useActivity(MenuActivity.class)
+
+                    .forPlace(LoginPlace.class)
+                    .inRegion(Style1Layout.Region.MAIN)
+                    .useActivity(LoginActivity.class)
+
+                    .forPlace(LogoutPlace.class)
+                    .inRegion(Style1Layout.Region.MAIN)
+                    .useActivity(LoginActivity.class)
+
+                    ;
+            config.defaultPlaceInstance(new NorolePlace());
+            bind(Component.class).annotatedWith(Names.named(GuicedUI.ROOT_COMPONENT)).to(Style1Layout.class);
         }
-    }
 
-    @Override
-    public void onAfterLogin(Place wantedPlace) {
-        if (wantedPlace == null)
-            wantedPlace = new NorolePlace();
-        injector.getInstance(PlaceController.class).goTo(wantedPlace);
 
-    }
+
+        /*
+
+        injector.getInstance(Key.get(String.class, Names.named(Style1Layout.Style1Region.TOOLBAR.toString())));
+
+        injector.getInstance(Key.get(String.class, Names.named(Style1Layout.Style1Region.MAIN.toString())));
+                placeActivityMap.put(NorolePlace.class, menuActivity);
+        placeActivityMap.put(Role1Place.class, menuActivity);
+        placeActivityMap.put(Role2Place.class, menuActivity);
+         */
+    };
+
+
+
+////    @Override
+////    protected void init(VaadinRequest request) {
+//////        this.getApplication().setRootPreserved(true);
+////        injector = Guice.createInjector(new VaadinModule(this),
+////                new ShiroSecurityModule(),
+////                new SecureMvpModule(),
+////                new PlaceHistoryModule(),
+////                myModule);
+////
+////
+////        EventBus eventBus = injector.getInstance(EventBus.class);
+//
+//
+//
+//
+//
+//        Style1Layout style1Layout = new Style1Layout();
+//
+//        this.setContent(style1Layout);
+//
+//        RegionalActivityMappings regionalActivityMappings = new RegionalActivityMappings(injector);
+//
+//
+////        regionalActivityMappings.forPlace()
+//
+//        RegionalDisplayActivityManager regionalDisplayActivityManager =
+//                new RegionalDisplayActivityManager(style1Layout);
+//
+//        regionalDisplayActivityManager.registerActivityMapper(
+//                injector.getInstance(EventBus.class),
+//                Style1Layout.Style1Region.MAIN,
+//                injector.getInstance(CenterActivityMapper.class)
+//        );
+//
+//        regionalDisplayActivityManager.registerActivityMapper(
+//                injector.getInstance(EventBus.class),
+//                Style1Layout.Style1Region.TOOLBAR,
+//                injector.getInstance(NorthActivityMapper.class)
+//        );
+//
+//        final SingleThreadedActivityManager centerActivityManager = new SingleThreadedActivityManager(
+//                injector.getInstance(CenterActivityMapper.class),
+//                injector.getInstance(EventBus.class)
+//        );
+//
+//        centerActivityManager.setDisplay(style2Layout.getCenterDisplay());
+//
+//        final ActivityManager northActivityManager = new ActivityManager(
+//                injector.getInstance(NorthActivityMapper.class),
+//                injector.getInstance(EventBus.class)
+//        );
+//
+//        northActivityManager.setDisplay(style2Layout.getHeaderDisplay());
+//
+//        PlacesRunner placesRunner = injector.getInstance(PlacesRunner.class);
+//        try {
+//            placesRunner.start();
+//        } catch (Throwable t) {
+//            t.printStackTrace();
+//        }
+//    }
+
 }

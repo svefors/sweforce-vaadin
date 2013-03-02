@@ -18,8 +18,6 @@ package sweforce.vaadin.sample.secure.norole;
 import sweforce.gui.ap.place.Place;
 import sweforce.gui.ap.place.token.PlaceTokenizer;
 import sweforce.gui.ap.place.token.Prefix;
-import sweforce.vaadin.layout.places.CenterPlace;
-import sweforce.vaadin.layout.places.NorthPlace;
 import sweforce.vaadin.security.place.PlaceRequiresAuthentication;
 
 /**
@@ -31,7 +29,7 @@ import sweforce.vaadin.security.place.PlaceRequiresAuthentication;
  */
 @Prefix("norole")
 @PlaceRequiresAuthentication
-public class NorolePlace extends Place implements CenterPlace, NorthPlace {
+public class NorolePlace extends Place {
 
 
     public static class Tokenizer implements PlaceTokenizer<NorolePlace>{

@@ -2,6 +2,8 @@ package sweforce.vaadin.table.editor;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.util.ObjectProperty;
+import com.vaadin.ui.Table;
+import sweforce.vaadin.data.SetProperty;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -9,11 +11,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Created with IntelliJ IDEA.
- * User: sveffa
- * Date: 11/1/12
- * Time: 3:48 PM
- * To change this template use File | Settings | File Templates.
+ * A immutable class representing a cell in a table identified by row(itemId) and column(propertyId)
+ *
  */
 public class CellGridId {
 
@@ -21,12 +20,23 @@ public class CellGridId {
 
     public final Object propertyId;
 
+    private CellGridId() {
+        itemId = null;
+        propertyId = null;
+    }
+
+    public static CellGridId NULL = new CellGridId();
+
     public CellGridId withItemId(Object itemId) {
+        if (itemId == null)
+            throw new IllegalArgumentException("item Id can't be null, try using CellGrid.NULL");
         return new CellGridId(itemId, this.propertyId);
     }
 
     public CellGridId withPropertyId(Object propertyId) {
-        return new CellGridId(propertyId, this.itemId);
+        if (propertyId == null)
+            throw new IllegalArgumentException("property Id can't be null, try using CellGrid.NULL");
+        return new CellGridId(this.itemId, propertyId);
     }
 
     public CellGridId(Object itemId, Object propertyId) {
@@ -41,19 +51,22 @@ public class CellGridId {
 
         CellGridId that = (CellGridId) o;
 
-        if (!itemId.equals(that.itemId)) return false;
-        if (!propertyId.equals(that.propertyId)) return false;
+        if (itemId != null ? !itemId.equals(that.itemId) : that.itemId != null) return false;
+        if (propertyId != null ? !propertyId.equals(that.propertyId) : that.propertyId != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = itemId.hashCode();
-        result = 31 * result + propertyId.hashCode();
+        int result = itemId != null ? itemId.hashCode() : 0;
+        result = 31 * result + (propertyId != null ? propertyId.hashCode() : 0);
         return result;
     }
 
+    /**
+     * A Vaadin Property containing a CellGridId
+     */
     public static class Property extends ObjectProperty<CellGridId> {
 
         public Property(Object itemId, Object propertyId) {
@@ -65,7 +78,7 @@ public class CellGridId {
         }
 
         public Property() {
-            super((CellGridId) null);
+            super(CellGridId.NULL);
         }
 
         public Property setIds(Object itemId, Object propertyId) {
@@ -86,51 +99,52 @@ public class CellGridId {
             this.setValue(new CellGridId(this.getValue() != null ? this.getValue().itemId : null, propertyId));
             return this;
         }
-    }
-
-
-    public static class SetProperty extends ObjectProperty<Set<CellGridId>> {
-
-        public SetProperty() {
-            super(Collections.newSetFromMap(new ConcurrentHashMap()));
-        }
-
-        @Override
-        public void setValue(Object newValue) throws ReadOnlyException {
-            Set<CellGridId> incoming = (Set<CellGridId>) newValue;
-            HashSet<CellGridId> copy = new HashSet<CellGridId>();
-            copy.addAll(incoming);
-            internalSet(copy);
-        }
-
-        private final void internalSet(Set<CellGridId> value) {
-            super.setValue(value);
-        }
 
         /**
-         *
-         *
-         * @return
+         * I will refresh the row cache on the table when my value changes.
+         * @param table
          */
-        @Override
-        public Set<CellGridId> getValue() {
-            return Collections.unmodifiableSet(super.getValue());
+        public void refreshRowCacheOnValueChange(Table table){
+            addValueChangeListener(new RefreshRowCacheListener(table));
         }
 
-        public SetProperty addCell(CellGridId cellGridId) {
-            if (!this.getValue().contains(cellGridId)) {
-                super.getValue().add(cellGridId);
-                fireValueChange();
+        private static class RefreshRowCacheListener implements ValueChangeListener{
+
+            final Table table;
+
+            public RefreshRowCacheListener(Table table) {
+                this.table = table;
             }
-            return this;
+
+            public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
+                table.refreshRowCache();
+            }
+
+            @Override
+            public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+
+                RefreshRowCacheListener that = (RefreshRowCacheListener) o;
+
+                if (table != null ? !table.equals(that.table) : that.table != null) return false;
+
+                return true;
+            }
+
+            @Override
+            public int hashCode() {
+                return table != null ? table.hashCode() : 0;
+            }
         }
 
-        public SetProperty removeCell(CellGridId cellGridId) {
-            if (!this.getValue().contains(cellGridId)) {
-                super.getValue().add(cellGridId);
-                fireValueChange();
-            }
-            return this;
+    }
+
+    /**
+     * A Vaadin Property containing a set of CellGridIds
+     */
+    public static class SetProperty extends sweforce.vaadin.data.SetProperty<CellGridId>{
+        public SetProperty() {
         }
     }
 }

@@ -16,7 +16,7 @@ import java.util.Collection;
  * Date: 7/1/12
  * Time: 12:32 PM
  */
-public class VaadinPageHistorian implements Historian, Page.FragmentChangedListener{
+public class VaadinPageHistorian implements Historian, Page.UriFragmentChangedListener{
 
     private final Page page;
 
@@ -25,12 +25,14 @@ public class VaadinPageHistorian implements Historian, Page.FragmentChangedListe
     @Inject
     public VaadinPageHistorian(Page page) {
         this.page = page;
-        page.addFragmentChangedListener(this);
+        page.addUriFragmentChangedListener(this);
     }
 
+
+
     @Override
-    public void fragmentChanged(Page.FragmentChangedEvent fragmentChangedEvent) {
-        HistoryChangedEvent historyChangedEvent = new HistoryChangedEvent(fragmentChangedEvent.getFragment());
+    public void uriFragmentChanged(Page.UriFragmentChangedEvent fragmentChangedEvent) {
+        HistoryChangedEvent historyChangedEvent = new HistoryChangedEvent(fragmentChangedEvent.getUriFragment());
         for (HistoryChangedEvent.Handler handler : handlers){
             handler.onHistoryChange(historyChangedEvent);
         }
@@ -49,12 +51,12 @@ public class VaadinPageHistorian implements Historian, Page.FragmentChangedListe
 
     @Override
     public String getToken() {
-        return page.getFragment();
+        return page.getUriFragment();
     }
 
     @Override
     public void newItem(String token) {
-        page.setFragment(token);
+        page.setUriFragment(token);
     }
 
 

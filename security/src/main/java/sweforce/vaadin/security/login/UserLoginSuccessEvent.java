@@ -21,30 +21,19 @@ import sweforce.gui.ap.place.Place;
 import sweforce.event.EventHandler;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sveffa
- * Date: 4/1/12
- * Time: 9:10 PM
- * To change this template use File | Settings | File Templates.
  */
 public class UserLoginSuccessEvent implements Event<UserLoginSuccessEvent.Handler> {
 
-    private final Place wantedPlace;
-
-    public UserLoginSuccessEvent(Place wantedPlace) {
-        this.wantedPlace = wantedPlace;
-    }
 
     public UserLoginSuccessEvent() {
-        this.wantedPlace = null;
     }
 
     @Override
     public void dispatch(Handler handler) {
-        handler.onAfterLogin(wantedPlace);
+        handler.onAfterLogin();
     }
 
     public static interface Handler extends EventHandler {
-        public void onAfterLogin(Place wantedPlace);
+        public void onAfterLogin();
     }
 }

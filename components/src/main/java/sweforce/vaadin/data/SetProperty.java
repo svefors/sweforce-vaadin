@@ -5,6 +5,7 @@ import com.vaadin.data.util.ObjectProperty;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,30 +16,43 @@ import java.util.Set;
  */
 public class SetProperty<T> extends ObjectProperty<Set<T>> {
 
-    private Set<T> values = new HashSet<T>();
-
     public SetProperty() {
-        super(new HashSet<T>());
-    }
-
-    public boolean addValue(T value) {
-        if(this.values.add(value)){
-            this.setValue(this.values);
-            return true;
-        }
-        return false;
+        super(Collections.newSetFromMap(new ConcurrentHashMap()));
     }
 
     @Override
-    public void setValue(Object newValue) throws ReadOnlyException {
-        values = (Set<T>) newValue;
-        super.setValue(newValue);
+    public void setValue(Set<T> newValue) throws ReadOnlyException {
+        Set<T> incoming = (Set<T>) newValue;
+        HashSet<T> copy = new HashSet<T>();
+        copy.addAll(incoming);
+        internalSet(copy);
     }
 
+    private final void internalSet(Set<T> value) {
+        super.setValue(value);
+    }
+
+    /**
+     * @return
+     */
     @Override
     public Set<T> getValue() {
         return Collections.unmodifiableSet(super.getValue());
     }
 
+    public SetProperty add(T value) {
+        if (!this.getValue().contains(value)) {
+            super.getValue().add(value);
+            fireValueChange();
+        }
+        return this;
+    }
 
+    public SetProperty remove(T value) {
+        if (!this.getValue().contains(value)) {
+            super.getValue().add(value);
+            fireValueChange();
+        }
+        return this;
+    }
 }

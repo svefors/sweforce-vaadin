@@ -1,5 +1,6 @@
 package sweforce.vaadin.command.button;
 
+import com.vaadin.data.Property;
 import com.vaadin.ui.Button;
 import sweforce.command.Command;
 import sweforce.event.HandlerRegistration;
@@ -46,25 +47,27 @@ public class CommandButton extends Button {
         if (this.reg != null)
             reg.removeHandler();
         setEnabled(command.isExecutable());
-        reg = command.getEventNotifier().addHandler(new Command.IsExecutableChangeEvent.Handler() {
+        command.isExecutableNotifier().addValueChangeListener(new Property.ValueChangeListener() {
             @Override
-            public void onIsExecutableChange(Command command) {
-                if (command.isExecutable()){
+            public void valueChange(Property.ValueChangeEvent event) {
+                Object value = event.getProperty().getValue();
+                if (value != null || (Boolean) value){
                     CommandButton.this.setEnabled(true);
                 }else{
                     CommandButton.this.setEnabled(false);
                 }
             }
         });
-        if (this.clickListener != null){
-            this.removeClickListener(this.clickListener);
-        }
-        this.clickListener = new ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                command.execute();
-            }
-        };
-        this.addClickListener(this.clickListener);
+
+//        if (this.clickListener != null){
+//            this.removeClickListener(this.clickListener);
+//        }
+//        this.clickListener = new ClickListener() {
+//            @Override
+//            public void buttonClick(ClickEvent event) {
+//                command.execute();
+//            }
+//        };
+//        this.addClickListener(this.clickListener);
     }
 }

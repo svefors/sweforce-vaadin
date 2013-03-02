@@ -16,10 +16,13 @@
 package sweforce.vaadin.security.place;
 
 
+import sweforce.event.EventBus;
+import sweforce.event.HandlerRegistration;
 import sweforce.gui.ap.place.Place;
 import sweforce.gui.ap.place.controller.PlaceController;
 import sweforce.vaadin.security.SecurityFacade;
 import sweforce.vaadin.security.login.LoginPlace;
+import sweforce.vaadin.security.login.UserLoginSuccessEvent;
 
 import javax.inject.Named;
 
@@ -31,42 +34,76 @@ import javax.inject.Named;
  * To change this template use File | Settings | File Templates.
  */
 @javax.inject.Singleton
-public class SecurePlaceController implements PlaceController {
+public class SecurePlaceController implements PlaceController, UserLoginSuccessEvent.Handler {
 
     private final SecurityFacade securityFacade;
 
-//    private Place defaultPlace;
+    private Place defaultSecurePlace;
 
     private final PlaceController delegate;
 
     public static final String DELEGATE_NAME = "SecurePlaceController.DELEGATE";
 
+    private HandlerRegistration loginSuccessHandlerRegistration;
 
 
     @javax.inject.Inject
-    public SecurePlaceController(SecurityFacade securityFacade, @Named(SecurePlaceController.DELEGATE_NAME) PlaceController delegate) {
+    public SecurePlaceController(SecurityFacade securityFacade,
+                                 @Named(SecurePlaceController.DELEGATE_NAME) PlaceController delegate,
+                                 EventBus eventBus) {
+        this.loginSuccessHandlerRegistration = eventBus.addHandler(UserLoginSuccessEvent.class, this);
         this.securityFacade = securityFacade;
         this.delegate = delegate;
     }
 
+    public void setDefaultSecurePlace(Place defaultSecurePlace) {
+        this.defaultSecurePlace = defaultSecurePlace;
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        loginSuccessHandlerRegistration.removeHandler();
+    }
+
+    public void goTo(LoginPlace loginPlace){
+        secureWantedPlace = loginPlace.getWantedPlace();
+        delegate.goTo(loginPlace);
+    }
+
     @Override
     public void goTo(Place wantedPlace) {
-        //check if the place is secure
-        if (!securityFacade.isAuthenticationRequired(wantedPlace)){
+        if(wantedPlace instanceof LoginPlace){
+            goTo((LoginPlace) wantedPlace);
+        }else if (!securityFacade.isAuthenticationRequired(wantedPlace)){
+            delegate.goTo(wantedPlace);
+        }else if (!securityFacade.getSubject().isAuthenticated()){
+            goTo(new LoginPlace(wantedPlace));
+        }else if (securityFacade.getSubject().isAuthorized(wantedPlace)){
             delegate.goTo(wantedPlace);
         }else{
-            if (!securityFacade.getSubject().isAuthenticated()){
-                delegate.goTo(new LoginPlace(wantedPlace));
-            }else{
-                if (securityFacade.getSubject().isAuthorized(wantedPlace)){
-                    delegate.goTo(wantedPlace);
-                }else{
-                    //display not authorized information
-                }
-            }
+            //display not authorized information
         }
     }
 
+    private Place secureWantedPlace;
+
+    @Override
+    public void setDefaultPlace(Place defaultPlace) {
+        delegate.setDefaultPlace(defaultPlace);
+    }
+
+    @Override
+    public void onAfterLogin() {
+//        if(secureWantedPlace != null)
+        Place wantedPlace = secureWantedPlace;
+        secureWantedPlace = null;
+        delegate.goTo(wantedPlace);
+//        else{
+//            delegate.goTo(defaultSecurePlace);
+//        }
+
+    }
 
     @Override
     public Place getWhere() {

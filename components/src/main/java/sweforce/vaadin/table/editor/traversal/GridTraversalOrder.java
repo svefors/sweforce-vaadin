@@ -4,14 +4,16 @@ import com.vaadin.ui.Table;
 import sweforce.vaadin.table.editor.CellGridId;
 
 /**
- * Created with IntelliJ IDEA.
- * User: sveffa
- * Date: 12/1/12
- * Time: 10:46 PM
- * To change this template use File | Settings | File Templates.
+ *
  */
 public interface GridTraversalOrder {
 
+    /**
+     * TODO: replace table with
+     * @param table
+     * @param cellGridId
+     * @return
+     */
     public boolean hasNext(Table table, CellGridId cellGridId);
 
     public CellGridId next(Table table, CellGridId cellGridId);

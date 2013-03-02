@@ -19,6 +19,9 @@ public interface Command {
 
     public Property.ValueChangeNotifier isExecutableNotifier();
 
+    public boolean isExecutable();
+
+
 //    public boolean isExecutable();
 
 //    public EventNotifier<IsExecutableChangeEvent.Handler> getEventNotifier();

@@ -16,8 +16,6 @@ import java.util.List;
  */
 public class HorizontalTraversalOrder implements GridTraversalOrder {
 
-//    private final Table table;
-
     private final boolean reverse;
 
     private final LeftRightOverflowMode leftRightOverflowMode;

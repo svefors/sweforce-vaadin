@@ -26,11 +26,7 @@ import sweforce.event.EventBus;
 import javax.inject.Inject;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sveffa
- * Date: 3/30/12
- * Time: 3:52 PM
- * To change this template use File | Settings | File Templates.
+ *
  */
 public class PlaceHistoryHandler {
 
@@ -54,7 +50,7 @@ public class PlaceHistoryHandler {
     public HandlerRegistration register(PlaceController placeController, EventBus eventBus,
                                         Place defaultPlace) {
         this.placeController = placeController;
-        this.defaultPlace = defaultPlace;
+        this.defaultPlace = defaultPlace != null ? defaultPlace : Place.NOWHERE;
         final HandlerRegistration placeReg =
                 eventBus.addHandler(PlaceChangeEvent.class, new PlaceChangeEvent.Handler() {
                     public void onPlaceChange(PlaceChangeEvent event) {
@@ -68,7 +64,7 @@ public class PlaceHistoryHandler {
                 PlaceHistoryHandler.this.handleHistoryToken(event.getPlaceToken());
             }
         });
-
+        placeController.setDefaultPlace(defaultPlace);
         return new HandlerRegistration() {
             public void removeHandler() {
                 PlaceHistoryHandler.this.defaultPlace = Place.NOWHERE;

@@ -38,6 +38,9 @@ public class VerticalTraversalOrder implements GridTraversalOrder {
         Object nextRowItemId = reverse ? orderedContainer.prevItemId(cellGridId.itemId) : orderedContainer.nextItemId(cellGridId.itemId);
         if (nextRowItemId == null)
             nextRowItemId = reverse ? orderedContainer.lastItemId() : orderedContainer.firstItemId();
+        if (orderedContainer.getContainerDataSource().size() <= 1){
+            return null;
+        }
         if (!orderedContainer.getContainerProperty(nextRowItemId, cellGridId.propertyId).isReadOnly()) {
             return cellGridId.withItemId(nextRowItemId);
         }

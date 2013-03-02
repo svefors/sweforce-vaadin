@@ -33,6 +33,7 @@ public abstract class AbstractCommand implements Command {
     protected AbstractCommand(Property<Boolean> executable) {
         if (executable instanceof Property.ValueChangeNotifier)
             this.executableNotifier = (Property.ValueChangeNotifier) executable;
+        this.executable = executable;
     }
 
     @Override
@@ -48,6 +49,11 @@ public abstract class AbstractCommand implements Command {
 
     protected void setExecutable(boolean executable){
         this.executable.setValue(executable);
+    }
+
+    @Override
+    public boolean isExecutable() {
+        return this.executable.getValue();
     }
 
     protected abstract void internalExecute();

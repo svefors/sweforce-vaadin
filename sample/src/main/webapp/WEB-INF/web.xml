@@ -32,12 +32,10 @@
 
     <servlet>
         <servlet-name>Sample Secure Application</servlet-name>
-        <servlet-class>
-            com.vaadin.terminal.gwt.server.ApplicationServlet
-        </servlet-class>
+        <servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
         <init-param>
-            <description>Vaadin root</description>
-            <param-name>root</param-name>
+            <description>Vaadin UI</description>
+            <param-name>UI</param-name>
             <param-value>
                 sweforce.vaadin.sample.secure.SecureApplication
             </param-value>

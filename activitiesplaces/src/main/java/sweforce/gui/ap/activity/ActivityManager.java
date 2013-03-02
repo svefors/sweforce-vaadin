@@ -35,7 +35,9 @@ import java.util.Set;
  * Manages {@link Activity} objects that should be kicked off in response to
  * {@link PlaceChangeEvent} events. Each activity can start itself
  * asynchronously, and provides a widget to be shown when it's ready to run.
+ * @deprecated Use SingleThreadedActivityManager instead. The requests are synchronized per UI.
  */
+@Deprecated
 public class ActivityManager implements PlaceChangeEvent.Handler, PlaceChangeRequestEvent.Handler {
 
     private static Logger logger = LoggerFactory.getLogger(ActivityManager.class);
@@ -144,6 +146,7 @@ public class ActivityManager implements PlaceChangeEvent.Handler, PlaceChangeReq
             startingNext = false;
         } else if (!currentActivity.equals(NULL_ACTIVITY)) {
             showWidget(NullView.getInstance());
+// Above COMMENTED because the NULL_ACTIVITY sets view to null
 
             /*
             * Kill off the activity's handlers, so it doesn't have to worry about

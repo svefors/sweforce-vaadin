@@ -1,4 +1,4 @@
-package sweforce.vaadin.layout.display;
+package sweforce.vaadin.layout.style2;
 
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;

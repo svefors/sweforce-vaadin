@@ -5,84 +5,97 @@ import com.vaadin.data.Property;
 import com.vaadin.ui.Table;
 import sweforce.command.AbstractCommand;
 import sweforce.vaadin.table.editor.CellGridId;
+import sweforce.vaadin.table.editor.EditableTable;
 
 /**
- *
+ * A Traversal Command is used to traverse over a grid. It will be executable if the current cell is not null and the
+ * GridTraversalOrder.hasNext(Table table, CellGridId cellGridId) returns true.
  */
 public class TraversalCommand extends AbstractCommand {
 
-    public Table table;
-
-    public CellGridId.Property currentCell;
-
     private final GridTraversalOrder gridTraversal;
 
-//    public TraversalCommand(Table table, GridTraversalOrder gridTraversal) {
-//        this.gridTraversal = gridTraversal;
-//        bind(table);
-//        bind(currentCell);
-//    }
-//
-//    public TraversalCommand(Table table, CellGridId.Property currentCell, GridTraversalOrder gridTraversal) {
-//        this.gridTraversal = gridTraversal;
-//        bind(table);
-//        bind(currentCell);
-//    }
-
+    /**
+     * @param gridTraversal
+     */
     public TraversalCommand(GridTraversalOrder gridTraversal) {
         this.gridTraversal = gridTraversal;
+//        this.table = table;
+//        this.currentCell = currentCell;
+//        this.currentCell.addValueChangeListener(new CurrentCellChangeListener());
+//        if (this.table.getContainerDataSource() instanceof Container.ItemSetChangeNotifier)
+//            ((Container.ItemSetChangeNotifier) this.table.getContainerDataSource()).addItemSetChangeListener(new GridRowsSetChangeListener());
+//        this.table.addColumnReorderListener(new ColumnReorderListener());
     }
 
-    private CurrentCellChangeListener currentCellChangeListener = new CurrentCellChangeListener();
+    private EditableTable editableTable;
+
+    public void bind(EditableTable editableTable) {
+        unbind();
+        this.editableTable = editableTable;
+        this.editableTable.currentCell.addValueChangeListener(currentCellChangeListener);
+        this.editableTable.addColumnReorderListener(columnReorderListener);
+        if (this.editableTable.getContainerDataSource() != null
+                && this.editableTable.getContainerDataSource() instanceof Container.ItemSetChangeNotifier
+                ) {
+            ((Container.ItemSetChangeNotifier) this.editableTable.getContainerDataSource())
+                    .addItemSetChangeListener(gridRowsSetChangeListener);
+        }
+    }
+
+    public void unbind() {
+        if (this.editableTable != null) {
+            this.editableTable.currentCell.removeValueChangeListener(currentCellChangeListener);
+            this.editableTable.removeColumnReorderListener(columnReorderListener);
+            if (this.editableTable.getContainerDataSource() instanceof Container.ItemSetChangeNotifier
+                    ) {
+                ((Container.ItemSetChangeNotifier) this.editableTable.getContainerDataSource())
+                        .removeItemSetChangeListener(gridRowsSetChangeListener);
+            }
+            this.editableTable = null;
+        }
+
+    }
+
+    private ColumnReorderListener columnReorderListener = new ColumnReorderListener();
+
+    private class ColumnReorderListener implements Table.ColumnReorderListener {
+        @Override
+        public void columnReorder(Table.ColumnReorderEvent event) {
+            refreshIsExecutableFromCellProperty(editableTable.currentCell);
+        }
+    }
+
+    private Property.ValueChangeListener currentCellChangeListener = new CurrentCellChangeListener();
 
     private class CurrentCellChangeListener implements Property.ValueChangeListener {
         @Override
         public void valueChange(Property.ValueChangeEvent event) {
-            TraversalCommand.this.refreshIsExeutableFromCellProperty((CellGridId.Property) event.getProperty());
+            TraversalCommand.this.refreshIsExecutableFromCellProperty((CellGridId.Property) event.getProperty());
         }
     }
 
     private GridRowsSetChangeListener gridRowsSetChangeListener = new GridRowsSetChangeListener();
 
-
     private class GridRowsSetChangeListener implements Container.ItemSetChangeListener {
         @Override
         public void containerItemSetChange(Container.ItemSetChangeEvent event) {
-            refreshIsExeutableFromCellProperty(currentCell);
+            refreshIsExecutableFromCellProperty(editableTable.currentCell);
         }
     }
 
-    private void refreshIsExeutableFromCellProperty(CellGridId.Property property) {
-        boolean hasNext;
-        if (property.getValue() == null) {
-            hasNext = false;
-        } else {
-            hasNext = gridTraversal.hasNext(table, property.getValue());
-
-        }
+    private void refreshIsExecutableFromCellProperty(CellGridId.Property property) {
+        editableTable.getClass();
+        boolean hasNext = !property.getValue().equals(CellGridId.NULL) && gridTraversal.hasNext(editableTable, property.getValue());
         setExecutable(hasNext);
     }
 
+
     @Override
     protected void internalExecute() {
-        CellGridId nextCell = gridTraversal.next(table, currentCell.getValue());
-        currentCell.setCell(nextCell);
+        CellGridId nextCell = gridTraversal.next(editableTable, editableTable.currentCell.getValue());
+        editableTable.currentCell.setCell(nextCell);
     }
 
-    public void bind(CellGridId.Property currentCell){
-        if (this.currentCell != null)
-            this.currentCell.removeValueChangeListener(this.currentCellChangeListener);
-        this.currentCell = currentCell;
-        if (this.currentCell != null)
-            currentCell.addValueChangeListener(currentCellChangeListener);
-    }
-
-    public void bind(Container container) {
-        if (this.table != null && container instanceof Container.ItemSetChangeNotifier)
-            ((Container.ItemSetChangeNotifier) container).removeItemSetChangeListener(gridRowsSetChangeListener);
-        this.table = table;
-        if (this.table != null && container instanceof Container.ItemSetChangeNotifier)
-            ((Container.ItemSetChangeNotifier) container).addItemSetChangeListener(gridRowsSetChangeListener);
-    }
 
 }

@@ -37,10 +37,16 @@ public class DefaultPlaceController implements PlaceController {
 
     private ConfirmationHandler delegate;
 
+    private Place defaultPlace;
+
     @Inject
     public DefaultPlaceController(EventBus eventBus, ConfirmationHandler confirmationHandler) {
         this.eventBus = eventBus;
         this.delegate = confirmationHandler;
+    }
+
+    public void setDefaultPlace(Place defaultPlace) {
+        this.defaultPlace = defaultPlace;
     }
 
     public Place getWhere() {
@@ -50,6 +56,9 @@ public class DefaultPlaceController implements PlaceController {
     public void goTo(final Place newPlace) {
         if (getWhere().equals(newPlace)) {
             return;
+        }
+        if(newPlace == null && defaultPlace != null){
+            goTo(defaultPlace);
         }
         String warning = maybeGoTo(newPlace);
         if (warning == null){

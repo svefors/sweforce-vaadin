@@ -26,11 +26,7 @@ import sweforce.vaadin.security.SecurityFacade;
 import javax.inject.Inject;
 
 /**
- * Created by IntelliJ IDEA.
- * User: sveffa
- * Date: 2/21/12
- * Time: 8:15 AM
- * To change this template use File | Settings | File Templates.
+ *
  */
 public class LoginActivity extends AbstractActivity implements LoginView.Presenter {
 
@@ -41,18 +37,11 @@ public class LoginActivity extends AbstractActivity implements LoginView.Present
 
     private final SecurityFacade securityFacade;
 
-    private Place wantedPlace;
-
-    private Place defaultPlace;
 
     @Inject
     public LoginActivity(LoginView loginView, SecurityFacade securityFacade) {
         this.loginView = loginView;
         this.securityFacade = securityFacade;
-    }
-
-    public void setDefaultPlace(Place defaultPlace) {
-        this.defaultPlace = defaultPlace;
     }
 
     @Override
@@ -62,15 +51,11 @@ public class LoginActivity extends AbstractActivity implements LoginView.Present
         loginView.setPresenter(this);
     }
 
-    public void setWantedPlace(Place wantedPlace) {
-        this.wantedPlace = wantedPlace;
-    }
-
     @Override
     public void login(String username, String password) {
         try {
             securityFacade.getSubject().login(username, password);
-            eventBus.fireEvent(new UserLoginSuccessEvent(wantedPlace));
+            eventBus.fireEvent(new UserLoginSuccessEvent());
         } catch (SecurityFacade.UnknownAccountException uae) {
             eventBus.fireEvent(new UserLoginFailedEvent());
         } catch (SecurityFacade.IncorrectCredentialsException ice) {

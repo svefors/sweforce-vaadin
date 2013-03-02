@@ -18,8 +18,6 @@ package sweforce.vaadin.sample.secure.role1;
 import sweforce.gui.ap.place.Place;
 import sweforce.gui.ap.place.token.PlaceTokenizer;
 import sweforce.gui.ap.place.token.Prefix;
-import sweforce.vaadin.layout.places.CenterPlace;
-import sweforce.vaadin.layout.places.NorthPlace;
 import sweforce.vaadin.security.place.PlaceRequiresRoles;
 
 /**
@@ -31,7 +29,7 @@ import sweforce.vaadin.security.place.PlaceRequiresRoles;
  */
 @Prefix("role1")
 @PlaceRequiresRoles("user_role_1")
-public class Role1Place extends Place implements CenterPlace, NorthPlace {
+public class Role1Place extends Place {
 
 
 

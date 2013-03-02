@@ -18,17 +18,19 @@ package sweforce.gui.ap.activity;
 
 import sweforce.gui.ap.place.Place;
 
+import javax.inject.Provider;
+import java.util.Map;
+
 /**
  * Finds the activity to run for a given {@link Place}, used to configure
  * an {@link ActivityManager}.
  */
 public interface ActivityMapper {
-  /**
-   * Returns the activity to run for the given {@link Place}, or null.
-   *
-   * @param place a Place object
-   */
-  Activity getActivity(Place place);
-
+    /**
+     * Returns the activity to run for the given {@link Place}, or null.
+     *
+     * @param place a Place object
+     */
+    Activity getActivity(Place place);
 
 }

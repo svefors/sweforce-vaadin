@@ -20,11 +20,7 @@ import sweforce.gui.display.VaadinView;
 
 
 /**
- * Created by IntelliJ IDEA.
- * User: sveffa
- * Date: 2/23/12
- * Time: 2:30 PM
- * To change this template use File | Settings | File Templates.
+ *
  */
 public class LoginViewImpl implements LoginView, VaadinView, LoginForm.LoginListener {
 
@@ -43,7 +39,7 @@ public class LoginViewImpl implements LoginView, VaadinView, LoginForm.LoginList
 
         LoginForm loginForm;
 		loginForm = new LoginForm();
-        loginPanel.addComponent(loginForm);
+        loginPanel.setContent(loginForm);
 		loginForm.setPasswordCaption("Password"); //i18n?
 		loginForm.setUsernameCaption("User");
 		loginForm.setLoginButtonCaption("Login");
