@@ -16,7 +16,7 @@
 package sweforce.vaadin.sample.secure.role2;
 
 import sweforce.event.EventBus;
-import sweforce.gui.ap.activity.AbstractActivity;
+import sweforce.gui.activity.AbstractActivity;
 import sweforce.gui.display.Display;
 
 /**

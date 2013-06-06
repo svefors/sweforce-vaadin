@@ -16,11 +16,11 @@
 package sweforce.vaadin.sample.secure.menu;
 
 import com.vaadin.ui.Button;
-import sweforce.gui.ap.activity.AbstractActivity;
-import sweforce.gui.ap.place.Place;
-import sweforce.gui.ap.place.controller.PlaceController;
+import sweforce.gui.activity.AbstractActivity;
+import sweforce.gui.place.Place;
+import sweforce.gui.place.PlaceController;
 import sweforce.gui.display.Display;
-import sweforce.gui.display.VaadinView;
+import sweforce.gui.vaadin.VaadinView;
 import sweforce.event.EventBus;
 import sweforce.vaadin.sample.secure.norole.NorolePlace;
 import sweforce.vaadin.sample.secure.role1.Role1Place;

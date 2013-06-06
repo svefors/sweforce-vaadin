@@ -30,9 +30,9 @@
  */package sweforce.vaadin.security.login;
 
 
-import sweforce.gui.ap.place.Place;
-import sweforce.gui.ap.place.token.PlaceTokenizer;
-import sweforce.gui.ap.place.token.Prefix;
+import sweforce.gui.place.Place;
+import sweforce.gui.place.PlaceTokenizer;
+import sweforce.gui.place.Prefix;
 
 /**
  * Created by IntelliJ IDEA.

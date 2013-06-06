@@ -20,7 +20,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
-import sweforce.gui.display.VaadinView;
+import sweforce.gui.vaadin.VaadinView;
 
 public class MenuViewImpl extends CustomComponent implements VaadinView, MenuActivity.MenuView {
 

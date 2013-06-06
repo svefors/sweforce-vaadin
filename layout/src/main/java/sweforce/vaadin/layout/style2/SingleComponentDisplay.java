@@ -5,7 +5,7 @@ import com.vaadin.ui.ComponentContainer;
 import sweforce.gui.display.Display;
 import sweforce.gui.display.View;
 
-import static sweforce.gui.display.VaadinView.Util.convertViewToComponent;
+import static sweforce.gui.vaadin.VaadinView.Util.convertViewToComponent;
 
 /**
  * Contains a single component.

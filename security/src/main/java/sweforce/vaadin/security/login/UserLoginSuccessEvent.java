@@ -17,7 +17,6 @@ package sweforce.vaadin.security.login;
 
 
 import sweforce.event.Event;
-import sweforce.gui.ap.place.Place;
 import sweforce.event.EventHandler;
 
 /**

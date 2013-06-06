@@ -16,7 +16,7 @@
 package sweforce.vaadin.security.logout;
 
 
-import sweforce.gui.ap.activity.AbstractActivity;
+import sweforce.gui.activity.AbstractActivity;
 import sweforce.gui.display.Display;
 import sweforce.event.EventBus;
 import sweforce.vaadin.security.SecurityFacade;

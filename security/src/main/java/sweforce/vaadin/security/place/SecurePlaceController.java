@@ -18,8 +18,8 @@ package sweforce.vaadin.security.place;
 
 import sweforce.event.EventBus;
 import sweforce.event.HandlerRegistration;
-import sweforce.gui.ap.place.Place;
-import sweforce.gui.ap.place.controller.PlaceController;
+import sweforce.gui.place.Place;
+import sweforce.gui.place.PlaceController;
 import sweforce.vaadin.security.SecurityFacade;
 import sweforce.vaadin.security.login.LoginPlace;
 import sweforce.vaadin.security.login.UserLoginSuccessEvent;
@@ -38,8 +38,6 @@ public class SecurePlaceController implements PlaceController, UserLoginSuccessE
 
     private final SecurityFacade securityFacade;
 
-    private Place defaultSecurePlace;
-
     private final PlaceController delegate;
 
     public static final String DELEGATE_NAME = "SecurePlaceController.DELEGATE";
@@ -56,9 +54,6 @@ public class SecurePlaceController implements PlaceController, UserLoginSuccessE
         this.delegate = delegate;
     }
 
-    public void setDefaultSecurePlace(Place defaultSecurePlace) {
-        this.defaultSecurePlace = defaultSecurePlace;
-    }
 
     @Override
     protected void finalize() throws Throwable {
@@ -88,10 +83,6 @@ public class SecurePlaceController implements PlaceController, UserLoginSuccessE
 
     private Place secureWantedPlace;
 
-    @Override
-    public void setDefaultPlace(Place defaultPlace) {
-        delegate.setDefaultPlace(defaultPlace);
-    }
 
     @Override
     public void onAfterLogin() {

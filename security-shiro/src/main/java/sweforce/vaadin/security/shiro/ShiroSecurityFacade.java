@@ -18,7 +18,7 @@ package sweforce.vaadin.security.shiro;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import sweforce.gui.ap.place.Place;
+import sweforce.gui.place.Place;
 import sweforce.vaadin.security.SecurityFacade;
 import sweforce.vaadin.security.Subject;
 import sweforce.vaadin.security.place.PlaceRequiresAuthentication;

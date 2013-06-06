@@ -15,7 +15,7 @@
  */
 package sweforce.vaadin.security;
 
-import sweforce.gui.ap.place.Place;
+import sweforce.gui.place.Place;
 
 /**
  * Created by IntelliJ IDEA.

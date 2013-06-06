@@ -17,8 +17,7 @@ package sweforce.vaadin.security.login;
 
 
 import sweforce.event.EventBus;
-import sweforce.gui.ap.activity.AbstractActivity;
-import sweforce.gui.ap.place.Place;
+import sweforce.gui.activity.AbstractActivity;
 import sweforce.gui.display.Display;
 import sweforce.event.SystemThrowableEvent;
 import sweforce.vaadin.security.SecurityFacade;

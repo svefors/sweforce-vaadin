@@ -17,8 +17,8 @@ package sweforce.vaadin.security;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
-import sweforce.gui.ap.place.controller.DefaultPlaceController;
-import sweforce.gui.ap.place.controller.PlaceController;
+import sweforce.gui.place.PlaceControllerImpl;
+import sweforce.gui.place.PlaceController;
 import sweforce.event.EventBus;
 import sweforce.event.SimpleEventBus;
 import sweforce.vaadin.security.login.LoginActivity;
@@ -45,16 +45,13 @@ public class SecureMvpModule extends AbstractModule{
 
     @Override
     protected void configure() {
-//        bind(Page.class).to(VaadinBrowserWindow.class);
         bind(EventBus.class).to(SimpleEventBus.class);
-//        bind(Application.class).toInstance(this.application);
-//        bind(ConfirmationHandler.class).to(CurrentRootConfirmationHandler.class);
         bind(LoginView.class).to(LoginViewImpl.class);
         bind(LoginActivity.class);
         bind(LogoutActivity.class);
         bind(PlaceController.class).to(SecurePlaceController.class);
         bind(PlaceController.class).annotatedWith(Names.named(SecurePlaceController.DELEGATE_NAME))
-                .to(DefaultPlaceController.class);
+                .to(PlaceControllerImpl.class);
     }
 
 }

@@ -20,10 +20,10 @@ import com.google.inject.name.Names;
 import com.vaadin.ui.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sweforce.gui.GuicedUI;
-import sweforce.gui.ap.place.history.PlaceHistoryModule;
-import sweforce.gui.ap.vaadin.VaadinModule;
-import sweforce.vaadin.layout.display.RegionPlacesModule;
+import sweforce.gui.vaadin.GuicedUI;
+import sweforce.gui.place.PlaceHistoryModule;
+import sweforce.gui.vaadin.VaadinModule;
+import sweforce.gui.guice.RegionPlacesModule;
 import sweforce.vaadin.layout.style1.Style1Layout;
 import sweforce.vaadin.sample.secure.menu.MenuActivity;
 import sweforce.vaadin.sample.secure.norole.NoroleActivity;
@@ -33,9 +33,6 @@ import sweforce.vaadin.sample.secure.role1.Role1Place;
 import sweforce.vaadin.sample.secure.role2.Role2Activity;
 import sweforce.vaadin.sample.secure.role2.Role2Place;
 import sweforce.vaadin.security.SecureMvpModule;
-import sweforce.vaadin.security.login.LoginActivity;
-import sweforce.vaadin.security.login.LoginPlace;
-import sweforce.vaadin.security.logout.LogoutPlace;
 import sweforce.vaadin.security.shiro.ShiroSecurityModule;
 
 /**
@@ -48,11 +45,25 @@ public class SecureApplication extends GuicedUI {
     @Override
     public Module[] getModules() {
         return new Module[]{
-        new VaadinModule(this),
+                new VaadinModule(this),
                 new ShiroSecurityModule(),
                 new SecureMvpModule(),
                 new PlaceHistoryModule(),
-                myModule
+                new RegionPlacesModule() {
+                    @Override
+                    protected void configurePlaces() {
+                        bindPlace(NorolePlace.class).in(Style1Layout.Region.MAIN).to(NoroleActivity.class);
+                        bindPlace(NorolePlace.class).in(Style1Layout.Region.TOOLBAR).to(MenuActivity.class);
+
+                        bindPlace(Role1Place.class).in(Style1Layout.Region.MAIN).to(Role1Activity.class);
+                        bindPlace(Role1Place.class).in(Style1Layout.Region.TOOLBAR).to(MenuActivity.class);
+
+                        bindPlace(Role2Place.class).in(Style1Layout.Region.MAIN).to(Role2Activity.class);
+                        bindPlace(Role2Place.class).in(Style1Layout.Region.TOOLBAR).to(MenuActivity.class);
+                        bind(Component.class).annotatedWith(Names.named(GuicedUI.ROOT_COMPONENT)).to(Style1Layout.class);
+                        bindDefaultPlaceInstance(new NorolePlace());
+                    }
+                }
         };
     }
     /*
@@ -75,55 +86,54 @@ public class SecureApplication extends GuicedUI {
      */
 
 
-    private RegionPlacesModule myModule = new  RegionPlacesModule(){
-
-        @Override
-        protected void configure(Config config) {
-            config
-                    .forPlace(NorolePlace.class)
-                    .inRegion(Style1Layout.Region.MAIN)
-                    .useActivity(NoroleActivity.class)
-                    .inRegion(Style1Layout.Region.TOOLBAR)
-                    .useActivity(MenuActivity.class)
-
-                    .forPlace(Role1Place.class)
-                    .inRegion(Style1Layout.Region.MAIN)
-                    .useActivity(Role1Activity.class)
-                    .inRegion(Style1Layout.Region.TOOLBAR)
-                    .useActivity(MenuActivity.class)
-
-                    .forPlace(Role2Place.class)
-                    .inRegion(Style1Layout.Region.MAIN)
-                    .useActivity(Role2Activity.class)
-                    .inRegion(Style1Layout.Region.TOOLBAR)
-                    .useActivity(MenuActivity.class)
-
-                    .forPlace(LoginPlace.class)
-                    .inRegion(Style1Layout.Region.MAIN)
-                    .useActivity(LoginActivity.class)
-
-                    .forPlace(LogoutPlace.class)
-                    .inRegion(Style1Layout.Region.MAIN)
-                    .useActivity(LoginActivity.class)
-
-                    ;
-            config.defaultPlaceInstance(new NorolePlace());
-            bind(Component.class).annotatedWith(Names.named(GuicedUI.ROOT_COMPONENT)).to(Style1Layout.class);
-        }
-
-
-
-        /*
-
-        injector.getInstance(Key.get(String.class, Names.named(Style1Layout.Style1Region.TOOLBAR.toString())));
-
-        injector.getInstance(Key.get(String.class, Names.named(Style1Layout.Style1Region.MAIN.toString())));
-                placeActivityMap.put(NorolePlace.class, menuActivity);
-        placeActivityMap.put(Role1Place.class, menuActivity);
-        placeActivityMap.put(Role2Place.class, menuActivity);
-         */
-    };
-
+//    private RegionPlacesModule myModule = new  RegionPlacesModule(){
+//
+//        @Override
+//        protected void configure(Config config) {
+//            config
+//                    .forPlace(NorolePlace.class)
+//                    .inRegion(Style1Layout.Region.MAIN)
+//                    .useActivity(NoroleActivity.class)
+//                    .inRegion(Style1Layout.Region.TOOLBAR)
+//                    .useActivity(MenuActivity.class)
+//
+//                    .forPlace(Role1Place.class)
+//                    .inRegion(Style1Layout.Region.MAIN)
+//                    .useActivity(Role1Activity.class)
+//                    .inRegion(Style1Layout.Region.TOOLBAR)
+//                    .useActivity(MenuActivity.class)
+//
+//                    .forPlace(Role2Place.class)
+//                    .inRegion(Style1Layout.Region.MAIN)
+//                    .useActivity(Role2Activity.class)
+//                    .inRegion(Style1Layout.Region.TOOLBAR)
+//                    .useActivity(MenuActivity.class)
+//
+//                    .forPlace(LoginPlace.class)
+//                    .inRegion(Style1Layout.Region.MAIN)
+//                    .useActivity(LoginActivity.class)
+//
+//                    .forPlace(LogoutPlace.class)
+//                    .inRegion(Style1Layout.Region.MAIN)
+//                    .useActivity(LoginActivity.class)
+//
+//                    ;
+//            config.defaultPlaceInstance(new NorolePlace());
+//            bind(Component.class).annotatedWith(Names.named(GuicedUI.ROOT_COMPONENT)).to(Style1Layout.class);
+//        }
+//
+//
+//
+//        /*
+//
+//        injector.getInstance(Key.get(String.class, Names.named(Style1Layout.Style1Region.TOOLBAR.toString())));
+//
+//        injector.getInstance(Key.get(String.class, Names.named(Style1Layout.Style1Region.MAIN.toString())));
+//                placeActivityMap.put(NorolePlace.class, menuActivity);
+//        placeActivityMap.put(Role1Place.class, menuActivity);
+//        placeActivityMap.put(Role2Place.class, menuActivity);
+//         */
+//    };
 
 
 ////    @Override
