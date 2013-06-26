@@ -16,14 +16,14 @@ import java.util.Map;
  * Time: 8:46 PM
  * To change this template use File | Settings | File Templates.
  */
-public class PlaceRegionActivityMapper implements ActivityMapper {
+public class RegionalActivityMapper implements ActivityMapper {
     // NOTE, needs to be com.google.inject.Provider instead of javax.inject
     private final Map<PlaceRegion, Provider<Activity>> placeRegionActivityProviderMap;
 
     private final Region region;
 
     @Inject
-    public PlaceRegionActivityMapper(Map<PlaceRegion, Provider<Activity>> placeRegionActivityProviderMap, @Assisted Region region) {
+    public RegionalActivityMapper(Map<PlaceRegion, Provider<Activity>> placeRegionActivityProviderMap, @Assisted Region region) {
         this.placeRegionActivityProviderMap = placeRegionActivityProviderMap;
         this.region = region;
     }

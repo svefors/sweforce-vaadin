@@ -34,25 +34,15 @@ public class RegionalDisplayPresenter {
 
     private RegionalDisplay display;
 
-    private Provider<Place> defaultPlaceProvider = new Provider<Place>() {
-        @Override
-        public Place get() {
-            return Place.NOWHERE;
-        }
-    };
-
     @Inject
     public RegionalDisplayPresenter(EventBus eventBus, PlaceController placeController,
                                     PlaceHistoryHandler placeHistoryHandler,
-                                    RegionActivityMapperFactory regionActivityMapperFactory, Provider<Place> defaultPlace) {
+                                    RegionActivityMapperFactory regionActivityMapperFactory) {
         this.eventBus = eventBus;
         this.placeController = placeController;
         this.placeHistoryHandler = placeHistoryHandler;
         this.regionActivityMapperFactory = regionActivityMapperFactory;
-        this.defaultPlaceProvider = defaultPlace;
-
     }
-
 
 
     /**
@@ -71,12 +61,12 @@ public class RegionalDisplayPresenter {
             activityManager.setDisplay(display.getDisplay(region));
             regionSingleThreadedActivityManagerMap.put(region, activityManager);
         }
-
+        //this doesn;t feel right
         display.addComponentAttachListener(new HasComponents.ComponentAttachListener() {
             @Override
             public void componentAttachedToContainer(HasComponents.ComponentAttachEvent event) {
                 //we only want this to happen once
-                placeHistoryHandlerHandlerRegistration = placeHistoryHandler.register(placeController, eventBus, defaultPlaceProvider);
+                placeHistoryHandlerHandlerRegistration = placeHistoryHandler.register(placeController, eventBus);
                 placeHistoryHandler.handleCurrentFragment();
             }
         });

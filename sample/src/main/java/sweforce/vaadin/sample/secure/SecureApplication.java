@@ -20,6 +20,8 @@ import com.google.inject.name.Names;
 import com.vaadin.ui.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sweforce.gui.place.DefaultPlace;
+import sweforce.gui.place.Place;
 import sweforce.gui.vaadin.GuicedUI;
 import sweforce.gui.place.PlaceHistoryModule;
 import sweforce.gui.vaadin.VaadinModule;
@@ -49,6 +51,8 @@ public class SecureApplication extends GuicedUI {
                 new ShiroSecurityModule(),
                 new SecureMvpModule(),
                 new PlaceHistoryModule(),
+                //in(region).at(place).invoke(Activity)
+                //at(RegistrationPlace.class).in(MenuRegion).do(Activity.class)
                 new RegionPlacesModule() {
                     @Override
                     protected void configurePlaces() {
@@ -60,8 +64,10 @@ public class SecureApplication extends GuicedUI {
 
                         bindPlace(Role2Place.class).in(Style1Layout.Region.MAIN).to(Role2Activity.class);
                         bindPlace(Role2Place.class).in(Style1Layout.Region.TOOLBAR).to(MenuActivity.class);
-                        bind(Component.class).annotatedWith(Names.named(GuicedUI.ROOT_COMPONENT)).to(Style1Layout.class);
-                        bindDefaultPlaceInstance(new NorolePlace());
+
+                        bind(Component.class).annotatedWith(GuicedUI.RootComponent.class).to(Style1Layout.class);
+                        bind(Place.class).annotatedWith(DefaultPlace.class).toInstance(new NorolePlace());
+
                     }
                 }
         };

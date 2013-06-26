@@ -20,4 +20,5 @@ import static java.lang.annotation.ElementType.*;
 @Retention(RetentionPolicy.RUNTIME)
 
 public @interface DefaultPlace {
+
 }

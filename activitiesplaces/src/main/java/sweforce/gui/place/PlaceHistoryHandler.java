@@ -30,28 +30,27 @@ public class PlaceHistoryHandler {
 
     private PlaceController placeController;
 
-    private Provider<Place> defaultPlaceProvider = new Provider<Place>() {
-        @Override
-        public Place get() {
-            return Place.NOWHERE;
-        }
-    };
-
     private final PlaceHistoryMapper mapper;
 
     private final Historian historian;
 
+    private final Provider<Place> defaultPlaceProvider;
+
     @Inject
-    public PlaceHistoryHandler(PlaceHistoryMapper mapper, Historian historian) {
+    public PlaceHistoryHandler(PlaceHistoryMapper mapper, Historian historian, @DefaultPlace Provider<Place> defaultPlaceProvider) {
         this.mapper = mapper;
         this.historian = historian;
+        this.defaultPlaceProvider = defaultPlaceProvider;
     }
 
-    public HandlerRegistration register(PlaceController placeController, EventBus eventBus,
-                                        Provider<Place> defaultPlace) {
+    /**
+     *
+     * @param placeController
+     * @param eventBus
+     * @return
+     */
+    public HandlerRegistration register(PlaceController placeController, EventBus eventBus) {
         this.placeController = placeController;
-        if(defaultPlace != null)
-            defaultPlaceProvider = defaultPlace;
         final HandlerRegistration placeReg =
                 eventBus.addHandler(PlaceChangeEvent.class, new PlaceChangeEvent.Handler() {
                     public void onPlaceChange(PlaceChangeEvent event) {
@@ -68,12 +67,6 @@ public class PlaceHistoryHandler {
 
         return new HandlerRegistration() {
             public void removeHandler() {
-                PlaceHistoryHandler.this.defaultPlaceProvider = new Provider<Place>() {
-                        @Override
-                        public Place get() {
-                            return Place.NOWHERE;
-                        }
-                    };
                 PlaceHistoryHandler.this.placeController = null;
                 placeReg.removeHandler();
                 historyReg.removeHandler();

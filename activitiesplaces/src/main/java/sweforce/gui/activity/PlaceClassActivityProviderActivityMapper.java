@@ -9,12 +9,12 @@ import java.util.Map;
 /**
  *
  */
-public class SimpleActivityMapper implements ActivityMapper {
+public class PlaceClassActivityProviderActivityMapper implements ActivityMapper {
 
     private Map<Class<? extends Place>, Provider<? extends Activity>> activityProviders;
 
     @Inject
-    public SimpleActivityMapper(Map<Class<? extends Place>, Provider<? extends Activity>> activityProviders) {
+    public PlaceClassActivityProviderActivityMapper(Map<Class<? extends Place>, Provider<? extends Activity>> activityProviders) {
         this.activityProviders = activityProviders;
     }
 

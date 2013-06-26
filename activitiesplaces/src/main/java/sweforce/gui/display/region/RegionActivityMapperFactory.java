@@ -9,6 +9,7 @@ import sweforce.gui.activity.ActivityMapper;
 * Time: 10:19 PM
 * To change this template use File | Settings | File Templates.
 */
+@Deprecated
 public interface RegionActivityMapperFactory {
     public ActivityMapper create(Region region);
 }

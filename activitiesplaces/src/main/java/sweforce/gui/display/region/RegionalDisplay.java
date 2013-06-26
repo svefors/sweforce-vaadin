@@ -27,9 +27,4 @@ public interface RegionalDisplay extends HasComponents.ComponentAttachDetachNoti
     @Override
     void removeComponentDetachListener(HasComponents.ComponentDetachListener listener);
 
-
-
-    /*
-    behavior for hiding region
-     */
 }
