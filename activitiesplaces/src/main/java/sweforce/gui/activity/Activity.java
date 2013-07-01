@@ -22,7 +22,7 @@ import sweforce.event.EventBus;
 
 /**
  * Implemented by objects that control a piece of user interface, with a life
- * cycle managed by an {@link ActivityManager}, in response to
+ * cycle managed by an {@link MultiThreadedActivityManager}, in response to
  * {@link sweforce.gui.place.PlaceChangeEvent} events as the user
  * navigates through the app.
  */

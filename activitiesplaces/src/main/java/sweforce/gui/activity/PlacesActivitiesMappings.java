@@ -1,10 +1,12 @@
 package sweforce.gui.activity;
 
 import com.google.inject.Binder;
+import com.google.inject.MembersInjector;
 import com.google.inject.Provider;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 import sweforce.gui.place.Place;
+import sweforce.gui.place.PlaceHistoryMapper;
 import sweforce.gui.place.PlaceTokenizer;
 import sweforce.gui.place.PlaceTokenizerUtil;
 
@@ -32,6 +34,8 @@ public class PlacesActivitiesMappings {
                 new TypeLiteral<Activity>() {
                 }
         );
+//        MembersInjector<PlaceHistoryMapper> placeHistoryMapperInjector =  binder.getMembersInjector(PlaceHistoryMapper.class);
+
         this.stringPlaceTokenizerMapBinder = MapBinder.newMapBinder(binder,
                 new TypeLiteral<String>() {
                 },
@@ -49,6 +53,7 @@ public class PlacesActivitiesMappings {
      */
     public KnownPlace at(final Class<? extends Place> place) {
         PlaceTokenizerUtil.bind(place, stringPlaceTokenizerMapBinder);
+
         return new KnownPlace() {
             @Override
             public PlacesActivitiesMappings run(Activity activity) {

@@ -20,7 +20,7 @@ import sweforce.gui.place.Place;
 
 /**
  * Finds the activity to run for a given {@link Place}, used to configure
- * an {@link ActivityManager}.
+ * an {@link MultiThreadedActivityManager}.
  */
 public interface ActivityMapper {
     /**

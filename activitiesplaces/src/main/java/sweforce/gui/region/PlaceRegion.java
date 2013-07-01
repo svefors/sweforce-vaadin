@@ -1,4 +1,4 @@
-package sweforce.gui.display.region;
+package sweforce.gui.region;
 
 import sweforce.gui.place.Place;
 

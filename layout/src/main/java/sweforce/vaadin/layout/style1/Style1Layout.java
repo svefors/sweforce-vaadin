@@ -3,10 +3,12 @@ package sweforce.vaadin.layout.style1;
 
 import com.vaadin.ui.VerticalLayout;
 import sweforce.gui.display.Display;
+import sweforce.gui.region.Region;
+import sweforce.gui.region.RegionalDisplay;
+import sweforce.gui.region.RegionalDisplayPresenter;
 import sweforce.gui.vaadin.VaadinView;
 import sweforce.gui.display.View;
-import sweforce.gui.display.region.RegionalDisplay;
-import sweforce.gui.display.region.RegionalDisplayPresenter;
+
 import sweforce.vaadin.layout.views.SingleViewOrSplitPanel;
 
 import javax.inject.Inject;
@@ -44,10 +46,10 @@ public class Style1Layout extends VerticalLayout implements RegionalDisplay {
 //    }
 
 
-    public Display getDisplay(sweforce.gui.display.region.Region region) {
-        if (!(region instanceof Region))
+    public Display getDisplay(Region region) {
+        if (!(region instanceof MyRegion))
             throw new IllegalArgumentException("wrong type of region");
-        switch ((Region) region) {
+        switch ((MyRegion) region) {
             case SPLIT_LEFT:
                 return singleViewOrSplitPanel.getFirstComponentDisplay();
             case SPLIT_RIGHT:
@@ -101,14 +103,14 @@ public class Style1Layout extends VerticalLayout implements RegionalDisplay {
     }
 
     @Override
-    public Set<sweforce.gui.display.region.Region> getRegions() {
-        HashSet<sweforce.gui.display.region.Region> regions =
-                new HashSet<sweforce.gui.display.region.Region>();
-        regions.addAll(Arrays.asList(Region.values()));
+    public Set<Region> getRegions() {
+        HashSet<Region> regions =
+                new HashSet<Region>();
+        regions.addAll(Arrays.asList(MyRegion.values()));
         return regions;
     }
 
-    public static enum Region implements sweforce.gui.display.region.Region {
+    public static enum MyRegion implements sweforce.gui.region.Region {
 
         TOOLBAR, SPLIT_LEFT, SPLIT_RIGHT, MAIN
 

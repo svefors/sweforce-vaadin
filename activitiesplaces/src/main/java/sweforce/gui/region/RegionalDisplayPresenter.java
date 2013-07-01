@@ -1,19 +1,17 @@
-package sweforce.gui.display.region;
+package sweforce.gui.region;
 
 import com.vaadin.ui.HasComponents;
 import sweforce.event.EventBus;
 import sweforce.event.HandlerRegistration;
 import sweforce.gui.activity.SingleThreadedActivityManager;
-import sweforce.gui.place.Place;
 import sweforce.gui.place.PlaceController;
 import sweforce.gui.place.PlaceHistoryHandler;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
 import java.util.*;
 
 /**
- *
+ * Revisit this class later. Is it really a Presenter if there is no Model?
  */
 
 public class RegionalDisplayPresenter {
@@ -44,6 +42,9 @@ public class RegionalDisplayPresenter {
         this.regionActivityMapperFactory = regionActivityMapperFactory;
     }
 
+    /*
+    x
+     */
 
     /**
      * @param display

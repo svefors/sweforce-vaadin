@@ -1,4 +1,4 @@
-package sweforce.gui.display.region;
+package sweforce.gui.region;
 
 import com.vaadin.ui.HasComponents;
 import sweforce.gui.display.Display;

@@ -27,3 +27,4 @@ public class PlaceClassActivityProviderActivityMapper implements ActivityMapper 
         return null;
     }
 }
+

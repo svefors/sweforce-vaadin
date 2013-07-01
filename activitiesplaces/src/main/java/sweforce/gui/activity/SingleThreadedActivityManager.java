@@ -17,7 +17,7 @@ import sweforce.gui.display.NullView;
  * if a user sends two requests at once to the same application, they're handled one at a time. "
  * So this should work...
  */
-public class SingleThreadedActivityManager implements PlaceChangeEvent.Handler, PlaceChangeRequestEvent.Handler {
+public class SingleThreadedActivityManager implements PlaceChangeEvent.Handler, PlaceChangeRequestEvent.Handler, ActivityManager {
 
     private static Logger logger = LoggerFactory.getLogger(SingleThreadedActivityManager.class);
 
@@ -54,6 +54,7 @@ public class SingleThreadedActivityManager implements PlaceChangeEvent.Handler, 
      *
      * @param display an instance of AcceptsOneWidget
      */
+    @Override
     public void setDisplay(Display display) {
         boolean wasActive = (null != this.display);
         boolean willBeActive = (null != display);

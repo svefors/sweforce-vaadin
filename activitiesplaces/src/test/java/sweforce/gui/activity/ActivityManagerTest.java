@@ -145,7 +145,7 @@ public class ActivityManagerTest extends TestCase {
 
     private CountingEventBus eventBus = new CountingEventBus();
 
-    private ActivityManager manager = new ActivityManager(myMap, eventBus);
+    private MultiThreadedActivityManager manager = new MultiThreadedActivityManager(myMap, eventBus);
 
     @Test
     public void testActiveEventBus() {
@@ -165,7 +165,7 @@ public class ActivityManagerTest extends TestCase {
             }
         };
 
-        manager = new ActivityManager(map, eventBus);
+        manager = new MultiThreadedActivityManager(map, eventBus);
         manager.setDisplay(realDisplay);
 
         eventBus.fireEvent(new PlaceChangeEvent(place1));
@@ -197,7 +197,7 @@ public class ActivityManagerTest extends TestCase {
             }
         };
 
-        manager = new ActivityManager(map, eventBus);
+        manager = new MultiThreadedActivityManager(map, eventBus);
         manager.setDisplay(realDisplay);
 
         PlaceChangeRequestEvent event = new PlaceChangeRequestEvent(
@@ -260,7 +260,7 @@ public class ActivityManagerTest extends TestCase {
             }
         };
 
-        manager = new ActivityManager(map, eventBus);
+        manager = new MultiThreadedActivityManager(map, eventBus);
         manager.setDisplay(realDisplay);
 
         PlaceChangeRequestEvent event = new PlaceChangeRequestEvent(
@@ -488,7 +488,7 @@ public class ActivityManagerTest extends TestCase {
             }
         };
 
-        manager = new ActivityManager(map, eventBus);
+        manager = new MultiThreadedActivityManager(map, eventBus);
         manager.setDisplay(realDisplay);
 
         // Start an activity
@@ -585,7 +585,7 @@ public class ActivityManagerTest extends TestCase {
             }
         };
 
-        manager = new ActivityManager(map, eventBus);
+        manager = new MultiThreadedActivityManager(map, eventBus);
         manager.setDisplay(realDisplay);
 
         // Start an activity

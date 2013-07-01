@@ -1,4 +1,4 @@
-package sweforce.gui.display.region;
+package sweforce.gui.region;
 
 import com.google.inject.Provider;
 import com.google.inject.assistedinject.Assisted;

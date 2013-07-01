@@ -88,7 +88,7 @@ public class PlaceHistoryHandlerTest {
     private class Subject extends PlaceHistoryHandler {
 
         Subject(PlaceHistoryMapper mapper, Historian historian) {
-            super(mapper, historian);
+            super(mapper, historian, null);
         }
 
 //        @Override
@@ -159,12 +159,12 @@ public class PlaceHistoryHandlerTest {
         placeController = new PlaceControllerImpl(eventBus,
                 new MockConfirmationHandler());
         subject = new Subject(new MockPlaceHistoryMapper(), historian);
-        subject.register(placeController, eventBus, new Provider<Place>() {
-            @Override
-            public Place get() {
-                return defaultPlace;
-            }
-        });
+//        subject.register(placeController, eventBus, new Provider<Place>() {
+//            @Override
+//            public Place get() {
+//                return defaultPlace;
+//            }
+//        });
     }
 
     ;

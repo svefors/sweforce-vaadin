@@ -1,4 +1,4 @@
-package sweforce.gui.display.region;
+package sweforce.gui.region;
 
 
 import com.google.inject.Binder;
@@ -72,5 +72,20 @@ public class PlacesRegionsActivitiesMappings {
         public InRegion in(Region region);
 
     }
+
+    /*
+    Use stricter configuration wizard order.
+
+    new ActivitiesPlacesWizard()
+        .createPlaceTokenizersFromPlaceClassesUsingReflection()
+        or
+        .usePrefixPlaceTokenizerMap(Map<String, PlaceTokenizer>
+
+        .useRegions
+    usePlaceTokenizer
+    x.in(TopLevel).runByDefault(MenuActivity.class)
+    x.at(AccountsPlace.class).in(SubLevel).run(
+     */
+
 
 }

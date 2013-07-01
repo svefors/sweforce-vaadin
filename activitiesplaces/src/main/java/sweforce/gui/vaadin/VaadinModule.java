@@ -25,8 +25,8 @@ public class VaadinModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(UI.class).toInstance(root);
-        bind(PlaceController.ConfirmationHandler.class).to(RootConfirmationHandler.class);
-        bind(PlaceHistoryHandler.Historian.class).to(VaadinPageHistorian.class);
+//        bind(PlaceController.ConfirmationHandler.class).to(RootConfirmationHandler.class);
+//        bind(PlaceHistoryHandler.Historian.class).to(VaadinPageHistorian.class);
     }
 
     @Provides
