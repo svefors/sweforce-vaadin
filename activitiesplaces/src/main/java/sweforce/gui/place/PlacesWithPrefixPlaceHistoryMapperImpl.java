@@ -43,21 +43,22 @@ public class PlacesWithPrefixPlaceHistoryMapperImpl extends AbstractPlaceHistory
         return tokenizerMap.get(prefix);
     }
 
-    public PlacesWithPrefixPlaceHistoryMapperImpl(Class<? extends Place>... placeClasses) {
-        for (Class<? extends Place> placeClass : placeClasses) {
-            Class<? extends PlaceTokenizer> placeTokenizerClass =
-                    PlaceTokenizerUtil.getDeclaredPlaceTokenizerClass(placeClass);
-            String prefix = PlaceTokenizerUtil.getPrefixAnnotationValue(placeTokenizerClass);
-            try {
-                tokenizerMap.put(prefix, placeTokenizerClass.newInstance());
-            } catch (InstantiationException e) {
-                throw new IllegalStateException(e);
-            } catch (IllegalAccessException e) {
-                throw new IllegalStateException(e);
-            }
-        }
-
-    }
+//    @SuppressWarnings("unchecked")
+//    public PlacesWithPrefixPlaceHistoryMapperImpl(Class<? extends Place>... placeClasses) {
+//        for (Class<? extends Place> placeClass : placeClasses) {
+//            Class<? extends PlaceTokenizer> placeTokenizerClass =
+//                    PlaceTokenizerUtil.getDeclaredPlaceTokenizerClass(placeClass);
+//            String prefix = PlaceTokenizerUtil.getPrefixAnnotationValue(placeTokenizerClass);
+//            try {
+//                tokenizerMap.put(prefix, placeTokenizerClass.newInstance());
+//            } catch (InstantiationException e) {
+//                throw new IllegalStateException(e);
+//            } catch (IllegalAccessException e) {
+//                throw new IllegalStateException(e);
+//            }
+//        }
+//
+//    }
 
     public PlacesWithPrefixPlaceHistoryMapperImpl(PrefixPlaceTokenizerMapping... prefixPlaceTokenizerMappings) {
         for (PrefixPlaceTokenizerMapping prefixPlaceTokenizerMapping : prefixPlaceTokenizerMappings) {

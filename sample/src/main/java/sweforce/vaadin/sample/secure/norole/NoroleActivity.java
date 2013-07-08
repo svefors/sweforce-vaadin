@@ -39,7 +39,7 @@ public class NoroleActivity extends AbstractActivity {
     }
 
 
-    public static class MyActivityMapper implements sweforce.gui.activity.ActivityMapper {
+    public static class ActivityMapper implements sweforce.gui.activity.ActivityMapper {
         @Override
         public Activity getActivity(Place place) {
             if (place instanceof NorolePlace)

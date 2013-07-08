@@ -17,13 +17,15 @@ public class CompositeActivityMapper implements ActivityMapper {
 
     private final Set<ActivityMapper> activityMapperSet;
 
-    public CompositeActivityMapper(Set<ActivityMapper> activityMapperSet) {
-        this.activityMapperSet = activityMapperSet;
+
+    public CompositeActivityMapper(ActivityMapper[] activityMappers) {
+        this.activityMapperSet  = new HashSet<ActivityMapper>();
+        for(ActivityMapper activityMapper : activityMappers){
+            registerActivityMapper(activityMapper);
+        }
     }
 
-    public CompositeActivityMapper() {
-        this(new HashSet<ActivityMapper>());
-    }
+
 
     public boolean registerActivityMapper(ActivityMapper activityMapper) {
         if (activityMapper == this)

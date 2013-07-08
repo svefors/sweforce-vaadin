@@ -17,6 +17,8 @@ package sweforce.vaadin.sample.secure.menu;
 
 import com.vaadin.ui.Button;
 import sweforce.gui.activity.AbstractActivity;
+import sweforce.gui.activity.Activity;
+import sweforce.gui.activity.ActivityMapper;
 import sweforce.gui.place.Place;
 import sweforce.gui.place.PlaceController;
 import sweforce.gui.display.Display;
@@ -25,6 +27,8 @@ import sweforce.event.EventBus;
 import sweforce.vaadin.sample.secure.norole.NorolePlace;
 import sweforce.vaadin.sample.secure.role1.Role1Place;
 import sweforce.vaadin.sample.secure.role2.Role2Place;
+import sweforce.vaadin.security.login.LoginPlace;
+import sweforce.vaadin.security.logout.LogoutPlace;
 
 import javax.inject.Inject;
 
@@ -35,7 +39,7 @@ import javax.inject.Inject;
  * Time: 11:45 AM
  * To change this template use File | Settings | File Templates.
  */
-public class MenuActivity extends AbstractActivity {
+public class MenuActivity extends AbstractActivity implements ActivityMapper {
 
     private MenuView menuView = new MenuViewImpl();
 
@@ -64,7 +68,7 @@ public class MenuActivity extends AbstractActivity {
 
     }
 
-    public class GotoPlaceClickListener implements Button.ClickListener{
+    public class GotoPlaceClickListener implements Button.ClickListener {
 
         private Place place;
 
@@ -78,5 +82,11 @@ public class MenuActivity extends AbstractActivity {
         }
     }
 
+    @Override
+    public Activity getActivity(Place place) {
+        if (place instanceof LoginPlace || place instanceof LogoutPlace)
+            return null;
+        return this;
+    }
 
 }

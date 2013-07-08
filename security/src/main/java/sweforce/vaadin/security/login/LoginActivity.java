@@ -18,8 +18,11 @@ package sweforce.vaadin.security.login;
 
 import sweforce.event.EventBus;
 import sweforce.gui.activity.AbstractActivity;
+import sweforce.gui.activity.Activity;
+import sweforce.gui.activity.ActivityMapper;
 import sweforce.gui.display.Display;
 import sweforce.event.SystemThrowableEvent;
+import sweforce.gui.place.Place;
 import sweforce.vaadin.security.SecurityFacade;
 
 import javax.inject.Inject;
@@ -27,7 +30,7 @@ import javax.inject.Inject;
 /**
  *
  */
-public class LoginActivity extends AbstractActivity implements LoginView.Presenter {
+public class LoginActivity extends AbstractActivity implements LoginView.Presenter, ActivityMapper {
 
 
     private EventBus eventBus;
@@ -35,7 +38,6 @@ public class LoginActivity extends AbstractActivity implements LoginView.Present
     private final LoginView loginView;
 
     private final SecurityFacade securityFacade;
-
 
     @Inject
     public LoginActivity(LoginView loginView, SecurityFacade securityFacade) {
@@ -69,5 +71,12 @@ public class LoginActivity extends AbstractActivity implements LoginView.Present
             ex.printStackTrace();
             eventBus.fireEvent(new SystemThrowableEvent(ex));
         }
+    }
+
+    @Override
+    public Activity getActivity(Place place) {
+        if (place instanceof LoginPlace)
+            return this;
+        return null;
     }
 }

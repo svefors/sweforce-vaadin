@@ -15,6 +15,6 @@ public class EventModule extends BinderModule {
     @Override
     protected void declare() {
         bind(EventBus.class).to(SimpleEventBus.class);
-        bind(N)
+
     }
 }

@@ -22,10 +22,19 @@ package sweforce.gui.place;
  */
 public abstract class Place {
 
-  /**
-   * The null place.
-   */
-  public static final Place NOWHERE = new Place() {
-  };
+    /**
+     * The null place.
+     */
+    public static final Place NOWHERE = new Place(){};
 
+//    public static class NOWHERE extends Place {
+//        private static final NOWHERE instance = new NOWHERE();
+//
+//        private NOWHERE() {
+//        }
+//
+//        private static NOWHERE getInstance() {
+//            return instance;
+//        }
+//    }
 }

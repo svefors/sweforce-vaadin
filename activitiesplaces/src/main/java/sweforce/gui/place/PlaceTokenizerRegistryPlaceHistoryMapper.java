@@ -30,10 +30,10 @@ public class PlaceTokenizerRegistryPlaceHistoryMapper extends AbstractPlaceHisto
             try {
                 Class<? extends Place> placeClass = (Class<? extends Place>) mapping.placeTokenizer()
                         .getClass().getMethod("getPlace", String.class).getReturnType();
+                placeClassPrefixMap.put(placeClass, mapping.prefix());
             } catch (NoSuchMethodException nsme) {
-                throw new IllegalStateException("Place ")
+                throw new IllegalStateException("Placetokenizer getPlace(String) does not have return type Place");
             }
-            placeClassPrefixMap.
         }
     }
 

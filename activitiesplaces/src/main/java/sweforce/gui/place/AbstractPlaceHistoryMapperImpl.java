@@ -8,6 +8,17 @@ package sweforce.gui.place;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class AbstractPlaceHistoryMapperImpl implements PlaceHistoryMapper {
+
+    public final char separator;
+
+    protected AbstractPlaceHistoryMapperImpl(char separator) {
+        this.separator = separator;
+    }
+
+    protected AbstractPlaceHistoryMapperImpl() {
+        this(':');
+    }
+
     public Place getPlace(String token) {
         if (token == null)
             return null;

@@ -88,7 +88,7 @@ public class PlaceHistoryHandlerTest {
     private class Subject extends PlaceHistoryHandler {
 
         Subject(PlaceHistoryMapper mapper, Historian historian) {
-            super(mapper, historian, null);
+            super(mapper, historian);
         }
 
 //        @Override

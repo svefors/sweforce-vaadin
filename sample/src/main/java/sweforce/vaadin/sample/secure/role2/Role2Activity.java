@@ -46,7 +46,7 @@ public class Role2Activity extends AbstractActivity {
         panel.setView(role2View);
     }
 
-    public static class MyActivityMapper implements ActivityMapper {
+    public static class ActivityMapper implements sweforce.gui.activity.ActivityMapper {
         @Override
         public Activity getActivity(Place place) {
             if(place instanceof Role2Place)

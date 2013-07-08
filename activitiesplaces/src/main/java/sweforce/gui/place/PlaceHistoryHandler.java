@@ -36,7 +36,6 @@ public class PlaceHistoryHandler {
 
     private Place defaultPlace = Place.NOWHERE;
 
-    @Inject
     public PlaceHistoryHandler(PlaceHistoryMapper mapper, Historian historian) {
         this.mapper = mapper;
         this.historian = historian;

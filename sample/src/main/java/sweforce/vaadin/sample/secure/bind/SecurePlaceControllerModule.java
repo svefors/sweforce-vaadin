@@ -15,7 +15,6 @@ import sweforce.vaadin.security.place.SecurePlaceController;
 public class SecurePlaceControllerModule extends BinderModule {
     @Override
     protected void declare() {
-
         injectingInto(SecurePlaceController.class).bind(PlaceController.class).to(PlaceControllerImpl.class);
         bind(PlaceController.class).to(SecurePlaceController.class);
     }

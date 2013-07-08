@@ -34,7 +34,7 @@ public class RegionPluginModule extends BinderModule {
         multibind(Name.named(region.toString()), ActivityMapper.class).to(activityMapper);
         Class<? extends PlaceTokenizer> placeTokenizerClass =
                 PlaceTokenizerUtil.getDeclaredPlaceTokenizerClass(placeClass);
-        String prefix = PlaceTokenizerUtil.getPrefixAnnotationValue(placeTokenizerClass);
+        String prefix = "apa";//PlaceTokenizerUtil.getPrefixAnnotationValue(placeTokenizerClass);
         try {
             multibind(PlacesWithPrefixPlaceHistoryMapperImpl.PrefixPlaceTokenizerMapping.class).to(
                     new PlacesWithPrefixPlaceHistoryMapperImpl.PrefixPlaceTokenizerMapping(
