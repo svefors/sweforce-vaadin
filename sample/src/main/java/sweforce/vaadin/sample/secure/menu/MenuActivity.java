@@ -41,7 +41,6 @@ public class MenuActivity extends AbstractActivity {
 
     private PlaceController placeController;
 
-    @Inject
     public MenuActivity(PlaceController placeController) {
         this.placeController = placeController;
     }
@@ -78,4 +77,6 @@ public class MenuActivity extends AbstractActivity {
             placeController.goTo(place);
         }
     }
+
+
 }

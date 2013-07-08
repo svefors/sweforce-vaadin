@@ -15,9 +15,14 @@
  */
 package sweforce.vaadin.sample.secure.norole;
 
+import se.jbee.inject.bind.BinderModule;
 import sweforce.event.EventBus;
 import sweforce.gui.activity.AbstractActivity;
+import sweforce.gui.activity.Activity;
+import sweforce.gui.activity.ActivityMapper;
+import sweforce.gui.activity.CompositeActivityMapper;
 import sweforce.gui.display.Display;
+import sweforce.gui.place.Place;
 
 /**
  * Created by IntelliJ IDEA.
@@ -32,4 +37,16 @@ public class NoroleActivity extends AbstractActivity {
     public void start(Display panel, EventBus eventBus) {
         panel.setView(new NoroleView());
     }
+
+
+    public static class MyActivityMapper implements sweforce.gui.activity.ActivityMapper {
+        @Override
+        public Activity getActivity(Place place) {
+            if (place instanceof NorolePlace)
+                return new NoroleActivity();
+            else
+                return null;
+        }
+    }
+
 }

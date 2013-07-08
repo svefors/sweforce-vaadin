@@ -51,24 +51,26 @@ public class PlaceTokenizerUtil {
         return null;
     }
 
-    //MapBinder<String, Snack>  Map<String, PlaceTokenizer<? extends Place>>
 
-    public static <P extends Place> void bind(Class<P> placeClass, MapBinder<String, PlaceTokenizer<? extends Place>> binder) {
-        Class<? extends PlaceTokenizer<P>> placeTokenizerClass = getDeclaredPlaceTokenizerClass(placeClass);
-        if (placeTokenizerClass != null) {
-            String prefix = getPrefixAnnotationValue(placeTokenizerClass);
-//            try {
-//                PlaceTokenizer placeTokenizer = placeTokenizerClass.newInstance();
-                //bind to the instance
-                binder.addBinding(prefix).to(placeTokenizerClass);
-//            } catch (InstantiationException ie) {
-//                //bind to the class. assume there is binding somewhere
+
+//    //MapBinder<String, Snack>  Map<String, PlaceTokenizer<? extends Place>>
+//
+//    public static <P extends Place> void bind(Class<P> placeClass, MapBinder<String, PlaceTokenizer<? extends Place>> binder) {
+//        Class<? extends PlaceTokenizer<P>> placeTokenizerClass = getDeclaredPlaceTokenizerClass(placeClass);
+//        if (placeTokenizerClass != null) {
+//            String prefix = getPrefixAnnotationValue(placeTokenizerClass);
+////            try {
+////                PlaceTokenizer placeTokenizer = placeTokenizerClass.newInstance();
+//                //bind to the instance
 //                binder.addBinding(prefix).to(placeTokenizerClass);
-//            } catch (IllegalAccessException iae) {
-//                //bind to the class. assume there is binding somewhere
-//                binder.addBinding(prefix).to(placeTokenizerClass);
-//            }
-        }
-    }
+////            } catch (InstantiationException ie) {
+////                //bind to the class. assume there is binding somewhere
+////                binder.addBinding(prefix).to(placeTokenizerClass);
+////            } catch (IllegalAccessException iae) {
+////                //bind to the class. assume there is binding somewhere
+////                binder.addBinding(prefix).to(placeTokenizerClass);
+////            }
+//        }
+//    }
 
 }

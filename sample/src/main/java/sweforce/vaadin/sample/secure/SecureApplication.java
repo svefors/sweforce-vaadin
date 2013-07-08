@@ -15,24 +15,23 @@
  */
 package sweforce.vaadin.sample.secure;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sweforce.gui.activity.ActivityManagerModule;
-import sweforce.gui.activity.ActivityMapper;
-import sweforce.gui.place.PlaceControllerModule;
-import sweforce.gui.place.PlaceHistoryModule;
-import sweforce.gui.vaadin.VaadinModule;
+import se.jbee.inject.Injector;
+import se.jbee.inject.bind.BinderModule;
+import se.jbee.inject.bootstrap.Bootstrap;
+import sweforce.event.EventBus;
+import sweforce.event.SimpleEventBus;
+import sweforce.gui.display.Display;
+import sweforce.gui.place.*;
+import sweforce.gui.vaadin.VaadinPageHistorian;
+import sweforce.vaadin.layout.style1.Style1Layout;
+import sweforce.vaadin.sample.secure.bind.SecureApplicationBundle;
+import sweforce.vaadin.sample.secure.norole.NoroleActivity;
 import sweforce.vaadin.sample.secure.norole.NorolePlace;
-import sweforce.vaadin.sample.secure.role1.Role1Place;
-import sweforce.vaadin.security.SecureMvpModule;
-import sweforce.vaadin.security.login.LoginPlace;
-import sweforce.vaadin.security.logout.LogoutPlace;
-import sweforce.vaadin.security.shiro.ShiroSecurityModule;
+import sweforce.vaadin.security.place.SecurePlaceController;
 
 /**
  * Sample Application
@@ -41,66 +40,38 @@ public class SecureApplication extends UI {
 
     private static Logger logger = LoggerFactory.getLogger(SecureApplication.class);
 
-//    @Override
-//    public Module[] getModules() {
-//        return new Module[]{
-//                new VaadinModule(this),
-//                new ShiroSecurityModule(),
-//                new SecureMvpModule(),
-//                new PlaceHistoryModule(),
-//                //in(region).at(place).invoke(Activity)
-//                //at(RegistrationPlace.class).in(MenuRegion).do(Activity.class)
-//                new RegionPlacesModule() {
-//                    @Override
-//                    protected void configurePlaces() {
-//                        bindPlace(NorolePlace.class).in(Style1Layout.Region.MAIN).to(NoroleActivity.class);
-//                        bindPlace(NorolePlace.class).in(Style1Layout.Region.TOOLBAR).to(MenuActivity.class);
-//
-//                        bindPlace(Role1Place.class).in(Style1Layout.Region.MAIN).to(Role1Activity.class);
-//                        bindPlace(Role1Place.class).in(Style1Layout.Region.TOOLBAR).to(MenuActivity.class);
-//
-//                        bindPlace(Role2Place.class).in(Style1Layout.Region.MAIN).to(Role2Activity.class);
-//                        bindPlace(Role2Place.class).in(Style1Layout.Region.TOOLBAR).to(MenuActivity.class);
-//
-//                        bind(Component.class).annotatedWith(GuicedUI.RootComponent.class).to(Style1Layout.class);
-//                        bind(Place.class).annotatedWith(DefaultPlace.class).toInstance(new NorolePlace());
-//
-//                    }
-//                }
-//        };
-//    }
-
-
     @Override
     protected void init(VaadinRequest request) {
-        Injector uiRootInjector = Guice.createInjector(
-                new VaadinModule(SecureApplication.this),
-                new ShiroSecurityModule(),
-                new SecureMvpModule(),
-                new PlaceHistoryModule(NorolePlace.class, Role1Place.class, Role1Place.class, LoginPlace.class,
-                        LogoutPlace.class),
-                new PlaceControllerModule(),
-                new AbstractModule() {
-                    @Override
-                    protected void configure() {
-                        //To change body of implemented methods use File | Settings | File Templates.
-                    }
-                }
-        );
-        Injector mainRegionInjector = uiRootInjector.createChildInjector(new ActivityManagerModule(),
-                new AbstractModule() {
-                    @Override
-                    protected void configure() {
-                        bind(ActivityMapper.class)
-                    }
-                }
-        );
-        //To change body of implemented methods use File | Settings | File Templates.
+        Injector injector = Bootstrap.injector(SecureApplicationBundle.class);
+
+        Style1Layout style1Layout = new Style1Layout();
+        this.setContent(style1Layout);
+
+        Display mainDisplay = style1Layout.getDisplay(Style1Layout.MyRegion.MAIN);
+        Display leftDisplay = style1Layout.getDisplay(Style1Layout.MyRegion.SPLIT_LEFT);
+        Display rightDisplay = style1Layout.getDisplay(Style1Layout.MyRegion.SPLIT_RIGHT);
+        Display toolbarDisplay = style1Layout.getDisplay(Style1Layout.MyRegion.TOOLBAR);
+
+
+
+    /*
+    goal is to make the application
+    - testable
+    - no magic
+
+I want a dsl to compose the app!
+
+
+(Style1Layout.MyRegion.MAIN).placeClass
+
+
+     */
+        //move this to bind
+
+//        PlaceHistoryHandler historyHandler = injector.resolve(Dependency.dependency(PlaceHistoryHandler.class));
+//        historyHandler.handleCurrentFragment();
+
     }
-
-
-
-
 
 
 }

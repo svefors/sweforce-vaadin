@@ -28,18 +28,15 @@ public class RegionalDisplayPresenter {
     private Map<Region, SingleThreadedActivityManager> regionSingleThreadedActivityManagerMap =
             new HashMap<Region, SingleThreadedActivityManager>();
 
-    private final RegionActivityMapperFactory regionActivityMapperFactory;
 
     private RegionalDisplay display;
 
-    @Inject
     public RegionalDisplayPresenter(EventBus eventBus, PlaceController placeController,
-                                    PlaceHistoryHandler placeHistoryHandler,
-                                    RegionActivityMapperFactory regionActivityMapperFactory) {
+                                    PlaceHistoryHandler placeHistoryHandler) {
         this.eventBus = eventBus;
         this.placeController = placeController;
         this.placeHistoryHandler = placeHistoryHandler;
-        this.regionActivityMapperFactory = regionActivityMapperFactory;
+
     }
 
     /*

@@ -16,8 +16,11 @@
 package sweforce.vaadin.sample.secure.role1;
 
 import sweforce.gui.activity.AbstractActivity;
+import sweforce.gui.activity.Activity;
+import sweforce.gui.activity.ActivityMapper;
 import sweforce.gui.display.Display;
 import sweforce.event.EventBus;
+import sweforce.gui.place.Place;
 
 /**
  * Created by IntelliJ IDEA.
@@ -32,4 +35,15 @@ public class Role1Activity extends AbstractActivity {
     public void start(Display panel, EventBus eventBus) {
         panel.setView(new Role1View());
     }
+
+    public static class MyActivityMapper implements ActivityMapper {
+        @Override
+        public Activity getActivity(Place place) {
+            if(place instanceof Role1Place)
+                return new Role1Activity();
+            else
+                return null;
+        }
+    }
+
 }

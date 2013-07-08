@@ -24,7 +24,6 @@ import javax.inject.Singleton;
  * In charge of the user's place/location in the app.
  * Copied and modified from GWt PLace Controller
  */
-@Singleton
 public class PlaceControllerImpl implements PlaceController {
 
     private final EventBus eventBus;
@@ -33,7 +32,6 @@ public class PlaceControllerImpl implements PlaceController {
 
     private ConfirmationHandler delegate;
 
-    @Inject
     public PlaceControllerImpl(EventBus eventBus, ConfirmationHandler confirmationHandler) {
         this.eventBus = eventBus;
         this.delegate = confirmationHandler;

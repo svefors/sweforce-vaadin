@@ -34,13 +34,12 @@ public class PlaceHistoryHandler {
 
     private final Historian historian;
 
-    private final Provider<Place> defaultPlaceProvider;
+    private Place defaultPlace = Place.NOWHERE;
 
     @Inject
-    public PlaceHistoryHandler(PlaceHistoryMapper mapper, Historian historian, @DefaultPlace Provider<Place> defaultPlaceProvider) {
+    public PlaceHistoryHandler(PlaceHistoryMapper mapper, Historian historian) {
         this.mapper = mapper;
         this.historian = historian;
-        this.defaultPlaceProvider = defaultPlaceProvider;
     }
 
     /**
@@ -68,7 +67,7 @@ public class PlaceHistoryHandler {
         return new HandlerRegistration() {
             public void removeHandler() {
                 PlaceHistoryHandler.this.placeController = null;
-                placeReg.removeHandler();
+                    placeReg.removeHandler();
                 historyReg.removeHandler();
             }
         };
@@ -77,7 +76,7 @@ public class PlaceHistoryHandler {
 
 
     private String tokenForPlace(Place newPlace) {
-        if (defaultPlaceProvider.get().equals(newPlace)) {
+        if (defaultPlace.equals(newPlace)) {
             return "";
         }
 
@@ -93,7 +92,7 @@ public class PlaceHistoryHandler {
         Place newPlace = null;
 
         if ("".equals(token)) {
-            newPlace = defaultPlaceProvider.get();
+            newPlace = defaultPlace;
         }
 
         if (newPlace == null) {
@@ -101,7 +100,7 @@ public class PlaceHistoryHandler {
         }
 
         if (newPlace == null) {
-            newPlace = defaultPlaceProvider.get();
+            newPlace = defaultPlace;
         }
 
         placeController.goTo(newPlace);

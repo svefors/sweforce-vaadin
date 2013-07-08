@@ -17,7 +17,11 @@ package sweforce.vaadin.sample.secure.role2;
 
 import sweforce.event.EventBus;
 import sweforce.gui.activity.AbstractActivity;
+import sweforce.gui.activity.Activity;
+import sweforce.gui.activity.ActivityMapper;
 import sweforce.gui.display.Display;
+import sweforce.gui.place.Place;
+import sweforce.vaadin.sample.secure.role1.Role1Place;
 
 /**
  * Created by IntelliJ IDEA.
@@ -40,5 +44,15 @@ public class Role2Activity extends AbstractActivity {
         if(someValue!= null)
             role2View.getLabel_1().setValue("Parameter was: " + someValue);
         panel.setView(role2View);
+    }
+
+    public static class MyActivityMapper implements ActivityMapper {
+        @Override
+        public Activity getActivity(Place place) {
+            if(place instanceof Role2Place)
+                return new Role2Activity();
+            else
+                return null;
+        }
     }
 }

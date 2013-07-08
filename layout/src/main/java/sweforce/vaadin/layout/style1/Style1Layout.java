@@ -26,10 +26,9 @@ public class Style1Layout extends VerticalLayout implements RegionalDisplay {
 
     private VerticalLayout toolbarContainer = new VerticalLayout();
 
-    @Inject
-    public Style1Layout(RegionalDisplayPresenter regionalPresenter) {
+
+    public Style1Layout() {
         this.addComponent(singleViewOrSplitPanel);
-        regionalPresenter.bindRegionalDisplay(this);
     }
 
 
