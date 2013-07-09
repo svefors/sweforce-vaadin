@@ -36,13 +36,6 @@ public class Role1Activity extends AbstractActivity {
         panel.setView(new Role1View());
     }
 
-    public static class ActivityMapper implements sweforce.gui.activity.ActivityMapper {
-        @Override
-        public Activity getActivity(Place place) {
-            if(place instanceof Role1Place)
-                return new Role1Activity();
-            return null;
-        }
-    }
+
 
 }

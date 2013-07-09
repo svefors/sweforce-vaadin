@@ -8,13 +8,10 @@ import se.jbee.inject.bind.BinderModule;
 import se.jbee.inject.bootstrap.Bootstrap;
 import se.jbee.inject.bootstrap.BootstrapperBundle;
 import sweforce.event.EventBus;
-import sweforce.gui.activity.AbstractActivity;
-import sweforce.gui.activity.Activity;
-import sweforce.gui.activity.ActivityMapper;
-import sweforce.gui.activity.CompositeActivityMapper;
+import sweforce.gui.activity.*;
 import sweforce.gui.display.Display;
 import sweforce.gui.place.Place;
-import sweforce.vaadin.sample.secure.bind.ActivityRegionModule;
+import sweforce.vaadin.sample.secure.bind.ActivityMapperWithActivityProviderRegistryModule;
 
 import static org.junit.Assert.*;
 
@@ -30,22 +27,30 @@ public class TestActivityRegionModule {
     private static class Bundle extends BootstrapperBundle {
         @Override
         protected void bootstrap() {
-            ActivityRegionModule leftActivityRegionModule = new ActivityRegionModule(left);
-            ActivityRegionModule rightActivityRegionModule = new ActivityRegionModule(right);
-            install(leftActivityRegionModule);
-            install(rightActivityRegionModule);
+            ActivityMapperWithActivityProviderRegistryModule leftActivityMapperModule =
+                    new ActivityMapperWithActivityProviderRegistryModule(left);
 
-            install(leftActivityRegionModule.newActivityMapping(FirstActivityMapper.class));
-            install(new BinderModule() {
-                @Override
-                protected void declare() {
-                    bind(FirstActivityMapper.class).toConstructor();
-                }
-            });
-            install(leftActivityRegionModule.newActivityMapping(secondActivity));
-            install(rightActivityRegionModule.newActivityMapping(thirdActivity));
+            ActivityMapperWithActivityProviderRegistryModule rightActivityMapperModule =
+                    new ActivityMapperWithActivityProviderRegistryModule(right);
+
+            install(leftActivityMapperModule);
+            install(rightActivityMapperModule);
+
+            leftActivityMapperModule.activityProviderRegistry.add(
+                    new ActivityProviderRegistry.Entry(placeA, new FirstActivityProvider()));
+
+            leftActivityMapperModule.activityProviderRegistry.add(
+                    new ActivityProviderRegistry.Entry(placeB, activityLeft2));
+
+            rightActivityMapperModule.activityProviderRegistry.add(
+                    new ActivityProviderRegistry.Entry(placeA, activityRight));
         }
     }
+
+    /*
+    what is good and what is bad?
+    how to
+     */
 
     private static final String left = "left";
     private static final String right = "right";
@@ -59,58 +64,55 @@ public class TestActivityRegionModule {
         @Override
         public void start(Display panel, EventBus eventBus) {
         }
+        public String toString(){ return "activityLeft1";}
     };
 
     private static final Activity activityLeft2 = new AbstractActivity() {
         @Override
         public void start(Display panel, EventBus eventBus) {
         }
+        public String toString(){ return "activityLeft2";}
     };
 
     private static final Activity activityRight = new AbstractActivity() {
         @Override
         public void start(Display panel, EventBus eventBus) {
         }
+        public String toString(){ return "activityRight";}
     };
 
-    private static class FirstActivityMapper implements ActivityMapper {
+
+    private static class FirstActivityProvider implements ActivityProvider<Activity> {
+        /*
+        there might be some dependencies injected into this provider
+         */
         @Override
-        public Activity getActivity(Place place) {
-            if (place == placeA)
-                return activityLeft1;
-            return null;
+        public Activity provide() {
+            return activityLeft1;
         }
+
     }
-
-    private static ActivityMapper secondActivity = new ActivityMapper() {
-        @Override
-        public Activity getActivity(Place place) {
-            if (place == placeB)
-                return activityLeft2;
-            return null;
-        }
-    };
-
-    private static ActivityMapper thirdActivity = new ActivityMapper() {
-        @Override
-        public Activity getActivity(Place place) {
-            if (place == placeA)
-                return activityRight;
-            return null;
-        }
-    };
 
     @Test
     public void testLeftCompositeActivityMapper_not_null() {
         Injector injector = Bootstrap.injector(Bundle.class);
-        ActivityMapper activityMapper = injector.resolve(Dependency.dependency(CompositeActivityMapper.class).named(left));
+        ActivityMapper activityMapper = injector.resolve(Dependency.dependency(ActivityMapper.class).named(left));
         assertNotNull(activityMapper);
     }
 
     @Test
+    public void testLeftRightActivityMapper_not_same() {
+        Injector injector = Bootstrap.injector(Bundle.class);
+        ActivityMapper leftActivityMapper = injector.resolve(Dependency.dependency(ActivityMapper.class).named(left));
+        ActivityMapper rightActivityMapper = injector.resolve(Dependency.dependency(ActivityMapper.class).named(right));
+        assertNotSame(leftActivityMapper, rightActivityMapper);
+    }
+
+
+    @Test
     public void testLeftActivityMapper_activityMappers() {
         Injector injector = Bootstrap.injector(Bundle.class);
-        ActivityMapper activityMapper = injector.resolve(Dependency.dependency(CompositeActivityMapper.class).named(left));
+        ActivityMapper activityMapper = injector.resolve(Dependency.dependency(ActivityMapper.class).named(left));
         assertSame(activityLeft1, activityMapper.getActivity(placeA));
         assertSame(activityLeft2, activityMapper.getActivity(placeB));
     }
@@ -118,7 +120,7 @@ public class TestActivityRegionModule {
     @Test
     public void testRightActivityMapper_activityMappers() {
         Injector injector = Bootstrap.injector(Bundle.class);
-        ActivityMapper activityMapper = injector.resolve(Dependency.dependency(CompositeActivityMapper.class).named(right));
+        ActivityMapper activityMapper = injector.resolve(Dependency.dependency(ActivityMapper.class).named(right));
         assertSame(activityRight, activityMapper.getActivity(placeA));
         assertNull(activityMapper.getActivity(placeB));
     }
@@ -126,7 +128,7 @@ public class TestActivityRegionModule {
     @Test
     public void testRightCompositeActivityMapper_not_null() {
         Injector injector = Bootstrap.injector(Bundle.class);
-        ActivityMapper activityMapper = injector.resolve(Dependency.dependency(CompositeActivityMapper.class).named(right));
+        ActivityMapper activityMapper = injector.resolve(Dependency.dependency(ActivityMapper.class).named(right));
         assertNotNull(activityMapper);
     }
 

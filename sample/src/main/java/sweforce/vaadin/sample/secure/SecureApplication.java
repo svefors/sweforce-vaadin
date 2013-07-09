@@ -44,7 +44,21 @@ public class SecureApplication extends UI {
     @Override
     protected void init(VaadinRequest request) {
         Injector injector = Bootstrap.injector(SecureApplicationBundle.class);
-
+        /**
+         * What needs to happen now?
+         * Component rootlayout = injector.resolve(ROOTLAYOUT)
+         * this.setContent(rootLayout)
+         *
+         * attach() --> presenter.setDisplay(display)
+         *  {
+         *   --> display.getRegions() iterate over and: activityMapper.setDisplay(subDisplay)
+         *   --> historyHandler.handleCurrentFragment();
+         *  }
+         * so, inject the presenter into the Layout
+         * later, detach --> presenter.setDisplay(null) --> unregister listeners
+         *
+         * but... also need the activitymanager and activitymapper to gel...
+         */
         Style1Layout style1Layout = new Style1Layout();
 
 

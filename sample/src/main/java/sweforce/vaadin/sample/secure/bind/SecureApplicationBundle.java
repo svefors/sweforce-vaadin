@@ -6,7 +6,10 @@ import se.jbee.inject.Injector;
 import se.jbee.inject.Name;
 import se.jbee.inject.bind.BinderModule;
 import se.jbee.inject.bootstrap.BootstrapperBundle;
+import sweforce.gui.activity.*;
 import sweforce.vaadin.layout.style1.Style1Layout;
+import sweforce.vaadin.sample.secure.MainActivityMapper;
+import sweforce.vaadin.sample.secure.ToolbarActivityMapper;
 import sweforce.vaadin.sample.secure.menu.MenuActivity;
 import sweforce.vaadin.sample.secure.norole.NoroleActivity;
 import sweforce.vaadin.sample.secure.norole.NorolePlace;
@@ -42,22 +45,10 @@ public class SecureApplicationBundle extends BootstrapperBundle {
         install(PlaceHistoryModule.placePrefixMatcher("login", new LoginPlace.Tokenizer()));
         install(PlaceHistoryModule.placePrefixMatcher("logout", new LogoutPlace.Tokenizer()));
 
-        ActivityRegionModule mainActivityRegionModule = new ActivityRegionModule(Style1Layout.MyRegion.MAIN);
-        ActivityRegionModule leftActivityRegionModule = new ActivityRegionModule(Style1Layout.MyRegion.SPLIT_LEFT);
-        ActivityRegionModule rightActivityRegionModule = new ActivityRegionModule(Style1Layout.MyRegion.SPLIT_RIGHT);
-        ActivityRegionModule toolbarActivityRegionModule = new ActivityRegionModule(Style1Layout.MyRegion.TOOLBAR);
-
-        install(mainActivityRegionModule);
-        install(mainActivityRegionModule.newActivityMapping(Role1Activity.ActivityMapper.class));
-        install(mainActivityRegionModule.newActivityMapping(Role2Activity.ActivityMapper.class));
-        install(mainActivityRegionModule.newActivityMapping(NoroleActivity.ActivityMapper.class));
-        install(mainActivityRegionModule.newActivityMapping(LoginActivity.class));
-
-        install(leftActivityRegionModule);
-        install(rightActivityRegionModule);
-
-        install(toolbarActivityRegionModule);
-        install(toolbarActivityRegionModule.newActivityMapping(MenuActivity.class));
+        install(ActivityMapperModule.class);
+        install(LayoutModule.class);
+        install(new ActivityManagerModule(Style1Layout.MyRegion.MAIN.toString()));
+        install(new ActivityManagerModule(Style1Layout.MyRegion.TOOLBAR.toString()));
 
         //for security
         install(new BinderModule() {
@@ -70,17 +61,41 @@ public class SecureApplicationBundle extends BootstrapperBundle {
 
     }
 
-    private static class LayoutModule extends BinderModule{
+    private static class ActivityManagerModule extends BinderModule {
+        private final String name;
+
+        private ActivityManagerModule(String name) {
+            this.name = name;
+        }
+
         @Override
         protected void declare() {
-            bind(Name.named("rootLayout"), Component.class).to(Style1Layout.class);
+            bind(Name.named(name), ActivityManager.class).to(SingleThreadedActivityManager.class);
+            injectingInto(Name.named(name), SingleThreadedActivityManager.class)
+                    .bind(ActivityManager.class)
+                    .to(Name.named(name), SingleThreadedActivityManager.class);
+        }
+
+    }
+
+    private static class ActivityMapperModule extends BinderModule {
+        @Override
+        protected void declare() {
+            bind(Name.named(Style1Layout.MyRegion.MAIN.toString()), ActivityMapper.class).to(MainActivityMapper.class);
+            bind(Name.named(Style1Layout.MyRegion.TOOLBAR.toString()), ActivityMapper.class).to(ToolbarActivityMapper.class);
+        }
+    }
+
+    private static class LayoutModule extends BinderModule {
+        @Override
+        protected void declare() {
             bind(Name.named("rootLayout"), Component.class).to(Style1Layout.class);
         }
     }
 
     public static final String ROOT_COMPONENT = "ROOT_COMPONENT";
 
-    public static final Component getRootLayout(Injector injector){
+    public static final Component getRootLayout(Injector injector) {
         return injector.resolve(Dependency.dependency(Component.class).named(Name.named(ROOT_COMPONENT)));
     }
 
