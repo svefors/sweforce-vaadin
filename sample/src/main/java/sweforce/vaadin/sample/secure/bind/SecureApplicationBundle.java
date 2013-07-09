@@ -1,5 +1,9 @@
 package sweforce.vaadin.sample.secure.bind;
 
+import com.vaadin.ui.Component;
+import se.jbee.inject.Dependency;
+import se.jbee.inject.Injector;
+import se.jbee.inject.Name;
 import se.jbee.inject.bind.BinderModule;
 import se.jbee.inject.bootstrap.BootstrapperBundle;
 import sweforce.vaadin.layout.style1.Style1Layout;
@@ -59,12 +63,25 @@ public class SecureApplicationBundle extends BootstrapperBundle {
         install(new BinderModule() {
             @Override
             protected void declare() {
-
                 bind(SecurityFacade.class).to(ShiroSecurityFacade.class);
             }
         });
 
 
+    }
+
+    private static class LayoutModule extends BinderModule{
+        @Override
+        protected void declare() {
+            bind(Name.named("rootLayout"), Component.class).to(Style1Layout.class);
+            bind(Name.named("rootLayout"), Component.class).to(Style1Layout.class);
+        }
+    }
+
+    public static final String ROOT_COMPONENT = "ROOT_COMPONENT";
+
+    public static final Component getRootLayout(Injector injector){
+        return injector.resolve(Dependency.dependency(Component.class).named(Name.named(ROOT_COMPONENT)));
     }
 
 }

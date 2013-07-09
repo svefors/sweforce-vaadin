@@ -32,6 +32,7 @@ public class Style1Layout extends VerticalLayout implements RegionalDisplay {
     }
 
 
+
 //    @Override
 //    public void attach() {
 //        super.attach();

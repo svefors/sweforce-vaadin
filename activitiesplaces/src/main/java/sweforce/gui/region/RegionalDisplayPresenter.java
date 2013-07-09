@@ -1,13 +1,11 @@
 package sweforce.gui.region;
 
-import com.vaadin.ui.HasComponents;
 import sweforce.event.EventBus;
 import sweforce.event.HandlerRegistration;
 import sweforce.gui.activity.SingleThreadedActivityManager;
 import sweforce.gui.place.PlaceController;
 import sweforce.gui.place.PlaceHistoryHandler;
 
-import javax.inject.Inject;
 import java.util.*;
 
 /**

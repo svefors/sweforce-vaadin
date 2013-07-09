@@ -46,14 +46,17 @@ public class SecureApplication extends UI {
         Injector injector = Bootstrap.injector(SecureApplicationBundle.class);
 
         Style1Layout style1Layout = new Style1Layout();
-        this.setContent(style1Layout);
+
 
         Display mainDisplay = style1Layout.getDisplay(Style1Layout.MyRegion.MAIN);
         Display leftDisplay = style1Layout.getDisplay(Style1Layout.MyRegion.SPLIT_LEFT);
         Display rightDisplay = style1Layout.getDisplay(Style1Layout.MyRegion.SPLIT_RIGHT);
         Display toolbarDisplay = style1Layout.getDisplay(Style1Layout.MyRegion.TOOLBAR);
 
-
+        /*
+        bind(named("rootLayout), Component.class).to(Style1Layout.class);
+         */
+        this.setContent(style1Layout);
 
     /*
     goal is to make the application

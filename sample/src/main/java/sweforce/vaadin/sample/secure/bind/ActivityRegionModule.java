@@ -11,6 +11,8 @@ import sweforce.gui.place.PlaceTokenizerRegistryPlaceHistoryMapper;
 import sweforce.gui.region.Region;
 import sweforce.vaadin.sample.secure.role1.Role1Place;
 
+import java.util.UUID;
+
 /**
  * Created with IntelliJ IDEA.
  * User: msvefors
@@ -24,6 +26,8 @@ public class ActivityRegionModule extends BinderModule {
 
     public final String name;
 
+    public final String multiBinderName = UUID.randomUUID().toString();
+
     public ActivityRegionModule(String name) {
         this.name = name;
     }
@@ -34,7 +38,14 @@ public class ActivityRegionModule extends BinderModule {
 
     @Override
     protected void declare() {
-        bind(Name.named(name), ActivityMapper.class).to(CompositeActivityMapper.class);
+//        bind(Name.named(name), ActivityMapper.class).to(CompositeActivityMapper.class);
+        bind(Name.named(name), CompositeActivityMapper.class).toConstructor();
+        //injectingInto( left, B.class )
+        // .bind( A[].class ).to( special, A[].class );
+//        			arraybind( A[].class ).to( new A[0] );
+        injectingInto(Name.named(name), CompositeActivityMapper.class)
+                .bind(ActivityMapper[].class).to(Name.named(multiBinderName),  ActivityMapper[].class);
+        arraybind(ActivityMapper[].class).to(new ActivityMapper[0]);
     }
 
     /**
@@ -55,22 +66,22 @@ public class ActivityRegionModule extends BinderModule {
         return newActivityMapping(name, activityMapper);
     }
 
-    public static BinderModule newActivityMapping(final String name, final Class<? extends ActivityMapper> activityMapperClass){
+    public  BinderModule newActivityMapping(final String name, final Class<? extends ActivityMapper> activityMapperClass){
         return new BinderModule() {
             @Override
             protected void declare() {
-                require(CompositeActivityMapper.class);
-                within(Name.named(name), CompositeActivityMapper.class).multibind(ActivityMapper.class).to(activityMapperClass);
+//                require(CompositeActivityMapper.class);
+                injectingInto(Name.named(name), CompositeActivityMapper.class).multibind(Name.named(multiBinderName), ActivityMapper.class).to(activityMapperClass);
             }
         };
     }
 
-    public static BinderModule newActivityMapping(final String name, final ActivityMapper activityMapper){
+    public  BinderModule newActivityMapping(final String name, final ActivityMapper activityMapper){
         return new BinderModule() {
             @Override
             protected void declare() {
-                require(CompositeActivityMapper.class);
-                within(Name.named(name), CompositeActivityMapper.class).multibind(ActivityMapper.class).to(activityMapper);
+//                require(CompositeActivityMapper.class);
+                injectingInto(Name.named(name), CompositeActivityMapper.class).multibind(Name.named(multiBinderName), ActivityMapper.class).to(activityMapper);
             }
         };
     }

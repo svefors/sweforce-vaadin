@@ -34,47 +34,69 @@ public class TestActivityRegionModule {
             ActivityRegionModule rightActivityRegionModule = new ActivityRegionModule(right);
             install(leftActivityRegionModule);
             install(rightActivityRegionModule);
-            leftActivityRegionModule.newActivityMapping(secondActivity);
-            leftActivityRegionModule.newActivityMapping(FirstActivityMapper.class);
+
+            install(leftActivityRegionModule.newActivityMapping(FirstActivityMapper.class));
             install(new BinderModule() {
                 @Override
                 protected void declare() {
                     bind(FirstActivityMapper.class).toConstructor();
                 }
             });
-            rightActivityRegionModule.newActivityMapping(thirdActivity);
+            install(leftActivityRegionModule.newActivityMapping(secondActivity));
+            install(rightActivityRegionModule.newActivityMapping(thirdActivity));
         }
     }
 
     private static final String left = "left";
     private static final String right = "right";
 
+    private static final Place placeA = new Place() {
+    };
+    private static final Place placeB = new Place() {
+    };
 
+    private static final Activity activityLeft1 = new AbstractActivity() {
+        @Override
+        public void start(Display panel, EventBus eventBus) {
+        }
+    };
 
-    private static final Place placeA = new Place(){};
-    private static final Place placeB = new Place(){};
+    private static final Activity activityLeft2 = new AbstractActivity() {
+        @Override
+        public void start(Display panel, EventBus eventBus) {
+        }
+    };
 
+    private static final Activity activityRight = new AbstractActivity() {
+        @Override
+        public void start(Display panel, EventBus eventBus) {
+        }
+    };
 
     private static class FirstActivityMapper implements ActivityMapper {
         @Override
         public Activity getActivity(Place place) {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
+            if (place == placeA)
+                return activityLeft1;
+            return null;
         }
     }
-
-
 
     private static ActivityMapper secondActivity = new ActivityMapper() {
         @Override
         public Activity getActivity(Place place) {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
+            if (place == placeB)
+                return activityLeft2;
+            return null;
         }
     };
 
     private static ActivityMapper thirdActivity = new ActivityMapper() {
         @Override
         public Activity getActivity(Place place) {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
+            if (place == placeA)
+                return activityRight;
+            return null;
         }
     };
 
@@ -86,16 +108,25 @@ public class TestActivityRegionModule {
     }
 
     @Test
-    public void testFirstActivityMapper() {
+    public void testLeftActivityMapper_activityMappers() {
         Injector injector = Bootstrap.injector(Bundle.class);
-        ActivityMapper activityMapper = injector.resolve(Dependency.dependency(ActivityMapper.class).named(left));
+        ActivityMapper activityMapper = injector.resolve(Dependency.dependency(CompositeActivityMapper.class).named(left));
+        assertSame(activityLeft1, activityMapper.getActivity(placeA));
+        assertSame(activityLeft2, activityMapper.getActivity(placeB));
+    }
 
+    @Test
+    public void testRightActivityMapper_activityMappers() {
+        Injector injector = Bootstrap.injector(Bundle.class);
+        ActivityMapper activityMapper = injector.resolve(Dependency.dependency(CompositeActivityMapper.class).named(right));
+        assertSame(activityRight, activityMapper.getActivity(placeA));
+        assertNull(activityMapper.getActivity(placeB));
     }
 
     @Test
     public void testRightCompositeActivityMapper_not_null() {
         Injector injector = Bootstrap.injector(Bundle.class);
-        ActivityMapper activityMapper = injector.resolve(Dependency.dependency(ActivityMapper.class).named(right));
+        ActivityMapper activityMapper = injector.resolve(Dependency.dependency(CompositeActivityMapper.class).named(right));
         assertNotNull(activityMapper);
     }
 
