@@ -39,7 +39,7 @@ import javax.inject.Inject;
  * Time: 11:45 AM
  * To change this template use File | Settings | File Templates.
  */
-public class MenuActivity extends AbstractActivity implements ActivityMapper {
+public class MenuActivity extends AbstractActivity {
 
     private MenuView menuView = new MenuViewImpl();
 
@@ -80,13 +80,6 @@ public class MenuActivity extends AbstractActivity implements ActivityMapper {
         public void buttonClick(Button.ClickEvent clickEvent) {
             placeController.goTo(place);
         }
-    }
-
-    @Override
-    public Activity getActivity(Place place) {
-        if (place instanceof LoginPlace || place instanceof LogoutPlace)
-            return null;
-        return this;
     }
 
 }

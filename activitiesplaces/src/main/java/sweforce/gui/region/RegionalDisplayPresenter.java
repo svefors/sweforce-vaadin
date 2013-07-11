@@ -2,6 +2,7 @@ package sweforce.gui.region;
 
 import sweforce.event.EventBus;
 import sweforce.event.HandlerRegistration;
+import sweforce.gui.activity.ActivityManager;
 import sweforce.gui.activity.SingleThreadedActivityManager;
 import sweforce.gui.place.PlaceController;
 import sweforce.gui.place.PlaceHistoryHandler;
@@ -23,9 +24,8 @@ public class RegionalDisplayPresenter {
 
     private final EventBus eventBus;
 
-    private Map<Region, SingleThreadedActivityManager> regionSingleThreadedActivityManagerMap =
-            new HashMap<Region, SingleThreadedActivityManager>();
-
+    private Map<Region, ActivityManager> activityManagers =
+            new HashMap<Region, ActivityManager>();
 
     private RegionalDisplay display;
 
@@ -34,26 +34,42 @@ public class RegionalDisplayPresenter {
         this.eventBus = eventBus;
         this.placeController = placeController;
         this.placeHistoryHandler = placeHistoryHandler;
-
     }
 
-    /**
-     * @param regionalDisplay
-     */
-    public void setDisplay(RegionalDisplay regionalDisplay){
-        if (display == this.display)
-            return;
-        for (Region region : this.display.getRegions()) {
-            regionSingleThreadedActivityManagerMap.get(region).setDisplay(display.getDisplay(region));
-            regionSingleThreadedActivityManagerMap.remove(region);
+    public void start() {
+        for (Map.Entry<Region, ActivityManager> entry : activityManagers.entrySet()) {
+            entry.getValue().setDisplay(display.getDisplay(entry.getKey()));
         }
-        for (Region region : display.getRegions() == null ? new HashSet<Region>() : display.getRegions()) {
-            SingleThreadedActivityManager activityManager =
-                    new SingleThreadedActivityManager(regionActivityMapperFactory.create(region), eventBus);
-            activityManager.setDisplay(display.getDisplay(region));
-            regionSingleThreadedActivityManagerMap.put(region, activityManager);
+        if(placeHistoryHandlerHandlerRegistration != null){
+            placeHistoryHandlerHandlerRegistration.removeHandler();
+            placeHistoryHandlerHandlerRegistration = null;
         }
+        placeHistoryHandlerHandlerRegistration = placeHistoryHandler.register(placeController, eventBus);
+        placeHistoryHandler.handleCurrentFragment();
     }
+
+    public void stop(){
+        placeHistoryHandlerHandlerRegistration.removeHandler();
+        placeHistoryHandlerHandlerRegistration = null;
+    }
+
+//    /**
+//     * @param regionalDisplay
+//     */
+//    public void setDisplay(RegionalDisplay regionalDisplay) {
+//        if (display == this.display)
+//            return;
+//        for (Region region : this.display.getRegions()) {
+//            regionSingleThreadedActivityManagerMap.get(region).setDisplay(display.getDisplay(region));
+//            regionSingleThreadedActivityManagerMap.remove(region);
+//        }
+//        for (Region region : display.getRegions() == null ? new HashSet<Region>() : display.getRegions()) {
+//            SingleThreadedActivityManager activityManager =
+//                    new SingleThreadedActivityManager(regionActivityMapperFactory.create(region), eventBus);
+//            activityManager.setDisplay(display.getDisplay(region));
+//            regionSingleThreadedActivityManagerMap.put(region, activityManager);
+//        }
+//    }
 
 //    /*
 //    x
@@ -94,8 +110,6 @@ public class RegionalDisplayPresenter {
 //        this.display = display;
 //
 //    }
-
-
 
 
 }

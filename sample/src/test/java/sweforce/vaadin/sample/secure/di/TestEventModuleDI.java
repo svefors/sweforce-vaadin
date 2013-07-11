@@ -6,9 +6,7 @@ import se.jbee.inject.Injector;
 import se.jbee.inject.bootstrap.Bootstrap;
 import sweforce.event.EventBus;
 import sweforce.event.SimpleEventBus;
-import sweforce.gui.place.PlaceHistoryMapper;
-import sweforce.vaadin.sample.secure.bind.EventModule;
-import sweforce.vaadin.sample.secure.bind.PlaceHistoryModule;
+import sweforce.event.EventModule;
 
 import static org.junit.Assert.*;
 

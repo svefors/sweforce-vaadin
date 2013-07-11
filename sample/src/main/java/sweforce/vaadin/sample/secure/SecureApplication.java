@@ -21,18 +21,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import se.jbee.inject.Dependency;
 import se.jbee.inject.Injector;
-import se.jbee.inject.bind.BinderModule;
 import se.jbee.inject.bootstrap.Bootstrap;
-import sweforce.event.EventBus;
-import sweforce.event.SimpleEventBus;
+import sweforce.gui.RegionalActivitiesAndPlacesContainer;
 import sweforce.gui.display.Display;
-import sweforce.gui.place.*;
-import sweforce.gui.vaadin.VaadinPageHistorian;
 import sweforce.vaadin.layout.style1.Style1Layout;
 import sweforce.vaadin.sample.secure.bind.SecureApplicationBundle;
+import sweforce.vaadin.sample.secure.menu.ToolbarPlugin;
+import sweforce.vaadin.sample.secure.menu.ToolbarPlaceMatch;
 import sweforce.vaadin.sample.secure.norole.NoroleActivity;
 import sweforce.vaadin.sample.secure.norole.NorolePlace;
-import sweforce.vaadin.security.place.SecurePlaceController;
+import sweforce.vaadin.sample.secure.role1.Role1Activity;
+import sweforce.vaadin.sample.secure.role1.Role1Place;
+import sweforce.vaadin.sample.secure.role2.Role2Activity;
+import sweforce.vaadin.sample.secure.role2.Role2Place;
+import sweforce.vaadin.security.SecurityActivitiesFactory;
+import sweforce.vaadin.security.login.LoginPlace;
+import sweforce.vaadin.security.logout.LogoutPlace;
 
 /**
  * Sample Application
@@ -41,10 +45,54 @@ public class SecureApplication extends UI {
 
     private static Logger logger = LoggerFactory.getLogger(SecureApplication.class);
 
+
     @Override
     protected void init(VaadinRequest request) {
+
         Injector injector = Bootstrap.injector(SecureApplicationBundle.class);
+
+        RegionalActivitiesAndPlacesContainer container = injector.resolve(Dependency.dependency(
+                RegionalActivitiesAndPlacesContainer.class));
+
+
+//        container.getPrefixPlaceTokenizerConfiguration()
+//                .prefix("role1").useTokenizer(new Role1Place.Tokenizer())
+//                .prefix("role2").useTokenizer(new Role2Place.Tokenizer())
+//                .prefix("norole").useTokenizer(new NorolePlace.Tokenizer())
+//                .prefix("login").useTokenizer(new LoginPlace.Tokenizer())
+//                .prefix("logout").useTokenizer(new LogoutPlace.Tokenizer());
+
+//        container.configureActivities(Style1Layout.MyRegion.MAIN)
+//                .match(Role1Place.class).use(new Role1Activity())
+//                .match(Role2Place.class).use(new Role2Activity())
+//                .match(NorolePlace.class).use(new NoroleActivity())
+//                .match(LoginPlace.class).use(injector.resolve(Dependency.dependency(SecurityActivitiesFactory.class)))
+//                .match(LogoutPlace.class).use(injector.resolve(Dependency.dependency(SecurityActivitiesFactory.class)));
+
+
         /**
+         *
+        who should know what?
+         The layout knows what regions it has
+         The "container" know what regions it has
+
+         To make it possible to replace the layout,
+           the views provided by the activities need to be placed in the new layout but the activities
+           should not have to be restarted.
+           to achieve reuse of activities between different types of UIs(mobile vs web)? don't let the framework handle this.
+
+         The RootComponent could have a presenter that is registered to layoutChangesEvent and modifies something. This presenter is
+         tightly coupled to the RootComponent, but can be injected into the RootComponent.
+         The layout can't decide to support fewer/different regions then? The activities would have to be reconfigured. Which might not
+         be such a big deal, but it should happen outside of the framework.
+
+
+
+
+           the activity managers need to be disposed.
+           the historyHandler needs to handle the currentHistory
+
+
          * What needs to happen now?
          * Component rootlayout = injector.resolve(ROOTLAYOUT)
          * this.setContent(rootLayout)
@@ -71,23 +119,6 @@ public class SecureApplication extends UI {
         bind(named("rootLayout), Component.class).to(Style1Layout.class);
          */
         this.setContent(style1Layout);
-
-    /*
-    goal is to make the application
-    - testable
-    - no magic
-
-I want a dsl to compose the app!
-
-
-(Style1Layout.MyRegion.MAIN).placeClass
-
-
-     */
-        //move this to bind
-
-//        PlaceHistoryHandler historyHandler = injector.resolve(Dependency.dependency(PlaceHistoryHandler.class));
-//        historyHandler.handleCurrentFragment();
 
     }
 

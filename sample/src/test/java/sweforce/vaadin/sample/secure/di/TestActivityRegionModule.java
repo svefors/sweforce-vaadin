@@ -11,7 +11,6 @@ import sweforce.gui.activity.*;
 import sweforce.gui.activity.registry.ActivityFactoryRegistry;
 import sweforce.gui.display.Display;
 import sweforce.gui.place.Place;
-import sweforce.vaadin.sample.secure.bind.ActivityMapperWithActivityProviderRegistryModule;
 
 import static org.junit.Assert.*;
 

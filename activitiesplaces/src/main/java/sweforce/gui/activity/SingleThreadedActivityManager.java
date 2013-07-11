@@ -51,7 +51,7 @@ public class SingleThreadedActivityManager implements PlaceChangeEvent.Handler, 
      * setDisplay(null) to get it to deregister from the event bus, so that it can
      * be garbage collected.
      *
-     * @param display an instance of AcceptsOneWidget
+     * @param display an instance of Display
      */
     @Override
     public void setDisplay(Display display) {

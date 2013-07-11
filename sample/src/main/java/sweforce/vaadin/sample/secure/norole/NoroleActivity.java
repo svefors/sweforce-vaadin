@@ -15,12 +15,9 @@
  */
 package sweforce.vaadin.sample.secure.norole;
 
-import se.jbee.inject.bind.BinderModule;
 import sweforce.event.EventBus;
 import sweforce.gui.activity.AbstractActivity;
 import sweforce.gui.activity.Activity;
-import sweforce.gui.activity.ActivityMapper;
-import sweforce.gui.activity.CompositeActivityMapper;
 import sweforce.gui.display.Display;
 import sweforce.gui.place.Place;
 

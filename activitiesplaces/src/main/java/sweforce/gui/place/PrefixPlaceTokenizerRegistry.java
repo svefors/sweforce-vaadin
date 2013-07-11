@@ -16,13 +16,21 @@ public interface PrefixPlaceTokenizerRegistry {
 
     public PlaceTokenizer<? extends Place> findTokenizer(String prefix);
 
-
     public class Impl implements PrefixPlaceTokenizerRegistry, PrefixPlaceTokenizerConfiguration<PrefixPlaceTokenizerConfiguration> {
         /**
          * prefix -> placeTokenizer mapping
          */
         private Map<String, PlaceTokenizer<? extends Place>> tokenizerMap =
                 new HashMap<String, PlaceTokenizer<? extends Place>>();
+
+        public Impl(Contributor[] contributors) {
+            for (Contributor contributor : contributors){
+                contributor.configure(this);
+            }
+        }
+
+        public Impl() {
+        }
 
         /**
          * placeClass -> prefix mapping
@@ -37,7 +45,6 @@ public interface PrefixPlaceTokenizerRegistry {
             return placeClassPrefixMap.get(placeClass);
         }
 
-
         private void add(String prefix, PlaceTokenizer placeTokenizer) {
             tokenizerMap.put(prefix, placeTokenizer);
             try {
@@ -48,7 +55,6 @@ public interface PrefixPlaceTokenizerRegistry {
                 throw new IllegalStateException("Placetokenizer getPlace(String) does not have return type Place");
             }
         }
-
 
         public UseTokenizer<PrefixPlaceTokenizerRegistry.PrefixPlaceTokenizerConfiguration> prefix(final String prefix) {
             return new UseTokenizer<PrefixPlaceTokenizerRegistry.PrefixPlaceTokenizerConfiguration>() {
@@ -61,12 +67,15 @@ public interface PrefixPlaceTokenizerRegistry {
         }
     }
 
-    public static interface PrefixPlaceTokenizerConfiguration<T> {
+    public static interface PrefixPlaceTokenizerConfiguration<T extends PrefixPlaceTokenizerConfiguration> {
         public UseTokenizer<T> prefix(String prefix);
+
+        public static interface UseTokenizer<T extends PrefixPlaceTokenizerConfiguration> {
+            public T useTokenizer(PlaceTokenizer placeTokenizer);
+        }
     }
 
-    public static interface UseTokenizer<T> {
-        public T useTokenizer(PlaceTokenizer placeTokenizer);
+    public static interface Contributor {
+        public void configure(PrefixPlaceTokenizerConfiguration<? extends PrefixPlaceTokenizerConfiguration> configuration);
     }
-
 }

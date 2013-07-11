@@ -59,7 +59,7 @@ public abstract class PlaceMatch {
         };
     }
 
-    public static PlaceMatch Clazz(final Class<? extends Place> placeClass) {
+    public static PlaceMatch clazz(final Class<? extends Place> placeClass) {
         return new PlaceMatch() {
             @Override
             public boolean matches(Place place) {

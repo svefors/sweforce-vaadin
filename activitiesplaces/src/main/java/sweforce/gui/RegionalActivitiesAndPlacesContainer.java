@@ -1,14 +1,11 @@
 package sweforce.gui;
 
-import sweforce.event.EventBus;
-import sweforce.event.SimpleEventBus;
-import sweforce.gui.activity.ActivityManager;
-import sweforce.gui.activity.ActivityMapper;
-import sweforce.gui.activity.SingleThreadedActivityManager;
 import sweforce.gui.activity.registry.ActivityFactoryRegistry;
-import sweforce.gui.place.PlaceTokenizer;
+import sweforce.gui.activity.registry.ActivityFactoryRegistryImpl;
 import sweforce.gui.place.PrefixPlaceTokenizerRegistry;
 import sweforce.gui.region.Region;
+import sweforce.gui.region.RegionalActivityFactoryRegistry;
+import sweforce.gui.region.RegionalDisplay;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,43 +15,66 @@ import java.util.Map;
  TODO replace name with region
  TODO ma
 
- Container container = new RegionalActivitiesAndPlacesContainer();
- PrefixPlaceTokenizerConfiguration prefixConfiguration =
-    container.getPrefixPlaceTokenizerConfiguration();
- prefixConfiguration.prefix("login").tokenizer(new LoginPlace.Tokenizer())
- prefixConfiguration.prefix("logout").tokenizer(new LogoutPlace.Tokenizer())
+ application.setContent(container.getRootLayout())
+ {
+  attach() -> {
+    presenter.start() -> {
+        for each region the presenter has{
+            getActivityManager(region).setDisplay(regionalDisplay.getDisplay(region))
+            don't like it. have to implement attach->presenter.start for each layout
+        }
+    }
+  }
+ }
 
 
  application.setContent(container.getRootLayout())
- {
-  attach() -> presenter.start()
+ //in Application.attach(){
+    presenter.start() -> {
+        display.getDisplay(region)
+        historyHandler.handleCurrentFragment();
+    }
  }
+
  */
 public class RegionalActivitiesAndPlacesContainer {
 
-    private EventBus eventBus = createEventBus();
+//    private PrefixPlaceTokenizerRegistry.Impl prefixPlaceTokenizerRegistry = new PrefixPlaceTokenizerRegistry.Impl();
 
-    private PrefixPlaceTokenizerRegistry.Impl prefixPlaceTokenizerRegistry = new PrefixPlaceTokenizerRegistry.Impl();
+    private RegionalActivityFactoryRegistry regionalActivityFactoryRegistry;
 
-    private Map<Region, ActivityFactoryRegistry.Impl> namedActivityFactoryRegistries =
-            new HashMap<Region, ActivityFactoryRegistry.Impl>();
+    private RegionalDisplay regionalDisplay;
 
-    public PrefixPlaceTokenizerRegistry.PrefixPlaceTokenizerConfiguration<PrefixPlaceTokenizerRegistry.PrefixPlaceTokenizerConfiguration>
-            getPrefixPlaceTokenizerConfiguration(){
-        return prefixPlaceTokenizerRegistry;
+    public RegionalActivitiesAndPlacesContainer(RegionalActivityFactoryRegistry regionalActivityFactoryRegistry, RegionalDisplay regionalDisplay) {
+        this.regionalActivityFactoryRegistry = regionalActivityFactoryRegistry;
+        this.regionalDisplay = regionalDisplay;
     }
 
-    public ActivityMapper activityMapperWithName(Region name){
-        return namedActivityFactoryRegistries.get(name);
+    public void start(){
+        //x.getA
     }
 
-    protected EventBus createEventBus() {
-        return eventBus;
-    }
+    //    public void plugin(Region region, ActivityFactoryRegistry.Plugin plugin){
+//        plugin.configure(configureActivities(region));
+//    }
 
-    protected ActivityManager createActivityManager(Region  name){
-        return new SingleThreadedActivityManager(activityMapperWithName(name), eventBus);
-    }
+
+
+
+
+//    public PrefixPlaceTokenizerRegistry.PrefixPlaceTokenizerConfiguration<PrefixPlaceTokenizerRegistry.PrefixPlaceTokenizerConfiguration>
+//            getPrefixPlaceTokenizerConfiguration(){
+//        return prefixPlaceTokenizerRegistry;
+//    }
+
+//    public ActivityFactoryRegistry.Configuration<ActivityFactoryRegistry.Configuration> configureActivities(Region region){
+//        ActivityFactoryRegistryImpl activityFactoryRegistry =  namedActivityFactoryRegistries.get(region);
+//        if (activityFactoryRegistry == null){
+//            activityFactoryRegistry = new ActivityFactoryRegistryImpl();
+//            namedActivityFactoryRegistries.put(region, activityFactoryRegistry);
+//        }
+//        return activityFactoryRegistry;
+//    }
 
 
 }

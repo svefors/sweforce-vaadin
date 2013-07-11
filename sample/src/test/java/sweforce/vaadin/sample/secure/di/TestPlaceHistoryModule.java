@@ -11,7 +11,7 @@ import sweforce.gui.place.Place;
 import sweforce.gui.place.PlaceHistoryHandler;
 import sweforce.gui.place.PlaceHistoryMapper;
 import sweforce.gui.place.PlaceTokenizer;
-import sweforce.vaadin.sample.secure.bind.PlaceHistoryModule;
+import sweforce.gui.place.PlaceModule;
 
 import static org.junit.Assert.*;
 
@@ -58,8 +58,8 @@ public class TestPlaceHistoryModule {
     private static class PlaceHistoryBundle extends BootstrapperBundle {
         @Override
         protected void bootstrap() {
-            install(PlaceHistoryModule.class);
-            install(PlaceHistoryModule.placePrefixMatcher(PREFIX, new SomePlace.Tokenizer()));
+            install(PlaceModule.class);
+            install(PlaceModule.placePrefixMatcher(PREFIX, new SomePlace.Tokenizer()));
             install(new BinderModule() {
                 @Override
                 protected void declare() {
