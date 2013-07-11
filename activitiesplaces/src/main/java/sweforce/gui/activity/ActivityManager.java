@@ -11,4 +11,6 @@ import sweforce.gui.display.Display;
  */
 public interface ActivityManager {
     void setDisplay(Display display);
+
+
 }

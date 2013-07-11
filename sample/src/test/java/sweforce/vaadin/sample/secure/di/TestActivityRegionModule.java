@@ -4,11 +4,11 @@ package sweforce.vaadin.sample.secure.di;
 import org.junit.Test;
 import se.jbee.inject.Dependency;
 import se.jbee.inject.Injector;
-import se.jbee.inject.bind.BinderModule;
 import se.jbee.inject.bootstrap.Bootstrap;
 import se.jbee.inject.bootstrap.BootstrapperBundle;
 import sweforce.event.EventBus;
 import sweforce.gui.activity.*;
+import sweforce.gui.activity.registry.ActivityFactoryRegistry;
 import sweforce.gui.display.Display;
 import sweforce.gui.place.Place;
 import sweforce.vaadin.sample.secure.bind.ActivityMapperWithActivityProviderRegistryModule;
@@ -36,14 +36,14 @@ public class TestActivityRegionModule {
             install(leftActivityMapperModule);
             install(rightActivityMapperModule);
 
-            leftActivityMapperModule.activityProviderRegistry.add(
-                    new ActivityProviderRegistry.Entry(placeA, new FirstActivityProvider()));
+            leftActivityMapperModule.activityFactoryRegistry.add(
+                    new ActivityFactoryRegistry.Entry(placeA, new FirstActivityProvider()));
 
-            leftActivityMapperModule.activityProviderRegistry.add(
-                    new ActivityProviderRegistry.Entry(placeB, activityLeft2));
+            leftActivityMapperModule.activityFactoryRegistry.add(
+                    new ActivityFactoryRegistry.Entry(placeB, activityLeft2));
 
-            rightActivityMapperModule.activityProviderRegistry.add(
-                    new ActivityProviderRegistry.Entry(placeA, activityRight));
+            rightActivityMapperModule.activityFactoryRegistry.add(
+                    new ActivityFactoryRegistry.Entry(placeA, activityRight));
         }
     }
 

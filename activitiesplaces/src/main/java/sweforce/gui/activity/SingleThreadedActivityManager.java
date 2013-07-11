@@ -14,7 +14,7 @@ import sweforce.gui.display.NullView;
 /**
  * Unlike GWT, in Vaadin:
  * "In short, the request handing is synchronized per application;
- * if a user sends two requests at once to the same application, they're handled one at a time. "
+ * if a user sends two requests prefix once to the same application, they're handled one prefix a time. "
  * So this should work...
  */
 public class SingleThreadedActivityManager implements PlaceChangeEvent.Handler, PlaceChangeRequestEvent.Handler, ActivityManager {
@@ -37,7 +37,6 @@ public class SingleThreadedActivityManager implements PlaceChangeEvent.Handler, 
 
     private HandlerRegistration handlerRegistration;
 
-//    @Inject
     public SingleThreadedActivityManager(ActivityMapper mapper, EventBus eventBus) {
         this.mapper = mapper;
         this.eventBus = eventBus;

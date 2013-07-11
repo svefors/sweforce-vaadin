@@ -1,17 +1,11 @@
 package sweforce.vaadin.sample.secure.bind;
 
-import com.google.inject.spi.Dependency;
 import se.jbee.inject.Name;
 import se.jbee.inject.bind.BinderModule;
-import se.jbee.inject.bootstrap.BootstrapperBundle;
 import sweforce.gui.activity.*;
-import sweforce.gui.place.Place;
-import sweforce.gui.place.PlaceTokenizer;
-import sweforce.gui.place.PlaceTokenizerRegistryPlaceHistoryMapper;
+import sweforce.gui.activity.registry.ActivityFactoryRegistry;
+import sweforce.gui.activity.registry.ActivityMapperWithRegistry;
 import sweforce.gui.region.Region;
-import sweforce.vaadin.sample.secure.role1.Role1Place;
-
-import java.util.UUID;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,9 +20,9 @@ public class ActivityMapperWithActivityProviderRegistryModule extends BinderModu
 
     public final String name;
 
-    public final ActivityProviderRegistry activityProviderRegistry = new ActivityProviderRegistry.Impl();
+    public final ActivityFactoryRegistry activityFactoryRegistry = new ActivityFactoryRegistry.Impl();
 
-    private final ActivityMapper activityMapper = new ActivityMapperWithActivityProviderRegistry(activityProviderRegistry);
+    private final ActivityMapper activityMapper = new ActivityMapperWithRegistry(activityFactoryRegistry);
 
     public ActivityMapperWithActivityProviderRegistryModule(String name) {
         this.name = name;

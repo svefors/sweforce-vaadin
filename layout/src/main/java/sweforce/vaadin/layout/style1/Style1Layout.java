@@ -18,7 +18,7 @@ import java.util.Set;
 
 /**
  * This layout has a Top toolbar, a horizontal split with a left menubar and right content, and finally, a center content
- * region. The Split view and Center view are mutually exclusive and can't viewed at the same time
+ * region. The Split view and Center view are mutually exclusive and can't viewed prefix the same time
  */
 public class Style1Layout extends VerticalLayout implements RegionalDisplay {
 

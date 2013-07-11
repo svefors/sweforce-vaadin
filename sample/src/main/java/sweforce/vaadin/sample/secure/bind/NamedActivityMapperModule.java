@@ -2,9 +2,9 @@ package sweforce.vaadin.sample.secure.bind;
 
 import se.jbee.inject.Name;
 import se.jbee.inject.bind.BinderModule;
+import sweforce.gui.activity.registry.ActivityMapperWithRegistry;
+import sweforce.gui.activity.registry.ActivityFactoryRegistry;
 import sweforce.gui.activity.ActivityMapper;
-import sweforce.gui.activity.ActivityMapperWithActivityProviderRegistry;
-import sweforce.gui.activity.ActivityProviderRegistry;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,9 +17,9 @@ public class NamedActivityMapperModule extends BinderModule {
 
     private final String name;
 
-    private final ActivityProviderRegistry activityProviderRegistry = new ActivityProviderRegistry.Impl();
+    private final ActivityFactoryRegistry activityFactoryRegistry = new ActivityFactoryRegistry.Impl();
 
-    private final ActivityMapper activityMapper = new ActivityMapperWithActivityProviderRegistry(activityProviderRegistry);
+    private final ActivityMapper activityMapper = new ActivityMapperWithRegistry(activityFactoryRegistry);
 
     public NamedActivityMapperModule(String name) {
         this.name = name;
@@ -30,8 +30,8 @@ public class NamedActivityMapperModule extends BinderModule {
         bind(Name.named(name), ActivityMapper.class).to(activityMapper);
     }
 
-    protected final void add(ActivityProviderRegistry.Entry entry){
-        activityProviderRegistry.add(entry);
+    protected final void add(ActivityFactoryRegistry.Entry entry){
+        activityFactoryRegistry.add(entry);
     }
 
 

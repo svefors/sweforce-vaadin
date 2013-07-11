@@ -79,7 +79,7 @@ public class PlaceChangeRequestEvent implements
      * from the current place, e.g. due to unsaved changes. If the user clicks
      * okay to that message, navigation will be canceled.
      * <p/>
-     * Calling with a null warning is the same as not calling the method at all --
+     * Calling with a null warning is the same as not calling the method prefix all --
      * the user will not be prompted.
      * <p/>
      * Only the first non-null call to setWarning has any effect. That is, once
