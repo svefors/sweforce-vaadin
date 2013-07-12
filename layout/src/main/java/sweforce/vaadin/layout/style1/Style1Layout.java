@@ -17,8 +17,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * This layout has a Top toolbar, a horizontal split with a left menubar and right content, and finally, a center content
- * region. The Split view and Center view are mutually exclusive and can't viewed prefix the same time
+ * This layout has a TOP toolbar, a horizontal split with LEFT and RIGHT , and a MAIN content.
+ * region. The Split displays and MAIN display are mutually exclusive and can't viewed at the same time
  */
 public class Style1Layout extends VerticalLayout implements RegionalDisplay {
 
@@ -30,20 +30,6 @@ public class Style1Layout extends VerticalLayout implements RegionalDisplay {
     public Style1Layout() {
         this.addComponent(singleViewOrSplitPanel);
     }
-
-
-
-//    @Override
-//    public void attach() {
-//        super.attach();
-//
-//    }
-//
-//    @Override
-//    public void detach() {
-//        super.detach();
-//        regionalPresenter.setRegionalDisplay(null);
-//    }
 
 
     public Display getDisplay(Region region) {
@@ -61,24 +47,6 @@ public class Style1Layout extends VerticalLayout implements RegionalDisplay {
             default:
                 throw new IllegalArgumentException("unknown region");
         }
-    }
-
-    /**
-     * DO NOT ADD OR REMOVE COMPONENTS TO THE CONTAINER RETURNED!
-     *
-     * @return
-     */
-    public VerticalLayout getToolbarContainer() {
-        return toolbarContainer;
-    }
-
-    /**
-     * DO NOT ADD OR REMOVE COMPONENTS TO THE CONTAINER RETURNED!
-     *
-     * @return
-     */
-    public SingleViewOrSplitPanel getSingleViewOrSplitPanel() {
-        return singleViewOrSplitPanel;
     }
 
     public Display getTopDisplay() {

@@ -22,21 +22,9 @@ import org.slf4j.LoggerFactory;
 import se.jbee.inject.Dependency;
 import se.jbee.inject.Injector;
 import se.jbee.inject.bootstrap.Bootstrap;
-import sweforce.gui.RegionalActivitiesAndPlacesContainer;
 import sweforce.gui.display.Display;
 import sweforce.vaadin.layout.style1.Style1Layout;
 import sweforce.vaadin.sample.secure.bind.SecureApplicationBundle;
-import sweforce.vaadin.sample.secure.menu.ToolbarPlugin;
-import sweforce.vaadin.sample.secure.menu.ToolbarPlaceMatch;
-import sweforce.vaadin.sample.secure.norole.NoroleActivity;
-import sweforce.vaadin.sample.secure.norole.NorolePlace;
-import sweforce.vaadin.sample.secure.role1.Role1Activity;
-import sweforce.vaadin.sample.secure.role1.Role1Place;
-import sweforce.vaadin.sample.secure.role2.Role2Activity;
-import sweforce.vaadin.sample.secure.role2.Role2Place;
-import sweforce.vaadin.security.SecurityActivitiesFactory;
-import sweforce.vaadin.security.login.LoginPlace;
-import sweforce.vaadin.security.logout.LogoutPlace;
 
 /**
  * Sample Application
@@ -51,23 +39,7 @@ public class SecureApplication extends UI {
 
         Injector injector = Bootstrap.injector(SecureApplicationBundle.class);
 
-        RegionalActivitiesAndPlacesContainer container = injector.resolve(Dependency.dependency(
-                RegionalActivitiesAndPlacesContainer.class));
 
-
-//        container.getPrefixPlaceTokenizerConfiguration()
-//                .prefix("role1").useTokenizer(new Role1Place.Tokenizer())
-//                .prefix("role2").useTokenizer(new Role2Place.Tokenizer())
-//                .prefix("norole").useTokenizer(new NorolePlace.Tokenizer())
-//                .prefix("login").useTokenizer(new LoginPlace.Tokenizer())
-//                .prefix("logout").useTokenizer(new LogoutPlace.Tokenizer());
-
-//        container.configureActivities(Style1Layout.MyRegion.MAIN)
-//                .match(Role1Place.class).use(new Role1Activity())
-//                .match(Role2Place.class).use(new Role2Activity())
-//                .match(NorolePlace.class).use(new NoroleActivity())
-//                .match(LoginPlace.class).use(injector.resolve(Dependency.dependency(SecurityActivitiesFactory.class)))
-//                .match(LogoutPlace.class).use(injector.resolve(Dependency.dependency(SecurityActivitiesFactory.class)));
 
 
         /**
