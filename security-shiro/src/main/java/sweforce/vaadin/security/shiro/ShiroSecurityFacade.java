@@ -21,8 +21,8 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import sweforce.gui.place.Place;
 import sweforce.vaadin.security.SecurityFacade;
 import sweforce.vaadin.security.Subject;
-import sweforce.vaadin.security.place.PlaceRequiresAuthentication;
-import sweforce.vaadin.security.place.PlaceRequiresRoles;
+import sweforce.vaadin.security.place.annotation.PlaceRequiresAuthentication;
+import sweforce.vaadin.security.place.annotation.PlaceRequiresRoles;
 
 /**
  * Created by IntelliJ IDEA.
@@ -49,6 +49,8 @@ public class ShiroSecurityFacade implements SecurityFacade {
 
             @Override
             public boolean isAuthorized(Place place) {
+
+
                 if (!place.getClass().isAnnotationPresent(PlaceRequiresRoles.class)) {
                     return true;
                 } else {
@@ -87,26 +89,5 @@ public class ShiroSecurityFacade implements SecurityFacade {
 
     }
 
-    /**
-     * return true if requires authentication or roles
-     *
-     * @param place
-     * @return
-     */
-    @Override
-    public boolean isAuthenticationRequired(Place place) {
-        boolean rolesRequired = false;
-        boolean loginRequired = false;
-        if (place.getClass().isAnnotationPresent(PlaceRequiresAuthentication.class)) {
-            PlaceRequiresAuthentication placeRequiresAuthentication =
-                    place.getClass().getAnnotation(PlaceRequiresAuthentication.class);
-            loginRequired = placeRequiresAuthentication != null ? placeRequiresAuthentication.value() : false;
-        }
-        if (place.getClass().isAnnotationPresent(PlaceRequiresRoles.class)) {
-            PlaceRequiresRoles placeRequiresRoles = place.getClass().getAnnotation(PlaceRequiresRoles.class);
-            if (placeRequiresRoles.value() != null && placeRequiresRoles.value().length > 0)
-                rolesRequired = true;
-        }
-        return rolesRequired || loginRequired;
-    }
+
 }

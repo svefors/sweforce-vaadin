@@ -17,8 +17,6 @@ package sweforce.gui.place;
 
 import sweforce.event.EventBus;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 /**
  * In charge of the user's place/location in the app.
@@ -70,7 +68,7 @@ public class PlaceControllerImpl implements PlaceController {
         return warning;
     }
 
-    private void goToAfterConfirmed(Place newPlace){
+    protected void goToAfterConfirmed(Place newPlace){
         this.where = newPlace;
         eventBus.fireEvent(new PlaceChangeEvent(newPlace));
     }

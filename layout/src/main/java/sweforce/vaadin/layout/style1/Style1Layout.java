@@ -3,9 +3,10 @@ package sweforce.vaadin.layout.style1;
 
 import com.vaadin.ui.VerticalLayout;
 import sweforce.gui.display.Display;
+import sweforce.gui.display.NullView;
 import sweforce.gui.region.Region;
 import sweforce.gui.region.RegionalDisplay;
-import sweforce.gui.region.RegionalDisplayPresenter;
+
 import sweforce.gui.vaadin.VaadinView;
 import sweforce.gui.display.View;
 
@@ -28,6 +29,7 @@ public class Style1Layout extends VerticalLayout implements RegionalDisplay {
 
 
     public Style1Layout() {
+        this.addComponent(toolbarContainer);
         this.addComponent(singleViewOrSplitPanel);
     }
 
@@ -53,7 +55,7 @@ public class Style1Layout extends VerticalLayout implements RegionalDisplay {
         return new Display() {
             @Override
             public void setView(View view) {
-                if (view != null) {
+                if (view != null && view != NullView.getInstance()) {
                     if (toolbarContainer.getComponentCount() == 1) {
                         //there is only one component, and that is the split thingy. do nothing
                         toolbarContainer.replaceComponent(getComponent(0), ((VaadinView) view).asComponent());

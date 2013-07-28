@@ -26,8 +26,8 @@ public class ActivityMapperWithRegistry implements ActivityMapper {
         return activityFactoryRegistry.findActivityFactory(place).create(place);
     }
     /*
-    bind(named, ActivityMapper.class).to(ActivityMapperWithActivityProviderRegistry.class)
-    bind(named, ActivityProviderRegistry.class).to(ActivityProviderRegistry.Impl.class)
+    bindPrefixMapping(named, ActivityMapper.class).to(ActivityMapperWithActivityProviderRegistry.class)
+    bindPrefixMapping(named, ActivityProviderRegistry.class).to(ActivityProviderRegistry.Impl.class)
 
      */
 

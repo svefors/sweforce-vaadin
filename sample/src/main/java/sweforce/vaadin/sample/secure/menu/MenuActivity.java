@@ -16,9 +16,8 @@
 package sweforce.vaadin.sample.secure.menu;
 
 import com.vaadin.ui.Button;
-import sweforce.gui.activity.AbstractActivity;
-import sweforce.gui.activity.Activity;
-import sweforce.gui.activity.ActivityMapper;
+import sweforce.gui.activity.*;
+import sweforce.gui.activity.registry.ActivityFactory;
 import sweforce.gui.place.Place;
 import sweforce.gui.place.PlaceController;
 import sweforce.gui.display.Display;
@@ -27,10 +26,8 @@ import sweforce.event.EventBus;
 import sweforce.vaadin.sample.secure.norole.NorolePlace;
 import sweforce.vaadin.sample.secure.role1.Role1Place;
 import sweforce.vaadin.sample.secure.role2.Role2Place;
-import sweforce.vaadin.security.login.LoginPlace;
-import sweforce.vaadin.security.logout.LogoutPlace;
-
-import javax.inject.Inject;
+import sweforce.vaadin.security.activitiesandplaces.login.LoginPlace;
+import sweforce.vaadin.security.activitiesandplaces.logout.LogoutPlace;
 
 /**
  * Created by IntelliJ IDEA.
@@ -39,7 +36,7 @@ import javax.inject.Inject;
  * Time: 11:45 AM
  * To change this template use File | Settings | File Templates.
  */
-public class MenuActivity extends AbstractActivity {
+public class MenuActivity extends AbstractActivity  {
 
     private MenuView menuView = new MenuViewImpl();
 
@@ -82,4 +79,18 @@ public class MenuActivity extends AbstractActivity {
         }
     }
 
+    public static PlaceMatchActivityMapping placeMatchActivityMapping =
+            new PlaceMatchActivityMapping(placeMatch(), MenuActivity.class);
+
+    public static PlaceMatch placeMatch(){
+        return new PlaceMatch() {
+            @Override
+                public boolean matches(Place place) {
+                    return !(
+                            (place instanceof LoginPlace) ||
+                                    (place instanceof LogoutPlace)
+                    );
+                }
+        };
+    }
 }

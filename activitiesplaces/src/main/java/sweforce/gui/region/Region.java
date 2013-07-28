@@ -1,7 +1,7 @@
 package sweforce.gui.region;
 
 
-import com.google.inject.BindingAnnotation;
+
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -23,11 +23,11 @@ public interface Region {
      */
     public String toString();
 
-    @BindingAnnotation
-    @Target({FIELD, PARAMETER, METHOD})
-    @Retention(RetentionPolicy.RUNTIME)
-    public @interface Regional {
-        Class<? extends Region> value();
-    }
+//    @BindingAnnotation
+//    @Target({FIELD, PARAMETER, METHOD})
+//    @Retention(RetentionPolicy.RUNTIME)
+//    public @interface Regional {
+//        Class<? extends Region> value();
+//    }
 
 }

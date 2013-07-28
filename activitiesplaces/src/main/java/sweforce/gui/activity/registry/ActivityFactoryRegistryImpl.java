@@ -2,10 +2,12 @@ package sweforce.gui.activity.registry;
 
 import sweforce.gui.activity.Activity;
 import sweforce.gui.activity.ActivityMapper;
+import sweforce.gui.activity.PlaceMatch;
 import sweforce.gui.place.Place;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 
 public class ActivityFactoryRegistryImpl implements ActivityFactoryRegistry,
@@ -16,7 +18,13 @@ public class ActivityFactoryRegistryImpl implements ActivityFactoryRegistry,
             new HashMap<PlaceMatch, ActivityFactory>();
 
     public ActivityFactoryRegistryImpl(Plugin[] plugins) {
-        for(Plugin plugin : plugins){
+        for (Plugin plugin : plugins) {
+            plugin.configure(this);
+        }
+    }
+
+    public ActivityFactoryRegistryImpl(Set<Plugin> plugins) {
+        for (Plugin plugin : plugins) {
             plugin.configure(this);
         }
     }
@@ -26,13 +34,12 @@ public class ActivityFactoryRegistryImpl implements ActivityFactoryRegistry,
 
     @Override
     public ActivityFactory findActivityFactory(Place place) {
-        for (Map.Entry<PlaceMatch, ActivityFactory> entry : placeMatchActivityFactoryMap.entrySet()){
+        for (Map.Entry<PlaceMatch, ActivityFactory> entry : placeMatchActivityFactoryMap.entrySet()) {
             if (entry.getKey().matches(place))
                 return entry.getValue();
         }
         return new ActivityFactory.NullActivityFactory();
     }
-
 
 
     @Override

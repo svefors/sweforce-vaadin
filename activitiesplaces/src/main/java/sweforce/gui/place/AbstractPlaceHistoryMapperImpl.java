@@ -22,7 +22,7 @@ public abstract class AbstractPlaceHistoryMapperImpl implements PlaceHistoryMapp
     public Place getPlace(String token) {
         if (token == null)
             return null;
-        int colonAt = token.indexOf(':');
+        int colonAt = token.indexOf(separator);
         String initial;
         String rest;
         if (colonAt >= 0) {
@@ -54,7 +54,7 @@ public abstract class AbstractPlaceHistoryMapperImpl implements PlaceHistoryMapp
 
     /**
      * Return value for
-     * {@link PlacesWithPrefixPlaceHistoryMapperImpl#getPrefixAndToken(sweforce.gui.place.Place)}.
+     * {@link PlaceHistoryMapperImpl#getPrefixAndToken(sweforce.gui.place.Place)}.
      */
     public static class PrefixAndToken {
         public final String prefix;

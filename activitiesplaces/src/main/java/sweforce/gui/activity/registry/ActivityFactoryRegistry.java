@@ -1,11 +1,8 @@
 package sweforce.gui.activity.registry;
 
 import sweforce.gui.activity.Activity;
-import sweforce.gui.activity.ActivityMapper;
+import sweforce.gui.activity.PlaceMatch;
 import sweforce.gui.place.Place;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,6 +14,8 @@ import java.util.Map;
 public interface ActivityFactoryRegistry  {
 
     public ActivityFactory findActivityFactory(Place place);
+
+
 
     public interface Configuration<T extends Configuration> {
 

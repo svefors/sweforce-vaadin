@@ -2,9 +2,10 @@ package sweforce.gui.vaadin;
 
 
 import com.vaadin.ui.UI;
+import org.vaadin.dialogs.ConfirmDialog;
 import sweforce.gui.place.PlaceController;
 
-import javax.inject.Inject;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,24 +18,22 @@ public class RootConfirmationHandler implements PlaceController.ConfirmationHand
 
     private final UI root;
 
-    @Inject
+
     public RootConfirmationHandler(UI root) {
         this.root = root;
     }
 
     @Override
         public void askForConfirmation(String message, final Listener listener) {
-        //TODO figure out which confirmation handler is used.
-
-//            ConfirmDialog.show(root, message, new ConfirmDialog.Listener() {
-//                @Override
-//                public void onClose(ConfirmDialog dialog) {
-//                    if (dialog.isConfirmed()) {
-//                        listener.onConfirm();
-//                    } else {
-//                        listener.onCancel();
-//                    }
-//                }
-//            });
+            ConfirmDialog.show(root, message, new ConfirmDialog.Listener() {
+                @Override
+                public void onClose(ConfirmDialog dialog) {
+                    if (dialog.isConfirmed()) {
+                        listener.onConfirm();
+                    } else {
+                        listener.onCancel();
+                    }
+                }
+            });
         }
 }

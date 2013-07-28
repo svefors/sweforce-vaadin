@@ -18,6 +18,8 @@ package sweforce.vaadin.sample.secure.norole;
 import sweforce.event.EventBus;
 import sweforce.gui.activity.AbstractActivity;
 import sweforce.gui.activity.Activity;
+import sweforce.gui.activity.PlaceMatch;
+import sweforce.gui.activity.PlaceMatchActivityMapping;
 import sweforce.gui.display.Display;
 import sweforce.gui.place.Place;
 
@@ -35,15 +37,15 @@ public class NoroleActivity extends AbstractActivity {
         panel.setView(new NoroleView());
     }
 
-
-    public static class ActivityMapper implements sweforce.gui.activity.ActivityMapper {
-        @Override
-        public Activity getActivity(Place place) {
-            if (place instanceof NorolePlace)
-                return new NoroleActivity();
-            else
-                return null;
-        }
+    public NoroleActivity() {
     }
+
+
+    public static PlaceMatch placeMatch(){
+        return PlaceMatch.clazz(NorolePlace.class);
+    }
+
+    public static PlaceMatchActivityMapping placeMatchActivityMapping =
+            new PlaceMatchActivityMapping(placeMatch(), NoroleActivity.class);
 
 }

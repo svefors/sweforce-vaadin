@@ -18,7 +18,7 @@ package sweforce.vaadin.sample.secure.norole;
 import sweforce.gui.place.Place;
 import sweforce.gui.place.PlaceTokenizer;
 import sweforce.gui.place.Prefix;
-import sweforce.vaadin.security.place.PlaceRequiresAuthentication;
+import sweforce.vaadin.security.place.annotation.PlaceRequiresAuthentication;
 
 /**
  * Created by IntelliJ IDEA.

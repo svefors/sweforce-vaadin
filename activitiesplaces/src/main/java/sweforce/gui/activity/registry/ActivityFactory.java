@@ -47,7 +47,7 @@ public interface ActivityFactory {
     }
 
     /**
-     * A factory that always return null;
+     * A factory that always return null activity;
      */
     public static class NullActivityFactory implements ActivityFactory {
         @Override

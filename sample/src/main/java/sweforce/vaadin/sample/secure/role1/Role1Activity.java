@@ -15,9 +15,7 @@
  */
 package sweforce.vaadin.sample.secure.role1;
 
-import sweforce.gui.activity.AbstractActivity;
-import sweforce.gui.activity.Activity;
-import sweforce.gui.activity.ActivityMapper;
+import sweforce.gui.activity.*;
 import sweforce.gui.display.Display;
 import sweforce.event.EventBus;
 import sweforce.gui.place.Place;
@@ -37,5 +35,6 @@ public class Role1Activity extends AbstractActivity {
     }
 
 
-
+    public static PlaceMatchActivityMapping placeMatchActivityMapping =
+                new PlaceMatchActivityMapping(PlaceMatch.clazz(Role1Place.class), Role1Activity.class);
 }

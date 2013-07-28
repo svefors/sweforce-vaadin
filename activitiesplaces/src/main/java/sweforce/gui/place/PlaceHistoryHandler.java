@@ -20,8 +20,6 @@ import sweforce.event.EventHandler;
 import sweforce.event.HandlerRegistration;
 import sweforce.event.EventBus;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
 
 /**
  *
@@ -47,8 +45,9 @@ public class PlaceHistoryHandler {
      * @param eventBus
      * @return
      */
-    public HandlerRegistration register(PlaceController placeController, EventBus eventBus) {
+    public HandlerRegistration register(PlaceController placeController, EventBus eventBus, Place defaultPlace) {
         this.placeController = placeController;
+        this.defaultPlace = defaultPlace;
         final HandlerRegistration placeReg =
                 eventBus.addHandler(PlaceChangeEvent.class, new PlaceChangeEvent.Handler() {
                     public void onPlaceChange(PlaceChangeEvent event) {
@@ -75,9 +74,10 @@ public class PlaceHistoryHandler {
 
 
     private String tokenForPlace(Place newPlace) {
-        if (defaultPlace.equals(newPlace)) {
-            return "";
-        }
+        // this was the default behavior of GWT, but it is better to write the token of the default place to the URL
+//        if (defaultPlace.equals(newPlace)) {
+//            return "";
+//        }
 
         String token = mapper.getToken(newPlace);
         if (token != null) {

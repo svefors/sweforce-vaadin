@@ -1,6 +1,8 @@
 package sweforce.gui.vaadin;
 
 
+import com.vaadin.ui.UI;
+import org.vaadin.dialogs.ConfirmDialog;
 import sweforce.gui.place.PlaceController;
 
 /**
@@ -14,16 +16,15 @@ public class CurrentRootConfirmationHandler implements PlaceController.Confirmat
 
     @Override
     public void askForConfirmation(String message, final Listener listener) {
-        //TODO wait for next version of confirm dialog. OR use your own javascript
-//        ConfirmDialog.show(UI.getCurrent(), message, new ConfirmDialog.Listener() {
-//            @Override
-//            public void onClose(ConfirmDialog dialog) {
-//                if (dialog.isConfirmed()) {
-//                    listener.onConfirm();
-//                } else {
-//                    listener.onCancel();
-//                }
-//            }
-//        });
+        ConfirmDialog.show(UI.getCurrent(), message, new ConfirmDialog.Listener() {
+            @Override
+            public void onClose(ConfirmDialog dialog) {
+                if (dialog.isConfirmed()) {
+                    listener.onConfirm();
+                } else {
+                    listener.onCancel();
+                }
+            }
+        });
     }
 }

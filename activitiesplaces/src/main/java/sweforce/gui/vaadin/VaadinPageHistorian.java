@@ -5,7 +5,7 @@ import com.vaadin.server.Page;
 import sweforce.event.HandlerRegistration;
 import sweforce.gui.place.PlaceHistoryHandler;
 
-import javax.inject.Inject;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -21,7 +21,7 @@ public class VaadinPageHistorian implements PlaceHistoryHandler.Historian, Page.
 
     private Collection<PlaceHistoryHandler.HistoryChangedEvent.Handler> handlers = new ArrayList<PlaceHistoryHandler.HistoryChangedEvent.Handler>();
 
-    @Inject
+
     public VaadinPageHistorian(Page page) {
         this.page = page;
         page.addUriFragmentChangedListener(this);

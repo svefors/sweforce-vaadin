@@ -20,7 +20,7 @@ def prevaylerVersion = "2.5"
 def axonVersion = "2.0-m2"
 def scalaVersion = "2.9.2"
 def sweforceVaadinVersion = "1.2.3"
-def vaadinVersion = "7.0.0"
+def vaadinVersion = "7.1.0"
 
 
 ext.libs = [
@@ -74,12 +74,14 @@ subprojects {
     apply plugin: 'java'
     dependencies {
         testCompile "junit:junit:4.10"
-        compile(['com.google.inject:guice:3.0',
-                'se.jbee:silk-di:0.5',
+        compile([
+                'com.google.inject:guice:3.0',
+                'com.google.inject.extensions:guice-assistedinject:3.0',
+                'com.google.inject.extensions:guice-multibindings:3.0',
+                'se.jbee:silk-di:0.6',
                 'org.slf4j:slf4j-api:1.6.6',
                 'ch.qos.logback:logback-classic:1.0.6',
-                'com.google.inject.extensions:guice-assistedinject:3.0',
-                'com.google.inject.extensions:guice-multibindings:3.0'
+
 
         ])
 
@@ -139,7 +141,7 @@ project(':activitiesplaces') {
                 libs.vaadin//,
                 //                'org.reflections:reflections:0.9.8'
         ])
-        compile('org.vaadin.addon:confirmdialog:2.0.1') {
+        compile('org.vaadin.addon:confirmdialog:2.0.4') {
             exclude group: 'com.vaadin', module: 'vaadin'
         }
     }

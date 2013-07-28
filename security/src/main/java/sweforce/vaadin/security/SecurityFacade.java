@@ -29,8 +29,6 @@ public interface SecurityFacade {
 
     public Subject getSubject() ;
 
-    public boolean isAuthenticationRequired(Place place);
-
 
     public class UnknownAccountException extends RuntimeException {
         public UnknownAccountException() {

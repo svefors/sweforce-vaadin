@@ -74,7 +74,7 @@ public class ConvertingPropertyVariableInterpolator extends ItemPropertyInterpol
     protected String toString(Object value)
     {
         Converter converter = converterFactory.createConverter(String.class, value.getClass());
-        return (String) converter.convertToPresentation(value, locale);
+        return (String) converter.convertToPresentation(value, String.class, locale);
 
     }
 }

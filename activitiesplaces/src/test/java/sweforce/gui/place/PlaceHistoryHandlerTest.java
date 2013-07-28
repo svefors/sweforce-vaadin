@@ -8,7 +8,7 @@ import sweforce.gui.place.testplaces.Place1;
 import sweforce.gui.place.testplaces.Place2;
 import sweforce.event.SimpleEventBus;
 
-import javax.inject.Provider;
+
 
 import static org.junit.Assert.*;
 

@@ -9,7 +9,6 @@ public interface PlaceController {
 
     public void goTo(final Place newPlace);
 
-//    public void setDefaultPlace(Place defaultPlace);
 
     /**
      * Optional delegate in charge of Window-related events. Provides nice

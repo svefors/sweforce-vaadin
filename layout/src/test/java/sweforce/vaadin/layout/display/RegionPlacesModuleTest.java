@@ -17,7 +17,7 @@ public class RegionPlacesModuleTest {
 //            this.configurePlaceRegionActivity(Place2.class, Region.LEFT, LeftActivity.class);
 //            this.configurePlaceRegionActivity(Place1.class, Region.RIGHT, Place1RightActivity.class);
 //            this.configurePlaceRegionActivity(Place2.class, Region.RIGHT, Place2RightActivity.class);
-//            this.bind(Injectee.class);
+//            this.bindPrefixMapping(Injectee.class);
 //        }
 //
 //    };
