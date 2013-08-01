@@ -35,6 +35,7 @@ public class Role1Activity extends AbstractActivity {
     }
 
 
+
     public static PlaceMatchActivityMapping placeMatchActivityMapping =
                 new PlaceMatchActivityMapping(PlaceMatch.clazz(Role1Place.class), Role1Activity.class);
 }

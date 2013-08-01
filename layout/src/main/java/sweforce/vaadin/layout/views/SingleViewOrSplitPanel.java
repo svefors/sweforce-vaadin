@@ -2,6 +2,7 @@ package sweforce.vaadin.layout.views;
 
 import com.vaadin.ui.*;
 import sweforce.gui.display.Display;
+import sweforce.gui.display.NullView;
 import sweforce.gui.vaadin.VaadinView;
 import sweforce.gui.display.View;
 import sweforce.vaadin.layout.style2.Size;
@@ -54,23 +55,26 @@ public class SingleViewOrSplitPanel extends CustomComponent {
         return orderedLayout;
     }
 
-    public void setMainComponent(Component component){
+    public void setMainComponent(Component component) {
         this.getLayoutState().setMainComponent(this, component);
     }
 
-    public void setFirstComponent(Component component){
+    public void setFirstComponent(Component component) {
         this.getLayoutState().setFirstComponent(this, component);
     }
 
-    public void setSecondComponent(Component component){
+    public void setSecondComponent(Component component) {
         this.getLayoutState().setSecondComponent(this, component);
     }
 
-    public Display getMainComponentDisplay(){
+    public Display getMainComponentDisplay() {
         return new Display() {
             @Override
             public void setView(View view) {
-                setMainComponent(((VaadinView)view).asComponent());
+                if (view != NullView.getInstance())
+                    setMainComponent(((VaadinView) view).asComponent());
+                else
+                    setMainComponent(null);
             }
         };
     }
@@ -79,7 +83,10 @@ public class SingleViewOrSplitPanel extends CustomComponent {
         return new Display() {
             @Override
             public void setView(View view) {
-                setFirstComponent(((VaadinView)view).asComponent());
+                if (view != NullView.getInstance())
+                    setFirstComponent(((VaadinView) view).asComponent());
+                else
+                    setFirstComponent(null);
             }
         };
     }
@@ -88,15 +95,20 @@ public class SingleViewOrSplitPanel extends CustomComponent {
         return new Display() {
             @Override
             public void setView(View view) {
-                setSecondComponent(((VaadinView)view).asComponent());
+                if (view != NullView.getInstance())
+                    setSecondComponent(((VaadinView) view).asComponent());
+                else
+                    setSecondComponent(null);
             }
         };
     }
 
-    public void refreshSize(){
-        if(layoutState instanceof EmptyLayoutState){
-            this.setWidth(filledSize.getWidth(), filledSize.getWidthUnit());
-            this.setHeight(filledSize.getHeight(), filledSize.getHeightUnit());
+    public void refreshSize() {
+        if (layoutState instanceof EmptyLayoutState) {
+            if (filledSize != null) {
+                this.setWidth(filledSize.getWidth(), filledSize.getWidthUnit());
+                this.setHeight(filledSize.getHeight(), filledSize.getHeightUnit());
+            }
         }
     }
 
@@ -116,14 +128,14 @@ public class SingleViewOrSplitPanel extends CustomComponent {
 
     }
 
-    private static class MainLayoutState implements LayoutState{
+    private static class MainLayoutState implements LayoutState {
 
         @Override
         public void setMainComponent(SingleViewOrSplitPanel layoutStateContext, Component newMainComponent) {
-            if(newMainComponent == null){
+            if (newMainComponent == null) {
                 layoutStateContext.getOrderedLayout().removeAllComponents();
                 layoutStateContext.setLayoutState(new EmptyLayoutState());
-            }else{
+            } else {
                 Component oldComponent = layoutStateContext.getOrderedLayout().getComponent(0);
                 layoutStateContext.getOrderedLayout().replaceComponent(oldComponent, newMainComponent);
                 layoutStateContext.setLayoutState(this);
@@ -132,9 +144,9 @@ public class SingleViewOrSplitPanel extends CustomComponent {
 
         @Override
         public void setFirstComponent(SingleViewOrSplitPanel layoutStateContext, Component newFirstComponent) {
-            if(newFirstComponent == null){
+            if (newFirstComponent == null) {
                 layoutStateContext.setLayoutState(this);
-            }else{
+            } else {
                 Component oldComponent = layoutStateContext.getOrderedLayout().getComponent(0);
                 layoutStateContext.getOrderedLayout().replaceComponent(oldComponent,
                         layoutStateContext.getSplitPanel());
@@ -145,9 +157,9 @@ public class SingleViewOrSplitPanel extends CustomComponent {
 
         @Override
         public void setSecondComponent(SingleViewOrSplitPanel layoutStateContext, Component newSecondComponent) {
-            if(newSecondComponent == null){
+            if (newSecondComponent == null) {
                 layoutStateContext.setLayoutState(this);
-            }else{
+            } else {
                 Component oldComponent = layoutStateContext.getOrderedLayout().getComponent(0);
                 layoutStateContext.getOrderedLayout().replaceComponent(oldComponent,
                         layoutStateContext.getSplitPanel());
@@ -157,12 +169,12 @@ public class SingleViewOrSplitPanel extends CustomComponent {
         }
     }
 
-    private static class SplitLayoutState implements LayoutState{
+    private static class SplitLayoutState implements LayoutState {
         @Override
         public void setMainComponent(SingleViewOrSplitPanel layoutStateContext, Component newMainComponent) {
-            if(newMainComponent == null){
+            if (newMainComponent == null) {
                 layoutStateContext.setLayoutState(this);
-            }else{
+            } else {
                 layoutStateContext.getOrderedLayout().replaceComponent(
                         layoutStateContext.getSplitPanel(),
                         newMainComponent);
@@ -173,14 +185,14 @@ public class SingleViewOrSplitPanel extends CustomComponent {
 
         @Override
         public void setFirstComponent(SingleViewOrSplitPanel layoutStateContext, Component newFirstComponent) {
-            if(newFirstComponent == null){
+            if (newFirstComponent == null) {
                 layoutStateContext.getSplitPanel().setFirstComponent(null);
-                if (layoutStateContext.getSplitPanel().getComponentCount() == 0){
+                if (layoutStateContext.getSplitPanel().getComponentCount() == 0) {
                     layoutStateContext.setLayoutState(new EmptyLayoutState());
-                }else{
+                } else {
                     layoutStateContext.setLayoutState(this);
                 }
-            }else{
+            } else {
                 layoutStateContext.getSplitPanel().setFirstComponent(newFirstComponent);
                 layoutStateContext.setLayoutState(this);
             }
@@ -188,27 +200,27 @@ public class SingleViewOrSplitPanel extends CustomComponent {
 
         @Override
         public void setSecondComponent(SingleViewOrSplitPanel layoutStateContext, Component newSecondComponent) {
-            if(newSecondComponent == null){
+            if (newSecondComponent == null) {
                 layoutStateContext.getSplitPanel().setSecondComponent(null);
-                if (layoutStateContext.getSplitPanel().getComponentCount() == 0){
+                if (layoutStateContext.getSplitPanel().getComponentCount() == 0) {
                     layoutStateContext.setLayoutState(new EmptyLayoutState());
-                }else{
+                } else {
                     layoutStateContext.setLayoutState(this);
                 }
-            }else{
+            } else {
                 layoutStateContext.getSplitPanel().setSecondComponent(newSecondComponent);
                 layoutStateContext.setLayoutState(this);
             }
         }
     }
 
-    private static class EmptyLayoutState implements LayoutState{
+    private static class EmptyLayoutState implements LayoutState {
 
         @Override
         public void setMainComponent(SingleViewOrSplitPanel layoutStateContext, Component newMainComponent) {
-            if(newMainComponent == null){
+            if (newMainComponent == null) {
                 layoutStateContext.setLayoutState(this);
-            }else{
+            } else {
                 layoutStateContext.getOrderedLayout().addComponent(newMainComponent);
                 layoutStateContext.setLayoutState(new MainLayoutState());
             }
@@ -216,9 +228,9 @@ public class SingleViewOrSplitPanel extends CustomComponent {
 
         @Override
         public void setFirstComponent(SingleViewOrSplitPanel layoutStateContext, Component newFirstComponent) {
-            if(newFirstComponent == null){
+            if (newFirstComponent == null) {
                 layoutStateContext.setLayoutState(this);
-            }else {
+            } else {
                 layoutStateContext.getOrderedLayout().addComponent(layoutStateContext.getSplitPanel());
                 layoutStateContext.getSplitPanel().setFirstComponent(newFirstComponent);
                 layoutStateContext.setLayoutState(new SplitLayoutState());
@@ -227,9 +239,9 @@ public class SingleViewOrSplitPanel extends CustomComponent {
 
         @Override
         public void setSecondComponent(SingleViewOrSplitPanel layoutStateContext, Component newSecondComponent) {
-            if(newSecondComponent == null){
+            if (newSecondComponent == null) {
                 layoutStateContext.setLayoutState(this);
-            }else {
+            } else {
                 layoutStateContext.getOrderedLayout().addComponent(layoutStateContext.splitPanel);
                 layoutStateContext.getSplitPanel().setSecondComponent(newSecondComponent);
                 layoutStateContext.setLayoutState(new SplitLayoutState());

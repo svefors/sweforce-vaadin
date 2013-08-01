@@ -28,12 +28,22 @@ import sweforce.vaadin.sample.secure.role1.Role1Place;
  * Time: 12:21 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Role2Activity extends AbstractActivity {
+public class Role2Activity extends AbstractActivity implements Activity.ConfigurableFromPlace<Role2Place> {
 
     private String someValue;
 
     public void setSomeValue(String someValue) {
         this.someValue = someValue;
+    }
+
+    @Override
+    public String mayStop() {
+        return someValue;
+    }
+
+    @Override
+    public void withPlace(Role2Place place) {
+        this.someValue = place.getSomeValue();
     }
 
     @Override
